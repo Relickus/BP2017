@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="700" prefWidth="500" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Controllers.CAPTCHASelectController">
+    <children>
+      <VBox prefHeight="700.0" prefWidth="500.0">
+         <children>
+              <Label fx:id="label" minHeight="16" minWidth="69" text="Please select your desired type of CAPTCHA:">
+               <VBox.margin>
+                  <Insets bottom="30.0" left="30.0" right="30.0" top="50.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Calibri" size="16.0" />
+               </font>
+            </Label>
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <RadioButton fx:id="CAPTCHA_radiobtn1" mnemonicParsing="false" onAction="#RB1Selected" text="Keyword specified">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </RadioButton>
+                        <VBox fx:id="keywordSpecifyVbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <TextField maxWidth="200.0" prefWidth="200.0" promptText="specify the keyword (optional)">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="sem pod radiobtny doplnit Available solvers" textFill="#868686">
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="System Italic" size="11.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <ImageView fitHeight="300.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                           <image>
+                              <Image url="@../CAPTCHA_example_keyword.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </ImageView>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <RadioButton fx:id="CAPTCHA_radiobtn2" mnemonicParsing="false" onAction="#RB2Selected" text="Image specified">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </RadioButton>
+                        <VBox fx:id="imageSpecifyVbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <TextField maxWidth="200.0" prefWidth="200.0" promptText="specify ref. image class (optional)">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </TextField>
+                           </children>
+                        </VBox>
+                        <Label alignment="BOTTOM_RIGHT" contentDisplay="RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="*only solvable by KNN" textFill="#868686">
+                           <VBox.margin>
+                              <Insets bottom="20.0" right="20.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Italic" size="11.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="300.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                           <image>
+                              <Image url="@../CAPTCHA_example_refimage.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </ImageView>
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>
+                    <Button fx:id="button" alignment="BOTTOM_CENTER" onAction="#generateCAPTCHA" text="Generate CAPTCHA">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding></Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="50.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+    </children>
+</AnchorPane>
