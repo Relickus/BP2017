@@ -40,7 +40,7 @@ public class CAPTCHA {
    
    public WebView getPayloadWebView(WebView view){
        
-       //generate payload view and save it on disk
+       //generate payload view from saved captcha and save it somewhere
        
        URL file = getClass().getResource("/htmlCAPTCHAs/payloadImages.html");
        view.getEngine().load(file.toExternalForm());
@@ -50,6 +50,7 @@ public class CAPTCHA {
    
    public WebView getWebView(WebView view){
        
+       // generate WebView from saved captcha and save it somewhere
               
        URL file = getClass().getResource("/htmlCAPTCHAs/index.html");
        view.getEngine().load(file.toExternalForm());

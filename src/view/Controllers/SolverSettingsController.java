@@ -48,6 +48,18 @@ public class SolverSettingsController extends AbstractController implements Init
         stageController.showStage();
     }
     
+    @FXML    
+    private void onProceedClicked(ActionEvent event){        
+        
+        stageController.loadNextStage(NEXT_SCENE);   
+        
+        ResultWindowController windowController = (ResultWindowController)stageController.getWindowController();
+        windowController.setCaptcha(captcha);  
+        windowController.initView();   
+        
+        stageController.showStage();
+    }
+    
      
     @Override
     public void initialize(URL url, ResourceBundle rb) {

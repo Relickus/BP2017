@@ -30,7 +30,7 @@ public class BAP_pokus1 extends Application {
         
         StageController stageController = StageController.getInstance();
        
-        stageController.loadNextStage(Constants.CAPTCHA_SELECT_WINDOW);     
+        stageController.loadNextStage(Constants.INIT_WINDOW);     
 
         //CAPTCHASelectController windowController = (CAPTCHASelectController)stageController.getWindowController();
         //windowController.setPrevStage(stage);
