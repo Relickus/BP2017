@@ -14,7 +14,7 @@
    <center>
       <ScrollPane fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER" prefHeight="700.0" BorderPane.alignment="CENTER">
          <content>
-            <VBox maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="700.0">
+            <VBox maxWidth="1.7976931348623157E308" minWidth="-Infinity">
                <children>
                   <HBox alignment="CENTER">
                      <children>
@@ -45,12 +45,12 @@
                                                 <Font name="Arial" size="15.0" />
                                              </font>
                                           </Label>
-                                          <Label text="..." fx:id="solverParam">
+                                          <Label fx:id="solverParam" text="...">
                                              <font>
                                                 <Font name="Arial" size="15.0" />
                                              </font>
                                           </Label>
-                                          <Label text="..." fx:id="solverAcc">
+                                          <Label fx:id="solverAcc" text="...">
                                              <font>
                                                 <Font name="Arial" size="15.0" />
                                              </font>

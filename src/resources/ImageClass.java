@@ -29,9 +29,23 @@ public enum ImageClass {
         this.value = value;
     }
     
-    public static ImageClass getValue(int value) {
+    public static ImageClass getEnum(int value) {
       for(ImageClass e: ImageClass.values()) {
         if(e.value == value) {
+          return e;
+        }
+      }
+      return null;
+    }
+    
+    public int getValue(){
+        return value;
+    }
+    
+    public static ImageClass getEnum(String str){
+        
+        for(ImageClass e: ImageClass.values()) {
+        if(e.printableName().toLowerCase().equals( str.toLowerCase() ) ) {
           return e;
         }
       }

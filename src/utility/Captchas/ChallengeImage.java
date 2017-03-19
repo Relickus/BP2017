@@ -5,13 +5,10 @@
  */
 package utility.Captchas;
 ;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
+import javafx.scene.Node;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import resources.Constants;
 import resources.ImageClass;
 
@@ -35,38 +32,40 @@ public class ChallengeImage extends AbstractChallenge{
     }
 
     @Override
-    public void getChallenge() {
-        
-        if(refImg == null){   
-            int classIndex;
-            Random rand = new Random();
-            classIndex = rand.nextInt() % Constants.NUMBER_OF_CLASSES;
-            
-            int refImgIndex, maxIndex= 0;
-            rand = new Random();
-            maxIndex = //get number of images of current class on HDD;
-            
-            refImgIndex = rand.nextInt() % maxIndex;
-            
-            try {            
-                File file = new File("c:\\mypic.jpg");
-                refImg = ImageIO.read(file);
-            } catch (IOException ex) {
-                Logger.getLogger(ChallengeImage.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            
-        }
+    public void createChallenge() {
+        // loads reference image
+     
+        loadRefImage();
         
     }
     
     private void generateRefImgIndex(){
         Random rand = new Random();            
         refImgClassIdx = (rand.nextInt(Constants.NUMBER_OF_CLASSES)) + 1;        
-        ImageClass imgclass = ImageClass.getValue(refImgClassIdx);  
+        ImageClass imgclass = ImageClass.getEnum(refImgClassIdx);  
+    }
+    
+    public void specifyImage(String path){
+        
+       
+            
+        
+    }
+    
+    public void setRefImgIndex(int idx){        
+        refImgClassIdx = idx;               
     }
         
     private void loadRefImage(){
+        
+        
+        // FIX THIS LATER ON COMPLETE DATASET
+        // respect user-specified keyword!!!
+        
+        if(new Random().nextBoolean() == true)
+            refImg = new Image("file:src/htmlCAPTCHAs/a.jpg");
+        else
+            refImg = new Image("file:src/htmlCAPTCHAs/b.JPG");
         
        // MyImageLoader loader = new MyImageLoader();
         
@@ -120,6 +119,28 @@ public class ChallengeImage extends AbstractChallenge{
     protected void loadChallengeImages() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public Node getNode() {
+
+           return new ImageView(refImg); 
+
+    }
+
+    @Override
+    public String getChallengeName() {
+        return "Reference image";
+    }
+
+    @Override
+    public void createPayload() {
+
+        
+
+    }
+    
+    
+    
     
     
 }

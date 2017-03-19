@@ -5,6 +5,9 @@
  */
 package utility.Captchas;
 
+import java.net.URL;
+import javafx.scene.web.WebView;
+
 /**
  *
  * @author Vojta
@@ -32,7 +35,26 @@ public class CAPTCHA {
     
    public void generateChallenge(){
        
-       challenge.getChallenge();
+       challenge.createChallenge();
+   }
+   
+   public WebView getPayloadWebView(WebView view){
+       
+       //generate payload view and save it on disk
+       
+       URL file = getClass().getResource("/htmlCAPTCHAs/payloadImages.html");
+       view.getEngine().load(file.toExternalForm());
+       
+       return view;
+   }
+   
+   public WebView getWebView(WebView view){
+       
+              
+       URL file = getClass().getResource("/htmlCAPTCHAs/index.html");
+       view.getEngine().load(file.toExternalForm());
+       
+       return view;
    }
    
    

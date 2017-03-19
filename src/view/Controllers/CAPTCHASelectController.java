@@ -34,7 +34,7 @@ public class CAPTCHASelectController extends AbstractController implements Initi
     public RadioButton CAPTCHA_radiobtn2;
     public ToggleGroup radioGroup;
     
-    public TextField keywordSpecify; 
+    public TextField keywordSpecifyText; 
     public Label optionalLabel;
     public VBox keywordSpecifyVbox; 
     public VBox imageSpecifyVbox;
@@ -47,12 +47,16 @@ public class CAPTCHASelectController extends AbstractController implements Initi
         CAPTCHA captcha; 
         
         if(CAPTCHA_radiobtn1.isSelected()){
-            captcha = new CAPTCHA(new ChallengeKeyword());
+            if( ! keywordSpecifyText.getText().isEmpty())
+                captcha = new CAPTCHA(new ChallengeKeyword(keywordSpecifyText.getText()));   
+            else
+                captcha = new CAPTCHA(new ChallengeKeyword());
             captcha.generateChallenge();
         }
         else if(CAPTCHA_radiobtn2.isSelected()){
             captcha = new CAPTCHA(new ChallengeImage());
             captcha.generateChallenge();
+            
         }
         else 
             return;
@@ -62,13 +66,12 @@ public class CAPTCHASelectController extends AbstractController implements Initi
         // generate captcha and hand it to next stage
         
         //stageController.getWindowController()
-                
-        stageController.closeStage(stageController.getCurrentStage());
-        stageController.loadNextStage(NEXT_SCENE);   
+                     
+        stageController.loadNextStage(NEXT_SCENE);         
         
         CAPTCHASettingsController windowController = (CAPTCHASettingsController)stageController.getWindowController();
-        windowController.setCaptcha(captcha);    
-        
+        windowController.setCaptcha(captcha);  
+        windowController.initView();
         
         stageController.showStage();
     }
@@ -98,7 +101,7 @@ public class CAPTCHASelectController extends AbstractController implements Initi
         keywordSpecifyVbox.setVisible(false);  
         imageSpecifyVbox.setVisible(false);
         
-        NEXT_SCENE = Constants.CAPTCHA_SETTINGS_WINDOW;
+        NEXT_SCENE = PREVIOUS_SCENE = Constants.CAPTCHA_SETTINGS_WINDOW;
     }    
     
 }

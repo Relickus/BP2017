@@ -7,14 +7,13 @@ package view.Controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.layout.VBox;
+import javafx.scene.web.WebView;
 import resources.Constants;
-import utility.CustomTreeItem;
-import utility.CustomCell;
+import utility.Captchas.CAPTCHA;
 
 /**
  * FXML Controller class
@@ -23,12 +22,33 @@ import utility.CustomCell;
  */
 public class SolverSettingsController extends AbstractController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+    
+    private CAPTCHA captcha;
+    public WebView captchaView;
     
     public TreeView<String> treeView;
     
+     public void initView(){
+        
+        captcha.getWebView(captchaView);
+        captchaView.setZoom(0.7);
+    }
+     
+        public void setCaptcha(CAPTCHA cap){
+        this.captcha = cap;
+    }        
+       
+    @FXML    
+    private void onBackClicked(ActionEvent event){        
+        
+        stageController.loadNextStage(PREVIOUS_SCENE); 
+        CAPTCHASettingsController windowController = (CAPTCHASettingsController)stageController.getWindowController();
+        windowController.setCaptcha(captcha);  
+        windowController.initView();        
+        stageController.showStage();
+    }
+    
+     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -67,5 +87,6 @@ public class SolverSettingsController extends AbstractController implements Init
 //        
         
             NEXT_SCENE = Constants.RESULT_WINDOW;
+            PREVIOUS_SCENE = Constants.CAPTCHA_SETTINGS_WINDOW;
     }
 }

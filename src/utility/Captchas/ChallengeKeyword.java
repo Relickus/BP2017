@@ -7,6 +7,8 @@ package utility.Captchas;
 
 import java.util.ArrayList;
 import java.util.Random;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
 import resources.Constants;
 import resources.ImageClass;
 
@@ -27,18 +29,34 @@ public class ChallengeKeyword extends AbstractChallenge{
         NUMBER_OF_CORRECT_IMAGES = new Random().nextInt(5) + 2;
     }
     
-    
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
+    public ChallengeKeyword(String keywordSpecify) {
+        NUMBER_OF_CHALLENGE_IMAGES = 9;
+        
+        specifyKeyword(keywordSpecify);
+        
+        // 2..6 correct images out of 9
+        NUMBER_OF_CORRECT_IMAGES = new Random().nextInt(5) + 2;
     }
-
+    
+   
 
     private void generateKeyword(){
         Random rand = new Random();            
         keywordClassIdx = (rand.nextInt(Constants.NUMBER_OF_CLASSES)) + 1;        
-        ImageClass imgclass = ImageClass.getValue(keywordClassIdx);                
+        ImageClass imgclass = ImageClass.getEnum(keywordClassIdx);                
         keyword = imgclass.printableName();
+    }
+    
+    private void specifyKeyword(String key){
+        
+         ImageClass imgclass = ImageClass.getEnum(key);
+        
+        if(imgclass != null){
+            keywordClassIdx = imgclass.getValue();
+            keyword = imgclass.printableName();
+        }
+        else    // unknown KW
+            generateKeyword();
     }
     
     /*
@@ -66,11 +84,9 @@ public class ChallengeKeyword extends AbstractChallenge{
     }
     
     @Override
-    public void getChallenge() {
+    public void createChallenge() {
         
-        generateKeyword();            
-        generateClassIndexes();
-        loadChallengeImages();
+        generateKeyword();       
     }
     
 
@@ -86,6 +102,26 @@ public class ChallengeKeyword extends AbstractChallenge{
 
 
     }
+
+    @Override
+    public Node getNode() {
+        return new Label(keyword);
+    }
+
+    @Override
+    public String getChallengeName() {
+        return "Keyword";
+    }
+
+    @Override
+    public void createPayload() {
+     
+        generateClassIndexes();
+        loadChallengeImages();    
+    
+    }
+    
+    
    
     
     

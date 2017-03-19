@@ -19,7 +19,6 @@ import javafx.stage.Stage;
  */
 public class StageController {
     
-    private AbstractController windowController;
     private FXMLLoader fxmlLoader;
     private Pane pane;
     private final Stage currentStage;
@@ -44,6 +43,10 @@ public class StageController {
        
         try {
             pane = fxmlLoader.load();
+            Scene scene = new Scene(pane);
+            currentStage.setScene(scene);        
+            currentStage.setResizable(false);
+            
         } catch (IOException ex) {
             Logger.getLogger(StageController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -56,9 +59,7 @@ public class StageController {
     
     public void showStage(){
     
-       Scene scene = new Scene(pane);
-       currentStage.setScene(scene);        
-       currentStage.setResizable(false);
+       
        
        currentStage.show();
       
@@ -66,7 +67,7 @@ public class StageController {
     
     public AbstractController getWindowController(){
         
-       return windowController = fxmlLoader.getController();      
+       return fxmlLoader.getController();      
     }
     
     

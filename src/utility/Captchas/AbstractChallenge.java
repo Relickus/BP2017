@@ -8,6 +8,7 @@ package utility.Captchas;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Set;
+import javafx.scene.Node;
 
 /**
  *
@@ -26,11 +27,15 @@ public abstract class AbstractChallenge {
     
     
     
-    public abstract void getChallenge();
+    public abstract void createChallenge();
+    public abstract void createPayload();
     
     protected abstract void loadChallengeImages();
     
     //protected loadNumberOfImagesInClasses(){
         
+    public abstract Node getNode();
+    
+    public abstract String getChallengeName();
     
 }

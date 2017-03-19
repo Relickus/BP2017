@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.web.WebView;
+import resources.Constants;
 
 /**
  *
@@ -42,6 +43,8 @@ public class ResultWindowController extends AbstractController implements Initia
         solverParam.setText("K=5");
         solverAcc.setText("75%");
         
+        NEXT_SCENE = null;
+        PREVIOUS_SCENE = Constants.SOLVER_SETTINGS_WINDOW;
         
 
         

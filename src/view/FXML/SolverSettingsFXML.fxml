@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="view.Controllers.SolverSettingsController">
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Controllers.SolverSettingsController">
    <children>
       <BorderPane prefHeight="700.0" prefWidth="500.0">
          <center>
@@ -25,9 +24,9 @@
          <bottom>
             <HBox minWidth="-Infinity" BorderPane.alignment="BOTTOM_CENTER">
                <children>
-                  <Button mnemonicParsing="false" text="Back" />
+                  <Button mnemonicParsing="false" onAction="#onBackClicked" text="Back" />
                   <HBox HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" text="Proceed" />
+                  <Button mnemonicParsing="false" onAction="#onProceedClicked" text="Proceed" />
                </children>
             </HBox>
          </bottom>
@@ -35,9 +34,9 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <top>
-            <WebView fx:id="htmlView" maxHeight="280.0" maxWidth="200.0" minHeight="280.0" minWidth="200.0" prefHeight="280.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <WebView fx:id="captchaView" maxHeight="380.0" maxWidth="300.0" minHeight="380.0" minWidth="300.0" prefHeight="380.0" prefWidth="300.0" BorderPane.alignment="CENTER">
                <BorderPane.margin>
-                  <Insets bottom="30.0" />
+                  <Insets bottom="20.0" />
                </BorderPane.margin>
             </WebView>
          </top>
