@@ -68,10 +68,10 @@ public class ChallengeImage extends AbstractChallenge{
         
     private void loadRefImage(){
         
-        MyImageLoader loader = new MyImageLoader();
+       // MyImageLoader loader = new MyImageLoader();
         
-        refImg = loader.getReferenceImage(refImgClassIdx);
-        imgArr = loader.getImageMatrix(refImgClassIdx,NUMBER_OF_CHALLENGE_IMAGES,NUMBER_OF_CORRECT_IMAGES);
+        //refImg = loader.getReferenceImage(refImgClassIdx);
+        //imgArr = loader.getImageMatrix(refImgClassIdx,NUMBER_OF_CHALLENGE_IMAGES,NUMBER_OF_CORRECT_IMAGES);
         
         
     }
