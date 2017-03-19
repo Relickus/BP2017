@@ -29,6 +29,7 @@ public class CAPTCHASelectController extends AbstractController implements Initi
     //@FXML
     //private WebView htmlView;
     
+    
     public RadioButton CAPTCHA_radiobtn1;    
     public RadioButton CAPTCHA_radiobtn2;
     public ToggleGroup radioGroup;
@@ -39,25 +40,37 @@ public class CAPTCHASelectController extends AbstractController implements Initi
     public VBox imageSpecifyVbox;
 
 
-
     
     @FXML
     private void generateCAPTCHA(ActionEvent event) {
                 
         CAPTCHA captcha; 
         
-        if(CAPTCHA_radiobtn1.isSelected())
+        if(CAPTCHA_radiobtn1.isSelected()){
             captcha = new CAPTCHA(new ChallengeKeyword());
-        else if(CAPTCHA_radiobtn2.isSelected())
+            captcha.generateChallenge();
+        }
+        else if(CAPTCHA_radiobtn2.isSelected()){
             captcha = new CAPTCHA(new ChallengeImage());
+            captcha.generateChallenge();
+        }
         else 
             return;
         
-         captcha.generateChallenge();
+       //  captcha.generateChallenge();
 
         // generate captcha and hand it to next stage
         
-        goToNextStage();
+        //stageController.getWindowController()
+                
+        stageController.closeStage(stageController.getCurrentStage());
+        stageController.loadNextStage(NEXT_SCENE);   
+        
+        CAPTCHASettingsController windowController = (CAPTCHASettingsController)stageController.getWindowController();
+        windowController.setCaptcha(captcha);    
+        
+        
+        stageController.showStage();
     }
     
     
@@ -84,10 +97,8 @@ public class CAPTCHASelectController extends AbstractController implements Initi
         CAPTCHA_radiobtn2.setToggleGroup(radioGroup);
         keywordSpecifyVbox.setVisible(false);  
         imageSpecifyVbox.setVisible(false);
-
         
-        NEXT_SCENE = Constants.RESULT_WINDOW;
-        
+        NEXT_SCENE = Constants.CAPTCHA_SETTINGS_WINDOW;
     }    
     
 }

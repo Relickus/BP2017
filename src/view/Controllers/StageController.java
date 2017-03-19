@@ -6,6 +6,8 @@
 package view.Controllers;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -20,7 +22,7 @@ public class StageController {
     private AbstractController windowController;
     private FXMLLoader fxmlLoader;
     private Pane pane;
-    private final Stage stage;
+    private final Stage currentStage;
     
     private static final StageController instance = new StageController();
     
@@ -28,14 +30,23 @@ public class StageController {
         return instance;
         
     }
-
-    public StageController() {
-        this.stage = new Stage();
+    
+    public Stage getCurrentStage(){
+        return currentStage;
     }
 
-    public void setNextStage(String window) throws IOException{
+    public StageController() {
+        this.currentStage = new Stage();
+    }
+
+    public void loadNextStage(String window){
        fxmlLoader = new FXMLLoader(getClass().getResource(window));
-       pane = fxmlLoader.load();
+       
+        try {
+            pane = fxmlLoader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(StageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void closeStage(Stage stage){
@@ -46,10 +57,10 @@ public class StageController {
     public void showStage(){
     
        Scene scene = new Scene(pane);
-       stage.setScene(scene);        
-       stage.setResizable(false);
+       currentStage.setScene(scene);        
+       currentStage.setResizable(false);
        
-       stage.show();
+       currentStage.show();
       
     }
     

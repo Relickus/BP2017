@@ -6,7 +6,9 @@
 package utility.Solvers;
 
 import utility.Captchas.AbstractChallenge;
+import utility.Captchas.CAPTCHA;
 import utility.Result;
+import utility.SolverParameters;
 
 /**
  *
@@ -14,9 +16,10 @@ import utility.Result;
  */
 public abstract class Solver {
     
-    private final String name;
-    private Result result;
-
+    protected final String name;
+    protected Result result;
+    protected SolverParameters parameters;
+    
     public Solver(String name) {
         this.name = name;
         this.result = new Result();
@@ -33,5 +36,11 @@ public abstract class Solver {
     }
     
     
+    public SolverParameters getParameters(){        
+        return parameters;
+    }
     
+    public abstract void predict(CAPTCHA captcha);
+    public abstract void loadScript( AbstractChallenge challenge);
+
 }

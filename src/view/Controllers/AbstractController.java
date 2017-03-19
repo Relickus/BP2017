@@ -17,23 +17,21 @@ import resources.Constants;
  */
 class AbstractController {
     
-    protected Stage prevStage;
+    //protected Stage currentStage;   // VYRESIT REDUNDANCI TENHLE STAGE A TEN UVNITR STAGECONTROLERU
+    
     protected StageController stageController = StageController.getInstance();
     protected String NEXT_SCENE;
-    
-    public void setPrevStage(Stage stage){
-        prevStage = stage;
-    }
+
+        
+//    public void setPrevStage(Stage stage){
+//        currentStage = stage;
+//    }
     
     protected void goToNextStage(){
         
-        stageController.closeStage(prevStage);
+        stageController.closeStage(stageController.getCurrentStage());
         
-        try {
-            stageController.setNextStage(NEXT_SCENE);
-        } catch (IOException ex) {
-            Logger.getLogger(AbstractController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        stageController.loadNextStage(NEXT_SCENE);
         
         stageController.showStage();
     }

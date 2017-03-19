@@ -25,6 +25,10 @@ public class CAPTCHA {
    public void setChallenge(AbstractChallenge challenge){
        this.challenge = challenge;
    }
+
+    public AbstractChallenge getChallenge() {
+        return challenge;
+    }
     
    public void generateChallenge(){
        

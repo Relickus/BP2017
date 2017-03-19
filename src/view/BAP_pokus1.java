@@ -8,7 +8,6 @@ package view;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import resources.Constants;
-import view.Controllers.CAPTCHASelectController;
 import view.Controllers.StageController;
 
 /**
@@ -21,15 +20,20 @@ public class BAP_pokus1 extends Application {
     public void start(Stage stage) throws Exception {
         
         stage.setTitle("CAPTCHAsolver v1.0");
+        
+        // tady by asi mel probehnout nejakej kod kteerj zjisti kolik obrazku je 
+        // v ktery kategorii ve slozce datasetu a naplnit prislusny konstanty
+        
+        
        
         //Parent root = FXMLLoader.load(getClass().getResource("/view/FXML/CAPTCHAWindowFXML.fxml"));
         
         StageController stageController = StageController.getInstance();
        
-        stageController.setNextStage(Constants.RESULT_WINDOW);     
+        stageController.loadNextStage(Constants.CAPTCHA_SELECT_WINDOW);     
 
-//        CAPTCHASelectController windowController = (CAPTCHASelectController)stageController.getWindowController();
-      //  windowController.setPrevStage(stage);
+        //CAPTCHASelectController windowController = (CAPTCHASelectController)stageController.getWindowController();
+        //windowController.setPrevStage(stage);
        
         stageController.showStage();
 

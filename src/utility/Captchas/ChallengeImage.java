@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import resources.Constants;
+import resources.ImageClass;
 
 /**
  *
@@ -21,7 +22,7 @@ import resources.Constants;
 public class ChallengeImage extends AbstractChallenge{
     
     private Image refImg;
-    
+    private int refImgClassIdx;
 
     public ChallengeImage() {        
         NUMBER_OF_CHALLENGE_IMAGES = 9;
@@ -59,8 +60,18 @@ public class ChallengeImage extends AbstractChallenge{
         
     }
     
+    private void generateRefImgIndex(){
+        Random rand = new Random();            
+        refImgClassIdx = (rand.nextInt(Constants.NUMBER_OF_CLASSES)) + 1;        
+        ImageClass imgclass = ImageClass.getValue(refImgClassIdx);  
+    }
+        
     private void loadRefImage(){
         
+        MyImageLoader loader = new MyImageLoader();
+        
+        refImg = loader.getReferenceImage(refImgClassIdx);
+        imgArr = loader.getImageMatrix(refImgClassIdx,NUMBER_OF_CHALLENGE_IMAGES,NUMBER_OF_CORRECT_IMAGES);
         
         
     }
@@ -106,7 +117,7 @@ public class ChallengeImage extends AbstractChallenge{
 //    }
 
     @Override
-    protected void loadChallengeImages(String path) {
+    protected void loadChallengeImages() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

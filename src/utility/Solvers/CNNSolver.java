@@ -6,6 +6,8 @@
 package utility.Solvers;
 
 import utility.Captchas.AbstractChallenge;
+import utility.Captchas.CAPTCHA;
+import utility.Captchas.ChallengeKeyword;
 
 /**
  *
@@ -17,8 +19,18 @@ public class CNNSolver extends Solver {
         super(name);
     }
 
-    void predict(AbstractChallenge challenge) {
-        //set result
+
+    @Override
+    public void predict(CAPTCHA captcha) {
+    
+        //set Result object
+    }
+
+    @Override
+    public void loadScript(AbstractChallenge challenge) {
+
+            // dont allow passing in ChallengeImage object! this method is not suitable for it
+
     }
     
 }

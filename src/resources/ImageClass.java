@@ -11,16 +11,39 @@ package resources;
  */
 public enum ImageClass {
     
-    
-    
-    CAT,
-    DOG,
-    HOUSE,
-    BOAT,
-    TREE,
-    CAR;
+   
+    DOG(1),
+    HOUSE(2),
+    BOAT(3),
+    TREE(4),
+    CAR(5),
+    PLANE(6),
+    CAT(7),
+    HORSE(8),
+    HUMAN(9),
+    FLOWER(10);
   
+    private final int value;
+
+    private ImageClass(int value) {
+        this.value = value;
+    }
     
+    public static ImageClass getValue(int value) {
+      for(ImageClass e: ImageClass.values()) {
+        if(e.value == value) {
+          return e;
+        }
+      }
+      return null;
+    }
+    
+    public String printableName(){
+        
+        String tmp = this.name().toLowerCase();
+        
+        return tmp.substring(0, 1).toUpperCase() + tmp.substring(1);        
+    }
     
     
 }
