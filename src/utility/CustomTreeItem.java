@@ -23,6 +23,7 @@ public class CustomTreeItem extends HBox{
         super();
 
         this.name = txt;
+        this.params = new Label("");
 
         this.getChildren().add(name);
         this.setAlignment(Pos.CENTER_LEFT);
@@ -48,6 +49,13 @@ public class CustomTreeItem extends HBox{
                 
     }
     
+    public String getName(){
+        return name.getText().toLowerCase();
+    }
+    
+    public void setParamString(String str){
+        params.setText(str);
+    }
     
     
 }

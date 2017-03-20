@@ -15,11 +15,15 @@ import utility.KNNParameters;
  */
 public class KNNSolver extends Solver {
 
-    public KNNSolver(String name) {
-        super(name);
+    public KNNSolver() {
+        super("knn");
         this.parameters = new KNNParameters();
     }
-
+        
+    public KNNSolver(KNNParameters par) {
+        super("knn");
+        this.parameters = par;
+    }
    
     @Override
     public void predict(CAPTCHA captcha) {

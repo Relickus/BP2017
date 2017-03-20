@@ -12,12 +12,29 @@ package utility;
 public class KNNParameters extends SolverParameters{
     
     
-    protected int K = 5;
-    protected boolean weightedVotes = false;
-    protected boolean crossFolding = false;
+    protected int K;
+    protected boolean weightedVotes;
+    protected boolean crossFolding;
     
-    protected AbstractDistance measureDistance = new EucleidianDistance();  // default distance
+    protected AbstractDistance measureDistance;
 
+    public KNNParameters(Object k, AbstractDistance dist, boolean weights, boolean cross) {
+
+        this.K = (Integer)k;
+        this.measureDistance = dist;
+        this.weightedVotes = weights;
+        this.crossFolding = cross;            
+    }
+
+    public KNNParameters() {   // default parameters
+            
+        this.K = 5;
+        this.measureDistance = new EucleidianDistance();
+        this.weightedVotes = false;
+        this.crossFolding = false;        
+    }
+
+    
     
     public void setK(int K) {
         
@@ -56,12 +73,10 @@ public class KNNParameters extends SolverParameters{
     public AbstractDistance getMeasureDistance() {
         return measureDistance;
     }
-    
-    
 
-    
-    
-    
-    
+    @Override
+    public String toString() {
+        return " K: " + K + ",distance: " + measureDistance.getName() + ",weighting: " + weightedVotes + ",crossfolding: " + crossFolding;
+    }
     
 }

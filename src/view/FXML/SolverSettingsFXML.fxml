@@ -17,7 +17,7 @@
             <VBox BorderPane.alignment="CENTER">
                <children>
                   <Label text="Aplicable solvers and parameters:" />
-                  <TreeView />
+                  <TreeView fx:id="treeView" />
                </children>
             </VBox>
          </center>
