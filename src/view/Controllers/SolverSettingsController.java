@@ -56,6 +56,8 @@ public class SolverSettingsController extends AbstractController implements Init
     public WebView captchaView;
     private GridPane dialogGrid;
     private Dialog knnParamsDialog;
+    private Dialog waitDialog;
+    private boolean resultsReady = false;
     
     public TreeView<CustomTreeItem> treeView;
     private ArrayList<Solver> solversArr;
@@ -146,17 +148,21 @@ public class SolverSettingsController extends AbstractController implements Init
     }
     
     private void handleMouseClicked(MouseEvent event) {
-            String name = ((CustomTreeItem)((TreeItem)treeView.getSelectionModel().getSelectedItem()).getValue()).getName().toLowerCase();
-            
-            if( event.getButton().equals(MouseButton.SECONDARY) && name.equals("knn")){
-                knnParamsDialog.showAndWait().ifPresent(result->{
-                
-                    knnParams = (KNNParameters)result;
-                    
-                    setKnnParamStringTreeView();
-                }
-                );
+        
+        if( ((TreeItem)treeView.getSelectionModel().getSelectedItem())== null )
+            return;
+        
+        String name = ((CustomTreeItem)((TreeItem)treeView.getSelectionModel().getSelectedItem()).getValue()).getName().toLowerCase();
+
+        if( event.getButton().equals(MouseButton.SECONDARY) && name.equals("knn")){
+            knnParamsDialog.showAndWait().ifPresent(result->{
+
+                knnParams = (KNNParameters)result;
+
+                setKnnParamStringTreeView();
             }
+            );
+        }
     }
     
     private void setKnnParamStringTreeView(){
@@ -223,10 +229,10 @@ public class SolverSettingsController extends AbstractController implements Init
     }
     
     private void showPleaseWaitDialog(){
-        Dialog waitDialog = new Dialog();
+        waitDialog = new Dialog();
         
         Label label = new Label("Solving in progress, please wait...");
-        label.setStyle("-fx-font-size: 30px; -fx-family-style: italic;");
+        label.setStyle("-fx-font-size: 25px; -fx-family-style: italic;");
         
         GridPane waitGrid = new GridPane();
         waitGrid.setHgap(10);
@@ -234,6 +240,10 @@ public class SolverSettingsController extends AbstractController implements Init
         waitGrid.setPadding(new Insets(10, 10, 10, 10));
         waitGrid.add(label,1,0);
         
+        
+        ButtonType closeButton = new ButtonType("Stop", ButtonData.CANCEL_CLOSE);
+        
+        waitDialog.getDialogPane().getButtonTypes().add(closeButton);
         waitDialog.getDialogPane().setContent(waitGrid);
         waitDialog.showAndWait();
         
@@ -251,6 +261,8 @@ public class SolverSettingsController extends AbstractController implements Init
         
         showPleaseWaitDialog();
         
+        if(!resultsReady)   //clicked Cancel button in dialog - dont proceed 
+            return;
         
         
         stageController.loadNextStage(NEXT_SCENE);   
