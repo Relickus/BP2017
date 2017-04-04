@@ -5,107 +5,59 @@
  */
 package utility.Captchas;
 
-import java.util.ArrayList;
 import java.util.Random;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import resources.Constants;
 import resources.ImageClass;
+import resources.ImageClassEnum;
 
 /**
  *
  * @author Vojta
  */
-public class ChallengeKeyword extends AbstractChallenge{
-    
-    private String keyword;
-    private ArrayList<Integer> noiseClassesArr;
-    private int keywordClassIdx;
+public class ChallengeKeyword extends AbstractChallenge {
 
     public ChallengeKeyword() {
-        NUMBER_OF_CHALLENGE_IMAGES = 9;
-        keywordClassIdx = 0;
-        // 2..6 correct images out of 9
-        NUMBER_OF_CORRECT_IMAGES = new Random().nextInt(5) + 2;
+        super();
     }
-    
-    public ChallengeKeyword(String keywordSpecify) {
-        NUMBER_OF_CHALLENGE_IMAGES = 9;
-        
-        specifyKeyword(keywordSpecify);
-        
-        // 2..6 correct images out of 9
-        NUMBER_OF_CORRECT_IMAGES = new Random().nextInt(5) + 2;
-    }
-    
-   
 
-    private void generateKeyword(){
-        Random rand = new Random();            
-        keywordClassIdx = (rand.nextInt(Constants.NUMBER_OF_CLASSES)) + 1;        
-        ImageClass imgclass = ImageClass.getEnum(keywordClassIdx);                
-        keyword = imgclass.printableName();
+    public ChallengeKeyword(String key) {
+        super(key);
+    }
+
+    private void generateKeyword() {
+        questionClassIdx = new Random().nextInt(Constants.NUMBER_OF_CLASSES);
+        challengeClass = ImageClassEnum.getEnum(questionClassIdx);
+        keywordStr = challengeClass.printableName();
+    }
+
+    
+    // zmenit v hierarchii tyhle dve metody na createRandomChallenge a createSpecifiedChallenge:
+    
+    @Override
+    protected void randomClass() {
+        generateKeyword();
+    }
+
+    @Override
+    protected void specifyClass(ImageClassEnum e) {
+               
+        challengeClass = e;
+        questionClassIdx = challengeClass.getValue();
+        keywordStr = challengeClass.printableName();
     }
     
-    private void specifyKeyword(String key){
-        
-         ImageClass imgclass = ImageClass.getEnum(key);
-        
-        if(imgclass != null){
-            keywordClassIdx = imgclass.getValue();
-            keyword = imgclass.printableName();
-        }
-        else    // unknown KW
-            generateKeyword();
-    }
-    
-    /*
-    *
-    * generates classes for noise images in image matrix
-    */
-    private void generateClassIndexes(){
-        
-        int noiseImages = NUMBER_OF_CHALLENGE_IMAGES - NUMBER_OF_CORRECT_IMAGES;
-        Random rand;
-        
-        noiseClassesArr = new ArrayList<>(noiseImages);        
-        
-        for(int i = 0; i < noiseImages;){
-            
-            rand = new Random();
-            int idx = rand.nextInt(Constants.NUMBER_OF_CLASSES + 1);
-            
-            if(idx != keywordClassIdx){
-                noiseClassesArr.add(idx);
-                ++i;                
-            }
-        }
-        
-    }
-    
+     
+
     @Override
     public void createChallenge() {
-        
-        generateKeyword();       
-    }
-    
-
-    @Override
-    protected void addChallengeImage(String path) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void loadChallengeImages() {
-
-        
-
-
+        generateKeyword();
     }
 
     @Override
     public Node getNode() {
-        return new Label(keyword);
+        return new Label(keywordStr);
     }
 
     @Override
@@ -114,15 +66,18 @@ public class ChallengeKeyword extends AbstractChallenge{
     }
 
     @Override
-    public void createPayload() {
-     
-        generateClassIndexes();
-        loadChallengeImages();    
-    
+    public String getKeyword() {
+        return keywordStr;
     }
-    
-    
-   
-    
-    
+
+    @Override
+    protected void generatePayloadWebView() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected void generateCaptchaWebView() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

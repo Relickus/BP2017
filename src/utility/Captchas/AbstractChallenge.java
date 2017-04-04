@@ -5,37 +5,174 @@
  */
 package utility.Captchas;
 
-import java.awt.Image;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.web.WebView;
+import resources.Constants;
+import resources.ImageClassEnum;
+import utility.Coordinates;
+import utility.Loader;
+import utility.PayloadImage;
 
 /**
  *
  * @author Vojta
  */
 public abstract class AbstractChallenge {
-    
-    protected ArrayList<Image> imgArr;
-    protected Set<Integer> indexArr;    
+
     protected int NUMBER_OF_CHALLENGE_IMAGES;
     protected int NUMBER_OF_CORRECT_IMAGES;
-    protected final String datasetPath = "/src/htmlCAPTCHAs";
-   // protected Map<IMAGECLASS,Integer> imageNumbersMap;
-         
-    protected abstract void addChallengeImage(String path);
-    
-    
-    
+    protected int NUMBER_OF_NOISE_IMAGES;
+
+    protected ArrayList<PayloadImage> payloadImgArr;
+    protected ArrayList<Coordinates> payloadCoordinatesArr;
+    protected ArrayList<ImageClassEnum> noiseImgsClassArr;
+
+    protected int questionClassIdx;
+    protected String keywordStr;
+    protected ImageClassEnum challengeClass;
+
+    protected WebView captchaWebView;
+    protected WebView payloadWebView;
+
+    public AbstractChallenge(String key) {
+
+        setConstants();
+        checkInput(key);
+    }
+
+    public AbstractChallenge() {
+
+        setConstants();
+
+        questionClassIdx = (new Random().nextInt(Constants.NUMBER_OF_CLASSES)) + 1;
+        challengeClass = ImageClassEnum.getEnum(questionClassIdx);
+    }
+
+    private void setConstants() {
+        NUMBER_OF_CHALLENGE_IMAGES = 9;
+        NUMBER_OF_CORRECT_IMAGES = new Random().nextInt(5) + 2;
+        NUMBER_OF_NOISE_IMAGES = NUMBER_OF_CHALLENGE_IMAGES - NUMBER_OF_CORRECT_IMAGES;
+    }
+
+    public void changeConstants() {
+        NUMBER_OF_CORRECT_IMAGES = new Random().nextInt(5) + 2;
+        NUMBER_OF_NOISE_IMAGES = NUMBER_OF_CHALLENGE_IMAGES - NUMBER_OF_CORRECT_IMAGES;
+    }
+
     public abstract void createChallenge();
-    public abstract void createPayload();
-    
-    protected abstract void loadChallengeImages();
-    
+
+    protected abstract void generatePayloadWebView();
+
+    protected abstract void generateCaptchaWebView();
+
     //protected loadNumberOfImagesInClasses(){
-        
     public abstract Node getNode();
-    
+
+    public abstract String getKeyword();
+
     public abstract String getChallengeName();
-    
+
+    public ArrayList<PayloadImage> getPayload() {
+        return payloadImgArr;
+    }
+
+    protected void generatePayloadCoordinates() {
+        payloadCoordinatesArr = new ArrayList<>(NUMBER_OF_CHALLENGE_IMAGES);
+
+        Random rand = new Random();
+
+        while (payloadCoordinatesArr.size() != NUMBER_OF_CHALLENGE_IMAGES) {        // this is stupid as the set will always contain the same 9 coordinates ordered
+
+            Coordinates coord = new Coordinates(rand.nextInt(3), rand.nextInt(3));
+
+            if (!payloadCoordinatesArr.contains(coord)) {
+                payloadCoordinatesArr.add(coord);
+            }
+        }
+    }
+
+    protected void generatePayloadClasses() {
+
+        noiseImgsClassArr = new ArrayList<>(NUMBER_OF_NOISE_IMAGES);
+
+        int i = 0;
+        while (i < NUMBER_OF_NOISE_IMAGES) {
+            int nextIdx = new Random().nextInt(Constants.NUMBER_OF_CLASSES);
+            if (nextIdx != questionClassIdx) {
+                noiseImgsClassArr.add(ImageClassEnum.getEnum(nextIdx));
+                ++i;
+            }
+            //if generated same class as keywordStr try again...
+        }
+    }
+
+    private void clearAll() {
+        if (payloadImgArr != null) {
+            payloadImgArr.clear();
+        }
+        if (payloadCoordinatesArr != null) {
+            payloadCoordinatesArr.clear();
+        }
+        if (noiseImgsClassArr != null) {
+            noiseImgsClassArr.clear();
+        }
+    }
+
+    public void createPayload() {
+
+        // challenge keywordStr class is already known at this moment
+        // 0. clear all arrays
+        // 1. generate payload noise classes
+        // 2. generate coordinates for whole payload grid
+        // 3. load random imgs from those classes
+        // 4. fill payloadArr and assign Coordinates to images in it
+        clearAll();
+        generatePayloadClasses();
+        generatePayloadCoordinates();
+        loadChallengeImages();
+        fillPayloadImgArr();    // join Coordinates and loaded images
+
+    }
+
+    protected void loadChallengeImages() {
+
+        Loader loader = Loader.getInstance();
+
+        // loads correct images to arr
+        payloadImgArr = loader.loadNImageFiles(challengeClass, NUMBER_OF_CORRECT_IMAGES);
+
+        // appends noise images to arr
+        for (ImageClassEnum i : noiseImgsClassArr) {
+            payloadImgArr.add(loader.loadImageFile(i));
+        }
+    }
+
+    protected void fillPayloadImgArr() {
+        int i = 0;
+        for (PayloadImage pi : payloadImgArr) {
+            pi.setCoordinates(payloadCoordinatesArr.get(i));
+            ++i;
+        }
+    }
+
+    protected final void checkInput(String key) {
+
+        ImageClassEnum specClass = ImageClassEnum.getEnum(key);
+        if (specClass != null) {
+            specifyClass(specClass);
+        } else {
+            randomClass();
+
+        }
+    }
+
+    protected abstract void specifyClass(ImageClassEnum e);
+
+    protected abstract void randomClass();
+
 }

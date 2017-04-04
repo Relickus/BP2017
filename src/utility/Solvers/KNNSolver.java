@@ -5,9 +5,13 @@
  */
 package utility.Solvers;
 
+import java.io.IOException;
+import javafx.scene.image.Image;
 import utility.Captchas.AbstractChallenge;
 import utility.Captchas.CAPTCHA;
 import utility.KNNParameters;
+import utility.PayloadImage;
+import utility.Result;
 
 /**
  *
@@ -26,17 +30,22 @@ public class KNNSolver extends Solver {
     }
    
     @Override
-    public void predict(CAPTCHA captcha) {
+    public void solve(CAPTCHA captcha) {
 
-        loadScript(captcha.getChallenge());
+       // loadScript(captcha.getChallenge());
         
         //set Result object
     }
 
-    @Override
-    public void loadScript(AbstractChallenge challenge) {
+//    @Override
+//    public void loadScript(AbstractChallenge challenge) {
+//
+//        // tohle vyndat ze Solver tridy? nebo do ni naopak dat pretizeny loadScript pro vsechny Challenges?
+//    }
 
-        // tohle vyndat ze Solver tridy? nebo do ni naopak dat pretizeny loadScript pro vsechny Challenges?
+    @Override
+    protected Result classifyImage(PayloadImage img) throws IOException{
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

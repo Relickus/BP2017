@@ -76,7 +76,7 @@ public class KNNParameters extends SolverParameters{
 
     @Override
     public String toString() {
-        return " K: " + K + ",distance: " + measureDistance.getName() + ",weighting: " + weightedVotes + ",crossfolding: " + crossFolding;
+        return " K: " + K + ", distance: " + measureDistance.getName() + ", weighting: " + weightedVotes + ", crossfolding: " + crossFolding;
     }
     
 }

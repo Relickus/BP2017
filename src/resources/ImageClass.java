@@ -9,52 +9,27 @@ package resources;
  *
  * @author Vojta
  */
-public enum ImageClass {
+public class ImageClass {
     
-   
-    DOG(1),
-    HOUSE(2),
-    BOAT(3),
-    TREE(4),
-    CAR(5),
-    PLANE(6),
-    CAT(7),
-    HORSE(8),
-    HUMAN(9),
-    FLOWER(10);
-  
     private final int value;
+    private final String name;
 
-    private ImageClass(int value) {
-        this.value = value;
+    public ImageClass(int value) {
+        this.value = value;        
+        this.name  = ImageClassEnum.getEnum(value).toString();
     }
-    
-    public static ImageClass getEnum(int value) {
-      for(ImageClass e: ImageClass.values()) {
-        if(e.value == value) {
-          return e;
-        }
-      }
-      return null;
+    public ImageClass(ImageClassEnum imgenum) {
+        this.value = imgenum.getValue();
+        this.name = imgenum.toString();
     }
-    
+        
     public int getValue(){
         return value;
     }
     
-    public static ImageClass getEnum(String str){
-        
-        for(ImageClass e: ImageClass.values()) {
-        if(e.printableName().toLowerCase().equals( str.toLowerCase() ) ) {
-          return e;
-        }
-      }
-      return null;
-    }
-    
     public String printableName(){
         
-        String tmp = this.name().toLowerCase();
+        String tmp = name;
         
         return tmp.substring(0, 1).toUpperCase() + tmp.substring(1);        
     }

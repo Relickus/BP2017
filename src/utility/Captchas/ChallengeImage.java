@@ -4,127 +4,82 @@
  * and open the template in the editor.
  */
 package utility.Captchas;
+
 ;
 import javafx.scene.Node;
 import java.util.Random;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import resources.Constants;
-import resources.ImageClass;
+import resources.ImageClassEnum;
+import utility.Loader;
 
 /**
  *
  * @author Vojta
  */
-public class ChallengeImage extends AbstractChallenge{
-    
+
+
+public class ChallengeImage extends AbstractChallenge {
+
     private Image refImg;
-    private int refImgClassIdx;
+    private boolean fixedClass;
 
-    public ChallengeImage() {        
-        NUMBER_OF_CHALLENGE_IMAGES = 9;
+    public ChallengeImage() {
+        refImg = null;
     }
-  
+
+    public ChallengeImage(String key) {
+        super(key);
+
+    }
+
+    @Override
+    protected void randomClass() {
+        fixedClass = false;
+        questionClassIdx = new Random().nextInt(Constants.NUMBER_OF_CLASSES);
+        challengeClass = ImageClassEnum.getEnum(questionClassIdx);
+        keywordStr = challengeClass.printableName();
+        loadRefImage();
+    }
+
+    @Override
+    protected void specifyClass(ImageClassEnum e) {                    
+        fixedClass = true;
+        challengeClass = e;
+        questionClassIdx = challengeClass.getValue();
+        keywordStr = challengeClass.printableName();  
+        loadRefImage();
+    }
+
     
-    public void setImage(String path){
-        
-        // load Image to refImg
-    }
-
+    
     @Override
     public void createChallenge() {
-        // loads reference image
-     
-        loadRefImage();
-        
-    }
-    
-    private void generateRefImgIndex(){
-        Random rand = new Random();            
-        refImgClassIdx = (rand.nextInt(Constants.NUMBER_OF_CLASSES)) + 1;        
-        ImageClass imgclass = ImageClass.getEnum(refImgClassIdx);  
-    }
-    
-    public void specifyImage(String path){
-        
-       
-            
-        
-    }
-    
-    public void setRefImgIndex(int idx){        
-        refImgClassIdx = idx;               
-    }
-        
-    private void loadRefImage(){
-        
-        
-        // FIX THIS LATER ON COMPLETE DATASET
-        // respect user-specified keyword!!!
-        
-        if(new Random().nextBoolean() == true)
-            refImg = new Image("file:src/htmlCAPTCHAs/a.jpg");
-        else
-            refImg = new Image("file:src/htmlCAPTCHAs/b.JPG");
-        
-       // MyImageLoader loader = new MyImageLoader();
-        
-        //refImg = loader.getReferenceImage(refImgClassIdx);
-        //imgArr = loader.getImageMatrix(refImgClassIdx,NUMBER_OF_CHALLENGE_IMAGES,NUMBER_OF_CORRECT_IMAGES);
-        
-        
-    }
-    
-    private void fillIndexArr(){
-        
-        Random rand = new Random();
-        
-        for(int i = 0 ; i < NUMBER_OF_CHALLENGE_IMAGES; ++i){
-            
-           // rand.nextInt() % 
+        if(fixedClass)
+            loadRefImage();
+        else{
+            randomClass();
         }
-        
     }
 
-    @Override
-    protected void addChallengeImage(String path) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean isFixedClass() {
+        return fixedClass;
     }
 
-//    private void loadChallengeImages(String path) {
-//
-//        File  directory = new File("resource");
-//
-//        for (File file : directory.listFiles())
-//        {
-//            if(file.getName().toLowerCase().endsWith(".png")
-//                    || file.getName().toLowerCase().endsWith(".jpg")
-//                    || file.getName().toLowerCase().endsWith(".jpeg")
-//                    || file.getName().toLowerCase().endsWith(".bmp"))
-//            {
-//                
-//                //if( index je ten kterej sem si vygeneroval)
-//                
-//                try {
-//                    imgArr.add(ImageIO.read(file));
-//                } catch (IOException ex) {
-//                    Logger.getLogger(ChallengeImage.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                
-//            }
-//        }
-//    }
+    public void setRefImgIndex(int idx) {
+        questionClassIdx = idx;
+    }
 
-    @Override
-    protected void loadChallengeImages() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void loadRefImage() {
+        Loader loader = Loader.getInstance();
+        refImg = loader.loadImageFile(challengeClass);
+
     }
 
     @Override
     public Node getNode() {
-
-           return new ImageView(refImg); 
-
+        return new ImageView(refImg);
     }
 
     @Override
@@ -133,14 +88,22 @@ public class ChallengeImage extends AbstractChallenge{
     }
 
     @Override
-    public void createPayload() {
+    public String getKeyword() {
+        if (refImg == null) {
+            return null;
+        }
 
-        
-
+        return keywordStr;
     }
-    
-    
-    
-    
-    
+
+    @Override
+    protected void generatePayloadWebView() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected void generateCaptchaWebView() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

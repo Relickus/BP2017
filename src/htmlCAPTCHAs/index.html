@@ -11,7 +11,7 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
     <style type="text/css">
-        img.gridImg{
+        img{
             width:  130px;
             height: 130px;
             display: block;
@@ -49,6 +49,15 @@ and open the template in the editor.
             margin: 0px;
             border-spacing: 3px;
         }
+        img.filterCorrect{   
+            z-index: 3;
+            position: absolute;
+            opacity: 0;
+        }
+       
+        img.payloadImage{
+            z-index: 1
+        }
        
     </style>
     
@@ -65,41 +74,50 @@ and open the template in the editor.
             <table>
                 <tr> 
                     <td>
-                    <img class="gridImg" src="cat.jpg" alt="cat" >
+                    <img id="filterr0c0" class="filterCorrect" src="filterCorrect.jpg" alt="filterCorrect">
+                    <img id="imgr0c0" class="payloadImage" src="r0c0.jpg" alt="cat" >
                     </td>
 
                     <td>
-                    <img class="gridImg" src="a.jpg" alt="a" >
+                    <img id="filterr0c1" class="filterCorrect" src="filterCorrect.jpg" alt="filterCorrect">
+                    <img  id="imgr0c1" class="payloadImage" src="r0c1.jpg" alt="a" >
                     </td>
 
                     <td>
-                    <img class="gridImg" src="b.JPG" alt="b" >
+                    <img id="filterr0c2" class="filterCorrect" src="filterCorrect.jpg" alt="filterCorrect">
+                    <img id="imgr0c2" class="payloadImage" src="r0c2.jpg" alt="b" >
                     </td>
                 </tr>
                 <tr> 
                     <td>
-                    <img class="gridImg" src="cat.jpg" alt="cat" >
+                    <img id="filterr1c0" class="filterCorrect" src="filterCorrect.jpg" alt="filterCorrect">
+                    <img id="imgr1c0" class="payloadImage" src="r1c0.jpg" alt="cat" >
                     </td>
 
                     <td>
-                    <img class="gridImg" src="a.jpg" alt="a" >
+                    <img id="filterr1c1" class="filterCorrect" src="filterCorrect.jpg" alt="filterCorrect">
+                    <img id="imgr1c1" class="payloadImage" src="r1c1.jpg" alt="a" >
                     </td>
 
                     <td>
-                    <img class="gridImg" src="b.JPG" alt="b" >
+                    <img id="filterr1c2" class="filterCorrect" src="filterCorrect.jpg" alt="filterCorrect">
+                    <img id="imgr1c2" class="payloadImage" src="r1c2.jpg" alt="b" >
                     </td>
                 </tr>
                 <tr> 
                     <td>
-                    <img class="gridImg" src="cat.jpg" alt="cat" >
+                    <img  id="filterr2c0" class="filterCorrect" src="filterCorrect.jpg" alt="filterCorrect">
+                    <img  id="imgr2c0" class="payloadImage" src="r2c0.jpg" alt="cat" >
                     </td>
 
                     <td>
-                    <img class="gridImg" src="a.jpg" alt="a" >
+                    <img  id="filterr2c1" class="filterCorrect" src="filterCorrect.jpg" alt="filterCorrect">
+                    <img  id="imgr2c1" class="payloadImage" src="r2c1.jpg" alt="a" >
                     </td>
 
                     <td>
-                    <img class="gridImg" src="b.JPG" alt="b" >
+                    <img  id="filterr2c2" class="filterCorrect" src="filterCorrect.jpg" alt="filterCorrect">
+                    <img  id="imgr2c2" class="payloadImage" src="r2c2.jpg" alt="b" >
                     </td>
                 </tr>
             </table>

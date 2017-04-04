@@ -15,6 +15,9 @@ public class Constants {
     public static final String RESULT_WINDOW ="/view/FXML/ResultWindowFXML.fxml"; 
     public static final String TRIAL ="/view/FXML/FXMLDocument.fxml";
 
+    public static final String DATASET_PATH = "D:\\BAP\\DATASET\\";
+    public static final String SCRIPTS_FOLDER_PATH = "src/scripts/";
+    public static final String HTML_SOURCE = "src/htmlCAPTCHAs/";
 
     
 }

@@ -33,6 +33,25 @@ public class Coordinates {
         String tmp = "[" + getRow() + "," + getCol() + "]";
         return tmp;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof Coordinates))return false;
+        
+        Coordinates tmp = (Coordinates)other;
+        return row == tmp.row && col == tmp.col;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 29 * hash + this.row;
+        hash = 29 * hash + this.col;
+        return hash;
+    }
+    
     
     
     
