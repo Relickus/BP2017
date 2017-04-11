@@ -17,6 +17,7 @@ import resources.ImageClassEnum;
 import utility.Coordinates;
 import utility.Loader;
 import utility.PayloadImage;
+import utility.Solvers.Solver;
 
 /**
  *
@@ -86,13 +87,11 @@ public abstract class AbstractChallenge {
 
         Random rand = new Random();
 
+        int i = 0;
         while (payloadCoordinatesArr.size() != NUMBER_OF_CHALLENGE_IMAGES) {        // this is stupid as the set will always contain the same 9 coordinates ordered
 
-            Coordinates coord = new Coordinates(rand.nextInt(3), rand.nextInt(3));
-
-            if (!payloadCoordinatesArr.contains(coord)) {
-                payloadCoordinatesArr.add(coord);
-            }
+            payloadCoordinatesArr.add(new Coordinates(i / 3, i % 3));
+            ++i;
         }
     }
 
@@ -174,5 +173,7 @@ public abstract class AbstractChallenge {
     protected abstract void specifyClass(ImageClassEnum e);
 
     protected abstract void randomClass();
+
+    public abstract ArrayList<Solver> getAvailableSolvers();
 
 }

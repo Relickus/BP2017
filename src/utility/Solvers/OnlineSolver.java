@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javafx.scene.image.Image;
 import utility.Captchas.CAPTCHA;
+import utility.ClassifiedImage;
 import utility.PayloadImage;
 import utility.Result;
 
@@ -37,24 +38,45 @@ public class OnlineSolver extends Solver {
                 System.err.println(e.getMessage());
             }
         }
+        
+        result.countAccuracy();
     }
 
     @Override
-    protected Result classifyImage(PayloadImage img) throws IOException {
+    protected void classifyImage(PayloadImage img) throws IOException {
 
         ProcessBuilder processbuilder = new ProcessBuilder();
-        processbuilder.command("python", scriptPath, img.getPath());
+        processbuilder.command("python", scriptPath, img.getAbsolutePath());
+        
+        System.err.println("\tSOLVING: " + processbuilder.command().toString());
         Process process = processbuilder.start();
+        
 
         BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
         
-        String ret = in.readLine();
-        System.out.println("value is : " + ret);
+        String ret;
+        ClassifiedImage i = new ClassifiedImage(img);
         
-        Result result = new Result();
-        //result.parseOutputString(ret);
+        while( true ){
+            ret = in.readLine();
+            if(ret == null)
+                break;
+            if(ret.isEmpty())
+                continue;
+            System.out.println("value is : " + ret);
+            
+            String label = ret.substring(0, ret.indexOf(':'));
+            double score = Double.parseDouble(ret.substring(ret.indexOf(':')+1));
+            i.addClass( label , score);
+            
+        }
         
-        return result;
+        result.addClassifiedImage(i);
+    }
+
+    @Override
+    public boolean hasParams() {
+        return false;
     }
 
 }

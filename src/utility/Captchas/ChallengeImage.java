@@ -6,13 +6,18 @@
 package utility.Captchas;
 
 ;
-import javafx.scene.Node;
+import java.util.ArrayList;
+import utility.Solvers.Solver;import javafx.scene.Node;
 import java.util.Random;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import resources.Constants;
 import resources.ImageClassEnum;
 import utility.Loader;
+import utility.Solvers.CNNSolver;
+import utility.Solvers.GoogleSolver;
+import utility.Solvers.KNNSolver;
+import utility.Solvers.WatsonSolver;
 
 /**
  *
@@ -104,6 +109,19 @@ public class ChallengeImage extends AbstractChallenge {
     @Override
     protected void generateCaptchaWebView() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Solver> getAvailableSolvers() {
+
+        ArrayList<Solver> arr = new ArrayList<>();
+        arr.add(new KNNSolver());
+        arr.add(new CNNSolver());
+        arr.add(new GoogleSolver());        
+        arr.add(new WatsonSolver());
+        // add more online solvers
+        
+        return arr;
     }
 
 }

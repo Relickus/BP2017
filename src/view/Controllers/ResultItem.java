@@ -10,8 +10,11 @@ import java.net.URL;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
+import utility.Captchas.CAPTCHA;
+import utility.Result;
 
 /**
  *
@@ -25,14 +28,17 @@ public class ResultItem extends VBox {
     Label solverParam;
     private @FXML
     Label solverAcc;
-
     private @FXML
-    WebView captchaView;
+    HBox captchaContainer;
 
-    public ResultItem() {
+    private final CAPTCHA captcha;
+
+    public ResultItem(CAPTCHA c) {
         super();
         loadFxml(getClass().getResource("/view/FXML/ResultItemFXML.fxml"), this);
-
+        this.captcha = c;
+        
+        setCaptchaView();
     }
 
     public void setLabels(String name, String param, String acc) {
@@ -41,10 +47,14 @@ public class ResultItem extends VBox {
         solverAcc.setText(acc);
     }
 
-    public void setCaptchaView(String path) {
-        URL file = getClass().getResource(path);
-        captchaView.getEngine().load(file.toExternalForm());
-        captchaView.setZoom(0.7);
+    private void setCaptchaView(){
+        
+        captchaContainer.getChildren().add(new CAPTCHAHolder(captcha));
+        
+    }
+    
+    public void setResult(Result res){
+        
     }
 
     protected static void loadFxml(URL fxmlFile, Object rootController) {

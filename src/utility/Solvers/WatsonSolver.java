@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package utility;
+package utility.Solvers;
 
 /**
  *
  * @author Vojta
  */
-public class ResultDescriptor {
-    
-    
+public class WatsonSolver extends OnlineSolver{
+
+    public WatsonSolver() {
+        super("Watson Vision");
+    }
     
 }

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.web.WebView?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Controllers.SolverSettingsController">
    <children>
@@ -16,7 +16,25 @@
          <center>
             <VBox BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Aplicable solvers and parameters:" />
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <HBox>
+                           <children>
+                              <Label text="Aplicable solvers and parameters:" />
+                           </children>
+                        </HBox>
+                        <HBox HBox.hgrow="ALWAYS" />
+                        <HBox>
+                           <children>
+                              <Label text="*right click to change params" textFill="#656565">
+                                 <font>
+                                    <Font name="System Italic" size="10.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
                   <TreeView fx:id="treeView" />
                </children>
             </VBox>
@@ -34,11 +52,10 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <top>
-            <WebView fx:id="captchaView" maxHeight="380.0" maxWidth="300.0" minHeight="380.0" minWidth="300.0" prefHeight="380.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+            <VBox fx:id="captchaContainer" maxHeight="370.0" maxWidth="300.0" minHeight="370.0" minWidth="300.0" prefHeight="370.0" prefWidth="300.0" BorderPane.alignment="CENTER">
                <BorderPane.margin>
-                  <Insets bottom="20.0" />
-               </BorderPane.margin>
-            </WebView>
+                  <Insets bottom="40.0" />
+               </BorderPane.margin></VBox>
          </top>
       </BorderPane>
    </children>

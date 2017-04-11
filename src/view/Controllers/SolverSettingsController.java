@@ -5,14 +5,18 @@
  */
 package view.Controllers;
 
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.ListChangeListener;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
@@ -26,7 +30,7 @@ import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.web.WebView;
+import javafx.scene.layout.VBox;
 import resources.Constants;
 import utility.AbstractDistance;
 import utility.Captchas.CAPTCHA;
@@ -35,7 +39,8 @@ import utility.CustomTreeItem;
 import utility.EucleidianDistance;
 import utility.KNNParameters;
 import utility.ManhattanDistance;
-import utility.Solvers.KNNSolver;
+import utility.PleaseWaitDialog;
+import utility.ScriptExecutor;
 import utility.Solvers.Solver;
 
 /**
@@ -43,39 +48,35 @@ import utility.Solvers.Solver;
  *
  * @author Vojta
  */
-public class SolverSettingsController extends AbstractController implements Initializable {
+public class SolverSettingsController extends AbstractController implements Initializable, Runnable {
 
     private CAPTCHA captcha;
+    private CAPTCHAHolder captchaHolder;
 
     private @FXML
-    WebView captchaView;    
+    VBox captchaContainer;
     private @FXML
     TreeView<CustomTreeItem> treeView;
-    
+
     private GridPane dialogGrid;
     private Dialog knnParamsDialog;
-    private Dialog waitDialog;
-    private boolean resultsReady = false;
-    private ArrayList<Solver> solversArr;
+    private ArrayList<Solver> availableSolversArr;
+    private ArrayList<Solver> pickedSolversArr;
     private KNNParameters knnParams;
+    private ArrayList<CheckBoxTreeItem<CustomTreeItem>> checkboxArr;
+    private PleaseWaitDialog pleaseWaitDialog;
 
     public void initView() {
 
-        captcha.getWebView(captchaView);
-        captchaView.setZoom(0.7);
+        captchaContainer.getChildren().add(captchaHolder);
+        initDialogView();
+        initTreeView();
+
     }
 
     public void setCaptcha(CAPTCHA cap) {
         this.captcha = cap;
-    }
-
-    public SolverSettingsController() {
-        solversArr = new ArrayList<>(6);
-    }
-
-    private void setSolvers(ArrayList<Solver> solvers) {
-
-        this.solversArr = solvers;
+        captchaHolder = new CAPTCHAHolder(captcha);
     }
 
     @FXML
@@ -88,6 +89,7 @@ public class SolverSettingsController extends AbstractController implements Init
         stageController.showStage();
     }
 
+    // fix this method
     private void initDialogView() {
 
         dialogGrid = new GridPane();
@@ -144,7 +146,7 @@ public class SolverSettingsController extends AbstractController implements Init
 
         String name = ((CustomTreeItem) ((TreeItem) treeView.getSelectionModel().getSelectedItem()).getValue()).getName().toLowerCase();
 
-        if (event.getButton().equals(MouseButton.SECONDARY) && name.equals("knn")) {
+        if (event.getButton().equals(MouseButton.SECONDARY) && name.toLowerCase().equals("knn")) {
             knnParamsDialog.showAndWait().ifPresent(result -> {
 
                 knnParams = (KNNParameters) result;
@@ -161,7 +163,7 @@ public class SolverSettingsController extends AbstractController implements Init
         while (true) {
             TreeItem<CustomTreeItem> item = treeView.getRoot().getChildren().get(i);
 
-            if (item.getValue().getName().equals("knn")) {
+            if (item.getValue().getName().toLowerCase().equals("knn")) {
                 String tmpStr = knnParams.toString();
                 CustomTreeItem tmpItem = (CustomTreeItem) item.getValue();
                 tmpItem.setParamString(tmpStr);
@@ -175,30 +177,22 @@ public class SolverSettingsController extends AbstractController implements Init
         }
     }
 
-    private void removeSolver(Solver solver) {
-        for (int i = 0; i < solversArr.size(); ++i) {
-            if (solversArr.get(i) instanceof KNNSolver) {
-                solversArr.remove(i);
-            }
-        }
-    }
-
-    private void addSolver(Solver solver) {
-
-        solversArr.add(solver);
-
-    }
-
     private void initTreeView() {
-        CheckBoxTreeItem<CustomTreeItem> knn = new CheckBoxTreeItem<>(new CustomTreeItem(new Label("kNN"), new Label("   ...right click this row to set parameters")));
-        CheckBoxTreeItem<CustomTreeItem> onlineRoot = new CheckBoxTreeItem<>(new CustomTreeItem(new Label("Online solvers"), new Label("some params")));
-        CheckBoxTreeItem<CustomTreeItem> onlineSolver1 = new CheckBoxTreeItem<>(new CustomTreeItem(new Label("someAPI"), new Label("some params")));
 
-        CheckBoxTreeItem<CustomTreeItem> root = new CheckBoxTreeItem<>(new CustomTreeItem(new Label("Solvers")));
+        CheckBoxTreeItem<CustomTreeItem> root = new CheckBoxTreeItem<>(new CustomTreeItem(new Label("All solvers")));
+
+        availableSolversArr = captcha.getChallenge().getAvailableSolvers();
+
+        checkboxArr = new ArrayList<>();
+
+        for (Solver s : availableSolversArr) {
+
+            checkboxArr.add(new CheckBoxTreeItem<>(new CustomTreeItem(s)));
+        }
+
         root.setExpanded(true);
-        root.getChildren().addAll(knn, onlineRoot);
 
-        onlineRoot.getChildren().add(onlineSolver1);
+        root.getChildren().addAll(checkboxArr);
 
         treeView.setRoot(root);
 
@@ -213,63 +207,70 @@ public class SolverSettingsController extends AbstractController implements Init
 
     }
 
-    private void fillSolversArr() {
+    private void fillPickedSolversArr() {
 
-//        for(TreeItem<CustomTreeItem> i : treeView.getSelectionModel().getSelectedItems()){
-//           // i.getValue().get
-//        }
-    }
+        if (pickedSolversArr == null) {
+            pickedSolversArr = new ArrayList<>();
+        }
 
-    private void showPleaseWaitDialog() {
-        waitDialog = new Dialog();
+        for (CheckBoxTreeItem<CustomTreeItem> i : checkboxArr) {
+            if (i.isSelected()) {
+                if (i.getValue().getSolver() != null) {
+                    pickedSolversArr.add(i.getValue().getSolver());
+                }
+            }
+        }
 
-        Label label = new Label("Solving in progress, please wait...");
-        label.setStyle("-fx-font-size: 25px; -fx-family-style: italic;");
-
-        GridPane waitGrid = new GridPane();
-        waitGrid.setHgap(10);
-        waitGrid.setVgap(10);
-        waitGrid.setPadding(new Insets(10, 10, 10, 10));
-        waitGrid.add(label, 1, 0);
-
-        ButtonType closeButton = new ButtonType("Stop", ButtonData.CANCEL_CLOSE);
-
-        waitDialog.getDialogPane().getButtonTypes().add(closeButton);
-        waitDialog.getDialogPane().setContent(waitGrid);
-        waitDialog.showAndWait();
-
-        //when solving is done - close dialog: http://stackoverflow.com/questions/30755370/javafx-close-alert-box-or-any-dialog-box-programatically
     }
 
     @FXML
     private void onProceedClicked(ActionEvent event) {
 
-        fillSolversArr();
-        // create some ScriptExecutor class and pass it the array 
+        fillPickedSolversArr();
 
-        showPleaseWaitDialog();
-
-        if (!resultsReady) //clicked Cancel button in dialog - dont proceed 
-        {
+        // no solvers were checked
+        if (pickedSolversArr.isEmpty()) {
             return;
         }
 
-        stageController.loadNextStage(NEXT_SCENE);
+        pleaseWaitDialog = new PleaseWaitDialog();
+        Task<Boolean> task = new Task<Boolean>() {
+            @Override
+            public Boolean call() {
+                ScriptExecutor se = new ScriptExecutor();
+                se.launchScripts(pickedSolversArr, captcha);
+                return true;
+            }
+        };
 
-        ResultWindowController windowController = (ResultWindowController) stageController.getWindowController();
-        windowController.setCaptcha(captcha);
-        windowController.initView();
+        task.setOnRunning((e) -> pleaseWaitDialog.show());
+        task.setOnSucceeded((e) -> {
+            pleaseWaitDialog.hide();
+            // process return value again in JavaFX thread
+              
+            stageController.loadNextStage(NEXT_SCENE);
+            ResultWindowController windowController = (ResultWindowController) stageController.getWindowController();
+            windowController.setCaptcha(captcha);
+            windowController.setResults(pickedSolversArr);
+            // tohle muze casem prijit pryc, nahradit metodou setResults() po obdrzeni vysledků
+            windowController.initView();
 
-        stageController.showStage();
+            stageController.showStage();
+        });
+        
+        new Thread(task).start();      
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        initDialogView();
-        initTreeView();
-
         NEXT_SCENE = Constants.RESULT_WINDOW;
         PREVIOUS_SCENE = Constants.CAPTCHA_SETTINGS_WINDOW;
     }
+
+    @Override
+    public void run() {
+
+    }
+
 }

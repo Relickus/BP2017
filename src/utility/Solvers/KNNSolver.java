@@ -20,12 +20,12 @@ import utility.Result;
 public class KNNSolver extends Solver {
 
     public KNNSolver() {
-        super("knn");
+        super("KNN");
         this.parameters = new KNNParameters();
     }
         
     public KNNSolver(KNNParameters par) {
-        super("knn");
+        super("KNN");
         this.parameters = par;
     }
    
@@ -44,8 +44,13 @@ public class KNNSolver extends Solver {
 //    }
 
     @Override
-    protected Result classifyImage(PayloadImage img) throws IOException{
+    protected void classifyImage(PayloadImage img) throws IOException{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean hasParams() {
+        return true;
     }
     
 }

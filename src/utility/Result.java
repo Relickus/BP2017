@@ -6,6 +6,7 @@
 package utility;
 
 import java.util.ArrayList;
+import resources.ImageClassEnum;
 
 /**
  *
@@ -13,24 +14,40 @@ import java.util.ArrayList;
  */
 public class Result {
     
+    private ArrayList<ClassifiedImage> classifiedImgsArr;
     private double accuracy;
-    private ArrayList<Coordinates> resultArr;
 
     public Result() {
+        this.classifiedImgsArr = new ArrayList<>();
     }
-    
     
     public double getAccuracy() {
         return accuracy;
     }
 
-    public ArrayList<Coordinates> getResultArr() {
-        return resultArr;
+    public ArrayList<ClassifiedImage> getResultArr() {
+        return classifiedImgsArr;
     }
     
     public boolean isEmpty(){
         
-        return resultArr == null || resultArr.isEmpty();
+        return classifiedImgsArr == null || classifiedImgsArr.isEmpty();
+    }
+    
+    public void countAccuracy(){
+        
+        int counter=0;
+        for(ClassifiedImage img : classifiedImgsArr){  
+            ImageClassEnum correctClass = img.getCorrectClass();    // correctclass is never NULL
+            if(correctClass.equals(img.getPredictedClass()))
+                ++counter;
+        }
+        
+        accuracy = counter/classifiedImgsArr.size();
+    }
+    
+    public void addClassifiedImage(ClassifiedImage img){
+        classifiedImgsArr.add(img);
     }
     
 }

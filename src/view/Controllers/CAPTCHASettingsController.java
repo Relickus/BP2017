@@ -14,11 +14,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javax.imageio.ImageIO;
 import resources.Constants;
 import utility.Captchas.CAPTCHA;
 import utility.Captchas.ChallengeImage;
@@ -107,8 +105,8 @@ public class CAPTCHASettingsController extends AbstractController implements Ini
     }
 
     private void fillPayloadGrid(){
+        payloadGrid.getChildren().clear();
         ArrayList<PayloadImage> payloadArr = captcha.getChallenge().getPayload();
-        int idx = 0;
         for(PayloadImage pi : payloadArr){
             ImageView imgview = new ImageView(pi);
             imgview.setFitWidth(100);
@@ -116,7 +114,6 @@ public class CAPTCHASettingsController extends AbstractController implements Ini
             imgview.setSmooth(true);
             GridPane.setConstraints(imgview, pi.getCoordinates().getRow(), pi.getCoordinates().getCol());            
             payloadGrid.getChildren().add(imgview);
-            idx++;
         }
         
         

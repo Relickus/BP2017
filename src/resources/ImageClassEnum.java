@@ -12,15 +12,15 @@ package resources;
 public enum ImageClassEnum {
       
     DOG(0),
-    FLOWER(1),
-    HOUSE(2),
-    BOAT(3),
+    FLOWER(1),  //plant?
+    HOUSE(2),   //building
+    BOAT(3),    // ship
     TREE(4),
     CAR(5),
     BIRD(6),
     CAT(7),
     HORSE(8),
-    FACE(9);
+    FACE(9);    //person?
     
      private final int value;
 

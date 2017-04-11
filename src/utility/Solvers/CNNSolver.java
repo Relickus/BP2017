@@ -19,8 +19,8 @@ import utility.Result;
  */
 public class CNNSolver extends Solver {
 
-    public CNNSolver(String name) {
-        super(name);
+    public CNNSolver() {
+        super("CNN");
     }
 
 
@@ -38,8 +38,13 @@ public class CNNSolver extends Solver {
 //    }
 
     @Override
-    protected Result classifyImage(PayloadImage img) throws IOException{
+    protected void classifyImage(PayloadImage img) throws IOException{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean hasParams() {
+        return false;
     }
     
 }

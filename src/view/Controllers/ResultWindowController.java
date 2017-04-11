@@ -17,80 +17,73 @@ import javafx.scene.web.WebView;
 import resources.Constants;
 import utility.Captchas.CAPTCHA;
 import utility.Result;
+import utility.Solvers.Solver;
 
 /**
  *
  * @author Vojta
  */
 public class ResultWindowController extends AbstractController implements Initializable {
-    
-    public WebView captchaView;
-    public Label solverName;
-    public Label solverParam;
-    public Label solverAcc;
-    public VBox resultContainer;
-    public VBox resultItem;
-    
-    private ArrayList<Result> resultsArr;
+
+    private @FXML
+    VBox resultContainer;
+
+    private ArrayList<Solver> solversAndResultsArr;
     private CAPTCHA captcha;
 
-    
     public void setCaptcha(CAPTCHA captcha) {
         this.captcha = captcha;
     }
-
     
+    public void setResults(ArrayList<Solver> arr){
+        this.solversAndResultsArr = arr;
+    }
+
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-  
+
         NEXT_SCENE = null;
         PREVIOUS_SCENE = Constants.SOLVER_SETTINGS_WINDOW;
-        
-    }    
-    
-     @FXML    
-    private void onBackClicked(ActionEvent event){        
-        
-        stageController.loadNextStage(PREVIOUS_SCENE); 
-        SolverSettingsController windowController = (SolverSettingsController)stageController.getWindowController();
-        windowController.setCaptcha(captcha);  
-        windowController.initView();        
+
+    }
+
+    @FXML
+    private void onBackClicked(ActionEvent event) {
+
+        stageController.loadNextStage(PREVIOUS_SCENE);
+        SolverSettingsController windowController = (SolverSettingsController) stageController.getWindowController();
+        windowController.setCaptcha(captcha);
+        windowController.initView();
         stageController.showStage();
     }
-    
-     @FXML    
-    private void onMainMenuClicked(ActionEvent event){        
-        
-        stageController.loadNextStage(Constants.INIT_WINDOW);        
+
+    @FXML
+    private void onMainMenuClicked(ActionEvent event) {
+
+        stageController.loadNextStage(Constants.INIT_WINDOW);
         stageController.showStage();
     }
-    
 
     public void initView() {
-          
-        URL file = getClass().getResource("/htmlCAPTCHAs/index.html");
-        captchaView.getEngine().load(file.toExternalForm());
-        captchaView.setZoom(0.7);
+
+        for( Solver s : solversAndResultsArr){
+            
+            ResultItem r = new ResultItem(captcha); // v parametru captcha.applyResultFilter(Result,Filter.SHOW_CORRECT_IMGS=true/false)  --- metoda ktera je prekryje payload filtrem a vraci tu captchu samotnou
         
-        solverName.setText("MyKNN");
-        solverParam.setText("K=5");
-        solverAcc.setText("75%");
-        
-       
-        // v cyklu vytvaret ResultItemy, naplnit je vysledkama a pak je dat do containeru:
-        
-        ResultItem ri = new ResultItem();
-        ResultItem rii = new ResultItem();
-        
-        ri.setCaptchaView("/htmlCAPTCHAs/index.html");
-        ri.setLabels("jinej", "zadny", "0%");
-        
-        resultContainer.getChildren().addAll(ri,rii);
-    }
+            // r.setFilterChosen(solversAndResultsArr);
+            
+            String paramStr = s.hasParams() ? s.getParameters().toString() : "";
+            
+            r.setLabels(s.getName(), paramStr, String.valueOf(s.getResult().getAccuracy()) );
     
+            resultContainer.getChildren().add(r);
+        }
+
+    }
+
 }
