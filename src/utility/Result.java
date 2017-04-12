@@ -38,12 +38,12 @@ public class Result {
         
         int counter=0;
         for(ClassifiedImage img : classifiedImgsArr){  
-            ImageClassEnum correctClass = img.getCorrectClass();    // correctclass is never NULL
+            ImageClassEnum correctClass = img.getImageClass();    // correctclass is never NULL
             if(correctClass.equals(img.getPredictedClass()))
                 ++counter;
         }
         
-        accuracy = counter/classifiedImgsArr.size();
+        accuracy = (double)counter/classifiedImgsArr.size();
     }
     
     public void addClassifiedImage(ClassifiedImage img){

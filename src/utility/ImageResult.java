@@ -29,7 +29,7 @@ public class ImageResult implements Comparable<ImageResult>{
 
     @Override
     public int compareTo(ImageResult o) {
-         return (int)(this.score*1000 - o.score*1000);  // *1000 in order to preserve floating point precision
+         return (int)(o.score*1000 - this.score*1000);  // *1000 in order to preserve floating point precision
     }
     
         

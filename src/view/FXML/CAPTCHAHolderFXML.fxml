@@ -12,7 +12,7 @@
 
 <fx:root fx:id="CAPTCHAHolder" maxHeight="370.0" maxWidth="300.0" minHeight="370.0" minWidth="300.0" prefHeight="370.0" prefWidth="300.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
      <children>
-      <HBox prefHeight="100.0" style="-fx-background-color: #4a90e2;">
+      <HBox maxWidth="300.0" minWidth="300.0" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #4a90e2;">
          <children>
             <HBox>
                <children>
@@ -38,7 +38,7 @@
             <Separator prefWidth="200.0" />
       <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
          <children>
-            <GridPane fx:id="payloadGrid" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+            <GridPane fx:id="payloadGrid" alignment="CENTER" maxHeight="300.0" maxWidth="300.0" minHeight="300.0" minWidth="300.0" prefHeight="300.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -49,6 +49,9 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
             </GridPane>
          </children>
       </HBox>

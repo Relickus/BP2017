@@ -39,17 +39,12 @@ public class PayloadImage extends Image {
         return coordinates;
     }
     
-    public ImageClassEnum getCorrectClass(){
-        
-        int idxStart = path.lastIndexOf('\\');   //for win system paths
-        if(idxStart == -1 )
-            idxStart = path.lastIndexOf('/')+1;    // for unix system paths 
-        
-        int idxEnd = path.indexOf('_');
-        
-        correctClass = ImageClassEnum.getEnum(path.substring(idxStart, idxEnd)); 
-        
+    public ImageClassEnum getImageClass(){      
         return correctClass;
+    }
+
+    void setImageClass(ImageClassEnum img) {
+        correctClass = img;
     }
 
 }

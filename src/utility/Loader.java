@@ -36,6 +36,8 @@ public class Loader {
         int imgIndex = rand.nextInt(targetFolder.list().length) + 1;    // returns random integer denoting a real image file in this folder
 
         PayloadImage result = new PayloadImage(constructImagePath(img, imgIndex));
+        
+        result.setImageClass(img);
 
         return result;
     }
@@ -48,6 +50,8 @@ public class Loader {
         }
 
         PayloadImage result = new PayloadImage(constructImagePath(img, idxSpecify));
+        
+        result.setImageClass(img);
 
         return result;
     }
@@ -99,6 +103,7 @@ public class Loader {
         Image i = new Image(constructImagePath(img, num));
         for (Integer idx : indexSet) {
             PayloadImage pi = new PayloadImage(constructImagePath(img, idx));
+            pi.setImageClass(img);
             imgArr.add(pi);
         }
 

@@ -71,6 +71,7 @@ public class OnlineSolver extends Solver {
             
         }
         
+        i.setPredictedClass();
         result.addClassifiedImage(i);
     }
 

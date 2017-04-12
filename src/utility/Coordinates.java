@@ -18,6 +18,11 @@ public class Coordinates {
         this.row = row;
         this.col = col;
     }
+    
+    public Coordinates(Coordinates oth){
+        this.row = oth.row;
+        this.col = oth.col;
+    }
 
     public int getRow() {
         return row;

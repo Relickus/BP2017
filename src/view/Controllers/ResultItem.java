@@ -7,13 +7,17 @@ package view.Controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import utility.Captchas.CAPTCHA;
+import utility.ClassifiedImage;
 import utility.Result;
 
 /**
@@ -32,29 +36,51 @@ public class ResultItem extends VBox {
     HBox captchaContainer;
 
     private final CAPTCHA captcha;
+    private Result result;
+    private CAPTCHAHolder captchaHolder;
 
     public ResultItem(CAPTCHA c) {
         super();
         loadFxml(getClass().getResource("/view/FXML/ResultItemFXML.fxml"), this);
         this.captcha = c;
-        
+
         setCaptchaView();
     }
 
     public void setLabels(String name, String param, String acc) {
         solverName.setText(name);
         solverParam.setText(param);
-        solverAcc.setText(acc);
+        
+        Double accPercent = Double.valueOf(acc)*100;
+        solverAcc.setText(accPercent.toString() + "%");
+
+        styleLabels();
     }
 
-    private void setCaptchaView(){
-        
-        captchaContainer.getChildren().add(new CAPTCHAHolder(captcha));
-        
+    private void styleLabels() {
+        solverName.setStyle("-fx-font-weight: bold;");
+
+        Double d = Double.valueOf(solverAcc.getText().replace(',', '.'));
+
+        if (d.compareTo(0.3) <= 0) {
+            solverAcc.setTextFill(Color.RED);
+        } else if (d.compareTo(0.5) <= 0) {
+            solverAcc.setTextFill(Color.ORANGE);
+        } else if (d.compareTo(0.7) <= 0) {
+            solverAcc.setTextFill(Color.LIGHTGREEN);
+        } else {
+            solverAcc.setTextFill(Color.GREEN);
+        }
     }
-    
-    public void setResult(Result res){
-        
+
+    private void setCaptchaView() {
+        captchaHolder = new CAPTCHAHolder(captcha);
+        captchaContainer.getChildren().add(captchaHolder);
+
+    }
+
+    public void setResult(Result res) {
+        result = res;
     }
 
     protected static void loadFxml(URL fxmlFile, Object rootController) {
@@ -67,4 +93,14 @@ public class ResultItem extends VBox {
             System.err.println(e.getMessage());
         }
     }
+
+    public void setFilter(String filterPath) {
+
+        for (ClassifiedImage i : result.getResultArr()) {
+            if (i.matchesKeyword(captcha.getChallenge().getKeyword().toLowerCase())) {
+                captchaHolder.setFilterOnField(filterPath, i.getCoordinates());
+            }
+        }
+    }
+
 }

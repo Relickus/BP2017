@@ -17,7 +17,9 @@ public class Constants {
 
     public static final String DATASET_PATH = "D:\\BAP\\DATASET\\";
     public static final String SCRIPTS_FOLDER_PATH = "src/scripts/";
-    public static final String HTML_SOURCE = "src/htmlCAPTCHAs/";
+    public static final String FILTER_CORRECT_PATH = "file:src/resources/filter_green.jpg";
+            
+    public static final double FILTER_CORRECT_OPACITY = 0.2;
 
     
 }

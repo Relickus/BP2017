@@ -19,9 +19,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
+import resources.Constants;
 import utility.Captchas.CAPTCHA;
 import utility.Captchas.ChallengeImage;
 import utility.Captchas.ChallengeKeyword;
+import utility.Coordinates;
 import utility.PayloadImage;
 
 /**
@@ -75,12 +77,12 @@ public class CAPTCHAHolder extends VBox{
         
         for(PayloadImage pi : payloadarr){           
             ImageView iv = new ImageView(pi);
-            iv.setFitWidth(90);
-            iv.setFitHeight(90);
+            iv.setFitWidth(96);
+            iv.setFitHeight(96);
             GridPane.setConstraints(iv, pi.getCoordinates().getRow(), pi.getCoordinates().getCol());
             
-            payloadGrid.setVgap(5);
-            payloadGrid.setHgap(5);
+            payloadGrid.setVgap(6);
+            payloadGrid.setHgap(6);
             payloadGrid.getChildren().add(iv);
         }
         
@@ -95,6 +97,16 @@ public class CAPTCHAHolder extends VBox{
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
+    }
+    
+    void setFilterOnField(String filterPath, Coordinates coord){
+        
+        ImageView iv = new ImageView(new Image(filterPath));
+        iv.setFitWidth(96);
+        iv.setFitHeight(96);
+        iv.setOpacity(Constants.FILTER_CORRECT_OPACITY);
+        GridPane.setConstraints(iv, coord.getRow(), coord.getCol());
+        payloadGrid.getChildren().add(iv);
     }
     
 }

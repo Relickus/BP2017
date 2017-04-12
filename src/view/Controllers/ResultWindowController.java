@@ -77,9 +77,13 @@ public class ResultWindowController extends AbstractController implements Initia
         
             // r.setFilterChosen(solversAndResultsArr);
             
-            String paramStr = s.hasParams() ? s.getParameters().toString() : "";
+            String paramStr = s.hasParams() ? s.getParameters().toString() : "none";
+            String accString = String.format("%.4f",s.getResult().getAccuracy());
             
-            r.setLabels(s.getName(), paramStr, String.valueOf(s.getResult().getAccuracy()) );
+            r.setLabels(s.getName(), paramStr, accString );
+            r.setResult(s.getResult());
+            
+            r.setFilter(Constants.FILTER_CORRECT_PATH);
     
             resultContainer.getChildren().add(r);
         }

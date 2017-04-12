@@ -5,10 +5,6 @@
  */
 package utility.Captchas;
 
-import java.net.URL;
-import javafx.scene.web.WebView;
-import utility.Result;
-
 /**
  *
  * @author Vojta

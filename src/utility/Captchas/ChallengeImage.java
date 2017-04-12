@@ -95,7 +95,7 @@ public class ChallengeImage extends AbstractChallenge {
     @Override
     public String getKeyword() {
         if (refImg == null) {
-            return null;
+            return "null refimg";
         }
 
         return keywordStr;
