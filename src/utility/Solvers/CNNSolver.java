@@ -6,12 +6,8 @@
 package utility.Solvers;
 
 import java.io.IOException;
-import javafx.scene.image.Image;
-import utility.Captchas.AbstractChallenge;
 import utility.Captchas.CAPTCHA;
-import utility.Captchas.ChallengeKeyword;
 import utility.PayloadImage;
-import utility.Result;
 
 /**
  *
@@ -20,7 +16,7 @@ import utility.Result;
 public class CNNSolver extends Solver {
 
     public CNNSolver() {
-        super("CNN");
+        super("CNN",50);
     }
 
 
@@ -46,5 +42,7 @@ public class CNNSolver extends Solver {
     public boolean hasParams() {
         return false;
     }
+
+    
     
 }

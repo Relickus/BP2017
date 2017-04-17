@@ -6,12 +6,9 @@
 package utility.Solvers;
 
 import java.io.IOException;
-import javafx.scene.image.Image;
-import utility.Captchas.AbstractChallenge;
 import utility.Captchas.CAPTCHA;
 import utility.KNNParameters;
 import utility.PayloadImage;
-import utility.Result;
 
 /**
  *
@@ -20,12 +17,12 @@ import utility.Result;
 public class KNNSolver extends Solver {
 
     public KNNSolver() {
-        super("KNN");
+        super("KNN",40);
         this.parameters = new KNNParameters();
     }
         
     public KNNSolver(KNNParameters par) {
-        super("KNN");
+        super("KNN",60);
         this.parameters = par;
     }
    
@@ -52,5 +49,5 @@ public class KNNSolver extends Solver {
     public boolean hasParams() {
         return true;
     }
-    
+
 }

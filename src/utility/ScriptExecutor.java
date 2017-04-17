@@ -24,7 +24,7 @@ public class ScriptExecutor {
     public void launchScripts(ArrayList<Solver> slvrs, CAPTCHA c) {
         this.solvers = slvrs;
         this.captcha = c;
-        
+                
         for (Solver s : solvers) {
             s.solve(captcha);
         }
@@ -33,6 +33,15 @@ public class ScriptExecutor {
     public void setOnFinishedButton(Button btn){
         finishButton = btn;
     }
-
-
+    
+    public int getEstimatedTime(ArrayList<Solver> solvers){        
+        int res=0;
+        
+        for(Solver s : solvers){
+            res += s.getEstimatedTime();
+        }
+        
+        return res;
+    }
+    
 }

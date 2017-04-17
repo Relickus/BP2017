@@ -11,12 +11,9 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.scene.web.WebView;
 import resources.Constants;
 import utility.Captchas.CAPTCHA;
-import utility.Result;
 import utility.Solvers.Solver;
 
 /**

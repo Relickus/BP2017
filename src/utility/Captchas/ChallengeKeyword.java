@@ -13,7 +13,9 @@ import resources.Constants;
 import resources.ImageClass;
 import resources.ImageClassEnum;
 import utility.Solvers.CNNSolver;
+import utility.Solvers.ClarifaiSolver;
 import utility.Solvers.GoogleSolver;
+import utility.Solvers.ImaggaSolver;
 import utility.Solvers.KNNSolver;
 import utility.Solvers.Solver;
 import utility.Solvers.WatsonSolver;
@@ -93,6 +95,8 @@ public class ChallengeKeyword extends AbstractChallenge {
         arr.add(new CNNSolver());
         arr.add(new GoogleSolver());
         arr.add(new WatsonSolver());
+        arr.add(new ClarifaiSolver());
+        arr.add(new ImaggaSolver());
         // add more online solvers
         
         return arr;

@@ -9,12 +9,10 @@ package utility.Solvers;
  *
  * @author Vojta
  */
-public class GoogleSolver extends OnlineSolver{
+public class ClarifaiSolver extends OnlineSolver{
     
-    public GoogleSolver() {
-        super("Google Vision",30);
+    public ClarifaiSolver() {
+        super("Clarifai",30);
     }
 
-    
-    
 }

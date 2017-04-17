@@ -23,9 +23,11 @@ public abstract class Solver {
     protected SolverParameters parameters;
     protected String scriptPath;
     protected Result result;
+    protected int estimatedTime;
 
-    public Solver(String name) {
+    public Solver(String name, int time) {
         this.name = name;
+        this.estimatedTime = time;
         this.result = new Result();
         setScriptPath();
     }
@@ -59,6 +61,14 @@ public abstract class Solver {
 
     public void setResult(Result result) {
         this.result = result;
+    }
+    
+    /**
+     * 
+     * @return Estimated time of solution in SECONDS
+     */
+    public int getEstimatedTime(){
+        return estimatedTime;
     }
     
     

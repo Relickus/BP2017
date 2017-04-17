@@ -9,12 +9,11 @@ package utility.Solvers;
  *
  * @author Vojta
  */
-public class GoogleSolver extends OnlineSolver{
+public class ImaggaSolver extends OnlineSolver{
     
-    public GoogleSolver() {
-        super("Google Vision",30);
+    public ImaggaSolver() {
+        super("Imagga",60);
     }
 
-    
     
 }

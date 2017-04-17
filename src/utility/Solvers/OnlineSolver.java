@@ -19,10 +19,10 @@ import utility.Result;
  *
  * @author Vojta
  */
-public class OnlineSolver extends Solver {
+public abstract class OnlineSolver extends Solver {
 
-    public OnlineSolver(String name) {
-        super(name);
+    public OnlineSolver(String name,int time) {
+        super(name,time);
     }
 
     @Override
@@ -79,5 +79,7 @@ public class OnlineSolver extends Solver {
     public boolean hasParams() {
         return false;
     }
+    
+    
 
 }

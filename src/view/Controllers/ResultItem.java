@@ -51,6 +51,7 @@ public class ResultItem extends VBox {
         solverName.setText(name);
         solverParam.setText(param);
         
+        acc = acc.replace(',', '.');    // Double parser expects '.' as a floating point character
         Double accPercent = Double.valueOf(acc)*100;
         solverAcc.setText(accPercent.toString() + "%");
 

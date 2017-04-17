@@ -29,7 +29,7 @@ while True:
 	try:
 		label = jsonarr["images"][0]["classifiers"][0]["classes"][i]["class"]
 		score = jsonarr["images"][0]["classifiers"][0]["classes"][i]["score"]
-		print(label + ":" + str(score) + "\n")
+		print(label + ":" + str(score))
 		i=i+1
 	except IndexError:
 		break
