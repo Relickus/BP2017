@@ -9,9 +9,9 @@
 
 <fx:root fx:id="resultItem" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
      <children>
-            <HBox alignment="CENTER">
+            <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
                <children>
-                  <VBox maxWidth="200.0" minWidth="-Infinity" spacing="20.0" HBox.hgrow="ALWAYS">
+                  <VBox maxWidth="180.0" minWidth="180.0" prefWidth="180.0" spacing="20.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label text="Info:">
                            <VBox.margin>
@@ -74,9 +74,12 @@
                      </padding>
                   </VBox>
                   <HBox HBox.hgrow="ALWAYS" />
-            <HBox fx:id="captchaContainer" />
+            <HBox fx:id="captchaContainer" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" />
                </children>
             </HBox>
-            <Separator prefWidth="200.0" />
+            <Separator prefWidth="200.0">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin></Separator>
          </children>
 </fx:root>

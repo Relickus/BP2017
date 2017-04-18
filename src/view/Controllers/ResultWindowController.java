@@ -80,6 +80,7 @@ public class ResultWindowController extends AbstractController implements Initia
             r.setLabels(s.getName(), paramStr, accString );
             r.setResult(s.getResult());
             
+            r.setFilter(Constants.FILTER_CHOSEN_PATH);
             r.setFilter(Constants.FILTER_CORRECT_PATH);
     
             resultContainer.getChildren().add(r);

@@ -25,24 +25,31 @@ public class PleaseWaitDialog extends Dialog {
    private final ButtonType buttontypeclose;
     private final Label label;
     private final Label time;
+    private final Label timelabel;
     private final GridPane waitGrid;
 
     public PleaseWaitDialog() {
 
         label = new Label("Solving in progress, please wait...");
         label.setStyle("-fx-font-size: 25px; -fx-font-weight: bold");
-        
-        time = new Label("Estimated time: ");        
-        time.setStyle("-fx-font-size: 12px; -fx-font-style: italic;");
-        GridPane.setConstraints(time, 0, 2, 1, 1, HPos.CENTER, VPos.CENTER);
+        GridPane.setConstraints(label, 0, 1, 2, 1, HPos.CENTER, VPos.CENTER);
 
+        
+        timelabel = new Label("Estimated time:");        
+        timelabel.setStyle("-fx-font-size: 12px; -fx-font-style: italic;");
+        GridPane.setConstraints(timelabel, 0, 2, 1, 1, HPos.RIGHT, VPos.CENTER);
+
+        time = new Label("");        
+        time.setStyle("-fx-font-size: 12px; -fx-font-style: italic;");
+        GridPane.setConstraints(time, 1, 2, 1, 1, HPos.LEFT, VPos.CENTER);
 
         waitGrid = new GridPane();
         waitGrid.setHgap(10);
         waitGrid.setVgap(10);
         waitGrid.setPadding(new Insets(10, 10, 10, 10));
         waitGrid.add(label, 0, 1);
-        waitGrid.add(time,0,2);
+        waitGrid.add(timelabel,0,2);
+        waitGrid.add(time,1,2);
 
         buttontypeclose = new ButtonType("Stop", ButtonData.CANCEL_CLOSE);
 
@@ -62,7 +69,7 @@ public class PleaseWaitDialog extends Dialog {
         else if(t < 100){
             time.setTextFill(Color.ORANGERED);
         }
-        else if(t > 120){
+        else{
             time.setTextFill(Color.RED);
         }
         

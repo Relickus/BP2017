@@ -65,6 +65,10 @@ public abstract class AbstractChallenge {
         NUMBER_OF_NOISE_IMAGES = NUMBER_OF_CHALLENGE_IMAGES - NUMBER_OF_CORRECT_IMAGES;
     }
 
+    public int getNumberOfCorrectImgs(){
+        return NUMBER_OF_CORRECT_IMAGES;
+    }
+    
     public abstract void createChallenge();
 
     protected abstract void generatePayloadWebView();
@@ -75,6 +79,10 @@ public abstract class AbstractChallenge {
     public abstract Node getNode();
 
     public abstract String getKeyword();
+    
+    public ImageClassEnum getChallengeClass(){
+        return challengeClass;
+    }
 
     public abstract String getChallengeName();
 

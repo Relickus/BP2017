@@ -32,8 +32,8 @@ public class ClassifiedImage extends PayloadImage {
 
         for (ImageResult r : resultsArr) {
             for (ImageClassEnum e : ImageClassEnum.values()) {
-                String lookforclass = e.name().toLowerCase();
-                if (r.label.contains(lookforclass)) {
+                String lookforclass = e.name().toLowerCase();     // ':' is there to exclude substrings like 'car' match labels like 'carnivore'
+                if (r.label.equalsIgnoreCase(lookforclass)) {
                     predictedClass = e;
                     return;
                 }
@@ -59,12 +59,12 @@ public class ClassifiedImage extends PayloadImage {
         return correctClass.equals(predictedClass);
     }
 
-    public boolean matchesKeyword(String keyword) {
+    public boolean matchesKeyword(ImageClassEnum challengeClass) {
 
         if(predictedClass == null)
             return false;
         
-        return keyword.equals(predictedClass.name().toLowerCase());
+        return challengeClass.equals(predictedClass);
     }
 
 }

@@ -34,16 +34,16 @@ public class Result {
         return classifiedImgsArr == null || classifiedImgsArr.isEmpty();
     }
     
-    public void countAccuracy(){
+    public void countAccuracy(ImageClassEnum challengeClass,int numberOfCorrectImgs){
         
         int counter=0;
         for(ClassifiedImage img : classifiedImgsArr){  
-            ImageClassEnum correctClass = img.getImageClass();    // correctclass is never NULL
-            if(correctClass.equals(img.getPredictedClass()))
+            if(img.matchesKeyword(challengeClass))
                 ++counter;
         }
         
-        accuracy = (double)counter/classifiedImgsArr.size();
+        accuracy = (double)counter/numberOfCorrectImgs;
+
     }
     
     public void addClassifiedImage(ClassifiedImage img){

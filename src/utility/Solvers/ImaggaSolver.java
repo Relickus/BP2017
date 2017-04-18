@@ -12,7 +12,7 @@ package utility.Solvers;
 public class ImaggaSolver extends OnlineSolver{
     
     public ImaggaSolver() {
-        super("Imagga",60);
+        super("Imagga",30);
     }
 
     

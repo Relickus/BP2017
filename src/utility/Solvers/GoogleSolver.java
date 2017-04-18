@@ -12,7 +12,7 @@ package utility.Solvers;
 public class GoogleSolver extends OnlineSolver{
     
     public GoogleSolver() {
-        super("Google Vision",30);
+        super("Google Vision",20);
     }
 
     

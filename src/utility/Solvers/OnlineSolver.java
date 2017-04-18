@@ -9,11 +9,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import javafx.scene.image.Image;
 import utility.Captchas.CAPTCHA;
 import utility.ClassifiedImage;
 import utility.PayloadImage;
-import utility.Result;
 
 /**
  *
@@ -39,7 +37,7 @@ public abstract class OnlineSolver extends Solver {
             }
         }
         
-        result.countAccuracy();
+        result.countAccuracy(captcha.getChallenge().getChallengeClass(), captcha.getChallenge().getNumberOfCorrectImgs());
     }
 
     @Override

@@ -10,17 +10,10 @@ import sys
 from oauth2client.client import GoogleCredentials
 from googleapiclient.discovery import build
 
-import googleapiclient.discovery as discovery
 
 imagefile = str(sys.argv[1])
 
-#service = build("vision", "v1", developerKey='AIzaSyDFTdamtbsccHL9Uj_OKpeCLrT3rGS4TFw')
-
-DISCOVERY_URL='https://vision.googleapis.com/$discovery/rest?version=v1'
-
-credentials = GoogleCredentials.get_application_default()
-service = discovery.build('vision', 'v1', credentials=credentials,
-                          discoveryServiceUrl=DISCOVERY_URL)
+service = build("vision", "v1", developerKey='AIzaSyBAnIieoASIcLVpfQQsLE03DbrcmKJ9ZDo')
 
 
 with open(imagefile, 'rb') as image:
@@ -32,7 +25,7 @@ with open(imagefile, 'rb') as image:
             },
             'features': [{
                 'type': 'LABEL_DETECTION',
-                'maxResults': 1
+                'maxResults': 5
             }]
         }]
     })

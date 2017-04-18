@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
+import resources.Constants;
 import utility.Captchas.CAPTCHA;
 import utility.ClassifiedImage;
 import utility.Result;
@@ -48,29 +49,31 @@ public class ResultItem extends VBox {
     }
 
     public void setLabels(String name, String param, String acc) {
+                
         solverName.setText(name);
-        solverParam.setText(param);
+        solverParam.setText(param);        
         
-        acc = acc.replace(',', '.');    // Double parser expects '.' as a floating point character
-        Double accPercent = Double.valueOf(acc)*100;
+        Double accPercent = Double.valueOf(acc.replace(',', '.'))*100;
         solverAcc.setText(accPercent.toString() + "%");
 
-        styleLabels();
+        styleLabels(accPercent);
+        
     }
 
-    private void styleLabels() {
+    private void styleLabels(Double d) {
         solverName.setStyle("-fx-font-weight: bold;");
 
-        Double d = Double.valueOf(solverAcc.getText().replace(',', '.'));
 
-        if (d.compareTo(0.3) <= 0) {
+        if (d.compareTo(30.0) <= 0) {
             solverAcc.setTextFill(Color.RED);
-        } else if (d.compareTo(0.5) <= 0) {
+        } else if (d.compareTo(50.0) <= 0) {
             solverAcc.setTextFill(Color.ORANGE);
-        } else if (d.compareTo(0.7) <= 0) {
-            solverAcc.setTextFill(Color.LIGHTGREEN);
+        } else if (d.compareTo(70.0) <= 0) {
+            solverAcc.setTextFill(Color.LIMEGREEN);
         } else {
             solverAcc.setTextFill(Color.GREEN);
+            if(d.compareTo(100.0) == 0)
+                solverAcc.setStyle("-fx-font-weight: bold");
         }
     }
 
@@ -96,10 +99,19 @@ public class ResultItem extends VBox {
     }
 
     public void setFilter(String filterPath) {
-
-        for (ClassifiedImage i : result.getResultArr()) {
-            if (i.matchesKeyword(captcha.getChallenge().getKeyword().toLowerCase())) {
-                captchaHolder.setFilterOnField(filterPath, i.getCoordinates());
+        
+        if(filterPath.equals(Constants.FILTER_CHOSEN_PATH)){
+            for (ClassifiedImage i : result.getResultArr()) {
+                if (i.matchesKeyword(captcha.getChallenge().getChallengeClass())) {
+                    captchaHolder.setFilterOnField(filterPath, i.getCoordinates());
+                }
+            }
+        }
+        else if(filterPath.equals(Constants.FILTER_CORRECT_PATH)){
+            for (ClassifiedImage i : result.getResultArr()) {
+                if (captcha.getChallenge().getChallengeClass().equals(i.getImageClass())) {
+                    captchaHolder.setFilterOnField(filterPath, i.getCoordinates());
+                }
             }
         }
     }

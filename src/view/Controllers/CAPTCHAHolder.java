@@ -104,7 +104,8 @@ public class CAPTCHAHolder extends VBox{
         ImageView iv = new ImageView(new Image(filterPath));
         iv.setFitWidth(96);
         iv.setFitHeight(96);
-        iv.setOpacity(Constants.FILTER_CORRECT_OPACITY);
+        if(filterPath.equals(Constants.FILTER_CHOSEN_PATH))
+            iv.setOpacity(Constants.FILTER_CHOSEN_OPACITY);           
         GridPane.setConstraints(iv, coord.getRow(), coord.getCol());
         payloadGrid.getChildren().add(iv);
     }
