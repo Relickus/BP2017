@@ -236,6 +236,7 @@ public class SolverSettingsController extends AbstractController implements Init
         pleaseWaitDialog = new PleaseWaitDialog();
         ScriptExecutor se = new ScriptExecutor();
         pleaseWaitDialog.setEstimatedTime(se.getEstimatedTime(pickedSolversArr));
+        pleaseWaitDialog.setGranularity(pickedSolversArr.size(),captcha.getChallenge().getPayloadSize());
 
         Task<Boolean> task = new Task<Boolean>() {
             @Override

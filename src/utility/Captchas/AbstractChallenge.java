@@ -38,6 +38,8 @@ public abstract class AbstractChallenge {
     protected WebView captchaWebView;
     protected WebView payloadWebView;
 
+    protected boolean fixedClass;
+    
     public AbstractChallenge(String key) {
 
         setConstants();
@@ -67,6 +69,10 @@ public abstract class AbstractChallenge {
         return NUMBER_OF_CORRECT_IMAGES;
     }
     
+     public boolean isFixedClass() {
+        return fixedClass;
+    }
+     
     public abstract void createChallenge();
 
     protected abstract void generatePayloadWebView();

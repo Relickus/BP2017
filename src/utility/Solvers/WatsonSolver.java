@@ -12,7 +12,7 @@ package utility.Solvers;
 public class WatsonSolver extends OnlineSolver{
 
     public WatsonSolver() {
-        super("Watson Vision",20);
+        super("Watson",20);
     }
     
 }

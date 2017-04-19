@@ -69,21 +69,21 @@ public class CAPTCHASettingsController extends AbstractController implements Ini
     @FXML
     private void onAnotherChallengeClicked(ActionEvent event) {
 
-        captcha.getChallenge().createChallenge();
-        fillChallengeNode();
-        
+        if (!captcha.getChallenge().isFixedClass()) {
+            captcha.getChallenge().createChallenge();   //double checking fixedclass - repair this!
+            fillChallengeNode();
+        }
+
         captcha.getChallenge().changeConstants();
         captcha.generatePayload();
         fillPayloadGrid();
     }
-       
+
 //    @FXML
 //    private void onAnotherPayloadClicked(ActionEvent event) {
 //
 //        // feature canceled 
 //    }
-
-
     @FXML
     private void onProceedClicked(ActionEvent event) {
 
@@ -104,30 +104,27 @@ public class CAPTCHASettingsController extends AbstractController implements Ini
         keywordOrImageHbox.getChildren().add(challengeNode);
     }
 
-    private void fillPayloadGrid(){
+    private void fillPayloadGrid() {
         payloadGrid.getChildren().clear();
         ArrayList<PayloadImage> payloadArr = captcha.getChallenge().getPayload();
-        for(PayloadImage pi : payloadArr){
+        for (PayloadImage pi : payloadArr) {
             ImageView imgview = new ImageView(pi);
             imgview.setFitWidth(100);
             imgview.setFitHeight(100);
             imgview.setSmooth(true);
-            GridPane.setConstraints(imgview, pi.getCoordinates().getRow(), pi.getCoordinates().getCol());            
+            GridPane.setConstraints(imgview, pi.getCoordinates().getRow(), pi.getCoordinates().getCol());
             payloadGrid.getChildren().add(imgview);
         }
-        
-        
+
         // !!!!!!!!!!!!!!!!!!! working filtering !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!§
-        
 //        ImageView fltr = new ImageView(new Image("file:src/htmlCAPTCHAs/filterCorrect.jpg"));
 //        fltr.setFitWidth(100);
 //        fltr.setFitHeight(100);
 //        fltr.setOpacity(0.5);
 //        GridPane.setConstraints(fltr, 0, 0);
 //        payloadGrid.getChildren().add(fltr);
-        
     }
-    
+
     public void initView() {
 
         fillPayloadGrid();
@@ -136,12 +133,10 @@ public class CAPTCHASettingsController extends AbstractController implements Ini
 
         keywordOrImageBtn.setText("Another " + captcha.getChallenge().getChallengeName().toLowerCase());
 
-        if (captcha.getChallenge() instanceof ChallengeImage) {
-            if (((ChallengeImage) captcha.getChallenge()).isFixedClass()) {
-                fixedClassHbox.setVisible(true);
-                classSpecifyLabel.setText(captcha.getChallenge().getKeyword().toUpperCase());
-                classSpecifyLabel.setStyle("-fx-font-weight: bold;");
-            }
+        if (captcha.getChallenge().isFixedClass()) {
+            fixedClassHbox.setVisible(true);
+            classSpecifyLabel.setText(captcha.getChallenge().getKeyword().toUpperCase());
+            classSpecifyLabel.setStyle("-fx-font-weight: bold;");
         }
 
     }
@@ -153,6 +148,5 @@ public class CAPTCHASettingsController extends AbstractController implements Ini
         PREVIOUS_SCENE = Constants.CAPTCHA_SELECT_WINDOW;
 
     }
-    
 
 }

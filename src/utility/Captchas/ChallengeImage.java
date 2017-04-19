@@ -31,7 +31,6 @@ import utility.Solvers.WatsonSolver;
 public class ChallengeImage extends AbstractChallenge {
 
     private Image refImg;
-    private boolean fixedClass;
 
     public ChallengeImage() {
         refImg = null;
@@ -71,9 +70,7 @@ public class ChallengeImage extends AbstractChallenge {
         }
     }
 
-    public boolean isFixedClass() {
-        return fixedClass;
-    }
+   
 
     public void setRefImgIndex(int idx) {
         questionClassIdx = idx;

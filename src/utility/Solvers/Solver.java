@@ -55,6 +55,7 @@ public abstract class Solver {
                 if (!pleaseWaitDialog.isShowing()) {
                     throw new SolutionInterruptedException();
                 }
+                pleaseWaitDialog.updateProgress(pleaseWaitDialog.getProgress() + 1.0/pleaseWaitDialog.getGranularity());
 
             } catch (IOException e) {
                 System.err.println("\t !!!Chyba v processbuileru: ");

@@ -30,6 +30,7 @@ public class PleaseWaitDialog extends Dialog {
     private final Label timelabel;
     private final GridPane waitGrid;
     private final ProgressBar progressBar;
+    private int granularity;
 
     public PleaseWaitDialog() {
         
@@ -105,5 +106,16 @@ public class PleaseWaitDialog extends Dialog {
         progressBar.setProgress(progress);
     }
     
+    public double getProgress(){
+        return progressBar.getProgress();
+    }
+    
+    public void setGranularity(int g, int numberOfPayloadImgs){
+        granularity = g * numberOfPayloadImgs;
+    }
+    
+    public int getGranularity(){
+        return granularity;
+    }
     
 }

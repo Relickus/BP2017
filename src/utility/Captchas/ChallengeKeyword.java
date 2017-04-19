@@ -46,12 +46,14 @@ public class ChallengeKeyword extends AbstractChallenge {
     
     @Override
     protected void randomClass() {
+        fixedClass=false;
         generateKeyword();
     }
 
     @Override
     protected void specifyClass(ImageClassEnum e) {
                
+        fixedClass = true;
         challengeClass = e;
         questionClassIdx = challengeClass.getValue();
         keywordStr = challengeClass.printableName();
@@ -61,7 +63,8 @@ public class ChallengeKeyword extends AbstractChallenge {
 
     @Override
     public void createChallenge() {
-        generateKeyword();
+        if(! isFixedClass())
+            generateKeyword();
     }
 
     @Override
