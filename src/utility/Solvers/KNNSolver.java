@@ -26,13 +26,7 @@ public class KNNSolver extends Solver {
         this.parameters = par;
     }
    
-    @Override
-    public void solve(CAPTCHA captcha) {
-
-       // loadScript(captcha.getChallenge());
-        
-        //set Result object
-    }
+    
 
 //    @Override
 //    public void loadScript(AbstractChallenge challenge) {

@@ -7,9 +7,13 @@ package utility.Solvers;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import javafx.concurrent.Task;
+import javafx.scene.control.ProgressBar;
 import resources.Constants;
 import utility.Captchas.CAPTCHA;
 import utility.PayloadImage;
+import utility.PleaseWaitDialog;
 import utility.Result;
 import utility.SolverParameters;
 
@@ -41,7 +45,22 @@ public abstract class Solver {
         return parameters;
     }
 
-    public abstract void solve(CAPTCHA captcha);
+    public void solve(CAPTCHA captcha, Task<Boolean> task, PleaseWaitDialog pleaseWaitDialog){
+                        
+         ArrayList<PayloadImage> payloadArr = captcha.getChallenge().getPayload();
+        for (PayloadImage pi : payloadArr) {
+            try {
+                classifyImage(pi);            
+                //pleaseWaitDialog.incrementProgress();
+            } catch (IOException e) {
+                System.err.println("\t !!!Chyba v processbuileru: ");
+                System.err.println(e.getMessage());
+                return;
+            }
+        }
+        
+        result.countAccuracy(captcha.getChallenge().getChallengeClass(), captcha.getChallenge().getNumberOfCorrectImgs());
+    }
     //public abstract void loadScript( AbstractChallenge challenge);  // WHAT??
 
     private void setScriptPath() {

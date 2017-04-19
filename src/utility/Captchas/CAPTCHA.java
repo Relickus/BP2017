@@ -38,7 +38,6 @@ public class CAPTCHA {
    public void generatePayload(){
        challenge.createPayload();
    }
-  
    
    
 }

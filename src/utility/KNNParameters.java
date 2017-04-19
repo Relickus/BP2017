@@ -14,16 +14,16 @@ public class KNNParameters extends SolverParameters{
     
     protected int K;
     protected boolean weightedVotes;
-    protected boolean crossFolding;
+    //protected boolean crossFolding;
     
     protected AbstractDistance measureDistance;
 
-    public KNNParameters(Object k, AbstractDistance dist, boolean weights, boolean cross) {
+    public KNNParameters(Object k, AbstractDistance dist, boolean weights /*, boolean cross*/) {
 
         this.K = (Integer)k;
         this.measureDistance = dist;
         this.weightedVotes = weights;
-        this.crossFolding = cross;            
+        //this.crossFolding = cross;            
     }
 
     public KNNParameters() {   // default parameters
@@ -31,7 +31,7 @@ public class KNNParameters extends SolverParameters{
         this.K = 5;
         this.measureDistance = new EucleidianDistance();
         this.weightedVotes = false;
-        this.crossFolding = false;        
+        //this.crossFolding = false;        
     }
 
     
@@ -50,9 +50,9 @@ public class KNNParameters extends SolverParameters{
     }
     
     
-    public void setCrossFolding(boolean crossFolding) {
-        this.crossFolding = crossFolding;
-    }
+//    public void setCrossFolding(boolean crossFolding) {
+//        this.crossFolding = crossFolding;
+//    }
 
     public void setMeasureDistance(AbstractDistance measureDistance) {
         this.measureDistance = measureDistance;
@@ -66,9 +66,9 @@ public class KNNParameters extends SolverParameters{
         return weightedVotes;
     }
 
-    public boolean isCrossFolding() {
-        return crossFolding;
-    }
+//    public boolean isCrossFolding() {
+//        return crossFolding;
+//    }
 
     public AbstractDistance getMeasureDistance() {
         return measureDistance;
@@ -76,7 +76,8 @@ public class KNNParameters extends SolverParameters{
 
     @Override
     public String toString() {
-        return " K: " + K + ", distance: " + measureDistance.getName() + ", weighting: " + weightedVotes + ", crossfolding: " + crossFolding;
+        return " K: " + K + ", distance: " + measureDistance.getName() 
+             + ", weighting: " + weightedVotes/* + ", crossfolding: " + crossFolding*/;
     }
     
 }

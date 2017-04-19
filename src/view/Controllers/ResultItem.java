@@ -7,15 +7,12 @@ package view.Controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.NumberFormat;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.web.WebView;
 import resources.Constants;
 import utility.Captchas.CAPTCHA;
 import utility.ClassifiedImage;
@@ -61,7 +58,7 @@ public class ResultItem extends VBox {
     }
 
     private void styleLabels(Double d) {
-        solverName.setStyle("-fx-font-weight: bold;");
+        //solverName.setStyle("-fx-font-weight: bold;");
 
 
         if (d.compareTo(30.0) <= 0) {

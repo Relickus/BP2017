@@ -19,6 +19,7 @@ import utility.Solvers.ClarifaiSolver;
 import utility.Solvers.GoogleSolver;
 import utility.Solvers.ImaggaSolver;
 import utility.Solvers.KNNSolver;
+import utility.Solvers.MicrosoftSolver;
 import utility.Solvers.WatsonSolver;
 
 /**
@@ -123,6 +124,7 @@ public class ChallengeImage extends AbstractChallenge {
         arr.add(new WatsonSolver());
         arr.add(new ClarifaiSolver());
         arr.add(new ImaggaSolver());
+        arr.add(new MicrosoftSolver());
         // add more online solvers
         
         return arr;

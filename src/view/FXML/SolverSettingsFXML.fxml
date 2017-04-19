@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Controllers.SolverSettingsController">
+<AnchorPane id="AnchorPane" maxHeight="700.0" maxWidth="500.0" minHeight="700.0" minWidth="500.0" prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Controllers.SolverSettingsController">
    <children>
-      <BorderPane prefHeight="700.0" prefWidth="500.0">
+      <BorderPane maxHeight="700.0" maxWidth="500.0" minHeight="700.0" minWidth="500.0" prefHeight="700.0" prefWidth="500.0">
          <center>
             <VBox BorderPane.alignment="CENTER">
                <children>

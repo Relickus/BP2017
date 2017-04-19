@@ -5,18 +5,15 @@
  */
 package view.Controllers;
 
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.collections.ListChangeListener;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
@@ -48,7 +45,7 @@ import utility.Solvers.Solver;
  *
  * @author Vojta
  */
-public class SolverSettingsController extends AbstractController implements Initializable, Runnable {
+public class SolverSettingsController extends AbstractController implements Initializable{
 
     private CAPTCHA captcha;
     private CAPTCHAHolder captchaHolder;
@@ -106,7 +103,7 @@ public class SolverSettingsController extends AbstractController implements Init
         kComboBox.getSelectionModel().selectFirst();
 
         CheckBox weightedVotes = new CheckBox("Weighted voting");
-        CheckBox crossFolding = new CheckBox("Crossfolding");
+        //CheckBox crossFolding = new CheckBox("Crossfolding");
 
         ComboBox distance = new ComboBox();
         distance.getItems().addAll(
@@ -118,7 +115,7 @@ public class SolverSettingsController extends AbstractController implements Init
         dialogGrid.add(kComboBox, 1, 0);
         dialogGrid.add(distance, 2, 0);
         dialogGrid.add(weightedVotes, 3, 0);
-        dialogGrid.add(crossFolding, 4, 0);
+        //dialogGrid.add(crossFolding, 4, 0);
 
         knnParamsDialog = new Dialog();
         knnParamsDialog.getDialogPane().setContent(dialogGrid);
@@ -129,8 +126,8 @@ public class SolverSettingsController extends AbstractController implements Init
             return new KNNParameters(
                     kComboBox.getValue(),
                     (AbstractDistance) distance.getValue(),
-                    weightedVotes.isSelected(),
-                    crossFolding.isSelected()
+                    weightedVotes.isSelected()
+                    //,crossFolding.isSelected()
             );
         });
 
@@ -168,6 +165,7 @@ public class SolverSettingsController extends AbstractController implements Init
                 CustomTreeItem tmpItem = (CustomTreeItem) item.getValue();
                 tmpItem.setParamString(tmpStr);
 
+                //this is not redundant, it updates the view!!
                 item.setValue(null);
                 item.setValue(tmpItem);
                 return;
@@ -240,12 +238,14 @@ public class SolverSettingsController extends AbstractController implements Init
         Task<Boolean> task = new Task<Boolean>() {
             @Override
             public Boolean call() {
-                se.launchScripts(pickedSolversArr, captcha);
+                se.launchScripts(pickedSolversArr, captcha, this, pleaseWaitDialog);
                 return true;
             }
         };
+        
 
         task.setOnRunning((e) -> pleaseWaitDialog.show());
+        
         task.setOnSucceeded((e) -> {
             pleaseWaitDialog.hide();
             // process return value again in JavaFX thread
@@ -260,7 +260,9 @@ public class SolverSettingsController extends AbstractController implements Init
             stageController.showStage();
         });
         
-        new Thread(task).start();      
+       Thread t = new Thread(task);      
+       //pleaseWaitDialog.setTaskToCancelButton(task);
+       t.start();
     }
 
     @Override
@@ -270,9 +272,5 @@ public class SolverSettingsController extends AbstractController implements Init
         PREVIOUS_SCENE = Constants.CAPTCHA_SETTINGS_WINDOW;
     }
 
-    @Override
-    public void run() {
-
-    }
 
 }

@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Controllers.ResultWindowController">
+<BorderPane maxHeight="700.0" maxWidth="500.0" minHeight="700.0" minWidth="500.0" prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Controllers.ResultWindowController">
    <center>
-      <ScrollPane focusTraversable="false" hbarPolicy="NEVER" prefHeight="700.0" BorderPane.alignment="CENTER">
+      <ScrollPane focusTraversable="false" hbarPolicy="NEVER" maxWidth="500.0" minWidth="500.0" prefWidth="500.0" BorderPane.alignment="CENTER">
          <content>
             <VBox fx:id="resultContainer">
                <opaqueInsets>
@@ -29,6 +29,9 @@
             <HBox HBox.hgrow="ALWAYS" />
             <Button mnemonicParsing="false" onAction="#onMainMenuClicked" text="Main Menu" />
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </HBox>
    </bottom>
 </BorderPane>

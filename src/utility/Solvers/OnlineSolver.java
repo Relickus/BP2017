@@ -23,23 +23,7 @@ public abstract class OnlineSolver extends Solver {
         super(name,time);
     }
 
-    @Override
-    public void solve(CAPTCHA captcha) {
-        //set Result object
-
-        ArrayList<PayloadImage> payloadArr = captcha.getChallenge().getPayload();
-        for (PayloadImage pi : payloadArr) {
-            try {
-                classifyImage(pi);
-            } catch (IOException e) {
-                System.err.println("\t !!!Chyba v processbuileru: ");
-                System.err.println(e.getMessage());
-            }
-        }
-        
-        result.countAccuracy(captcha.getChallenge().getChallengeClass(), captcha.getChallenge().getNumberOfCorrectImgs());
-    }
-
+   
     @Override
     protected void classifyImage(PayloadImage img) throws IOException {
 

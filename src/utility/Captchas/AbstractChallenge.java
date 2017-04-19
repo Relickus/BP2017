@@ -6,11 +6,9 @@
 package utility.Captchas;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Random;
-import java.util.Set;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.web.WebView;
 import resources.Constants;
 import resources.ImageClassEnum;
@@ -56,12 +54,12 @@ public abstract class AbstractChallenge {
 
     private void setConstants() {
         NUMBER_OF_CHALLENGE_IMAGES = 9;
-        NUMBER_OF_CORRECT_IMAGES = new Random().nextInt(5) + 2;
+        NUMBER_OF_CORRECT_IMAGES = new Random().nextInt(Constants.MAX_NUMBER_OF_CORRECT_IMAGES-Constants.MIN_NUMBER_OF_CORRECT_IMAGES+1) + Constants.MIN_NUMBER_OF_CORRECT_IMAGES;
         NUMBER_OF_NOISE_IMAGES = NUMBER_OF_CHALLENGE_IMAGES - NUMBER_OF_CORRECT_IMAGES;
     }
 
     public void changeConstants() {
-        NUMBER_OF_CORRECT_IMAGES = new Random().nextInt(5) + 2;
+        NUMBER_OF_CORRECT_IMAGES = new Random().nextInt(Constants.MAX_NUMBER_OF_CORRECT_IMAGES-Constants.MIN_NUMBER_OF_CORRECT_IMAGES+1) + Constants.MIN_NUMBER_OF_CORRECT_IMAGES;
         NUMBER_OF_NOISE_IMAGES = NUMBER_OF_CHALLENGE_IMAGES - NUMBER_OF_CORRECT_IMAGES;
     }
 
@@ -93,14 +91,13 @@ public abstract class AbstractChallenge {
     protected void generatePayloadCoordinates() {
         payloadCoordinatesArr = new ArrayList<>(NUMBER_OF_CHALLENGE_IMAGES);
 
-        Random rand = new Random();
-
         int i = 0;
-        while (payloadCoordinatesArr.size() != NUMBER_OF_CHALLENGE_IMAGES) {        // this is stupid as the set will always contain the same 9 coordinates ordered
-
+        while (payloadCoordinatesArr.size() != NUMBER_OF_CHALLENGE_IMAGES) {    
             payloadCoordinatesArr.add(new Coordinates(i / 3, i % 3));
             ++i;
         }
+        
+        Collections.shuffle(payloadCoordinatesArr);
     }
 
     protected void generatePayloadClasses() {
@@ -183,5 +180,10 @@ public abstract class AbstractChallenge {
     protected abstract void randomClass();
 
     public abstract ArrayList<Solver> getAvailableSolvers();
-
+ 
+   
+   public int getPayloadSize(){
+       return NUMBER_OF_CHALLENGE_IMAGES;
+   }
+  
 }

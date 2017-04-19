@@ -6,8 +6,7 @@
 package utility;
 
 import java.util.ArrayList;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.concurrent.Task;
 import utility.Captchas.CAPTCHA;
 import utility.Solvers.Solver;
 
@@ -19,20 +18,19 @@ public class ScriptExecutor {
 
     private ArrayList<Solver> solvers;
     private CAPTCHA captcha;
-    private Button finishButton;
 
-    public void launchScripts(ArrayList<Solver> slvrs, CAPTCHA c) {
-        this.solvers = slvrs;
+    public void launchScripts(ArrayList<Solver> arr, CAPTCHA c, Task<Boolean> task, PleaseWaitDialog pleaseWaitDialog) {
+        this.solvers = arr;
         this.captcha = c;
-                
+        int ctr = 0;         
+        
         for (Solver s : solvers) {
-            s.solve(captcha);
+            pleaseWaitDialog.updateProgress((double)ctr/solvers.size());
+            s.solve(captcha,task,pleaseWaitDialog);
+            ++ctr;
         }
     }
     
-    public void setOnFinishedButton(Button btn){
-        finishButton = btn;
-    }
     
     public int getEstimatedTime(ArrayList<Solver> solvers){        
         int res=0;

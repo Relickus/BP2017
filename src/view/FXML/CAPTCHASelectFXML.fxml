@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="700" prefWidth="500" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Controllers.CAPTCHASelectController">
+<AnchorPane id="AnchorPane" maxHeight="700.0" maxWidth="500.0" minHeight="700.0" minWidth="500.0" prefHeight="700" prefWidth="500" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Controllers.CAPTCHASelectController">
     <children>
-      <VBox prefHeight="700.0" prefWidth="500.0">
+      <VBox maxHeight="700.0" maxWidth="500.0" minHeight="700.0" minWidth="500.0" prefHeight="700.0" prefWidth="500.0">
          <children>
               <Label fx:id="label" minHeight="16" minWidth="69" text="Please select your desired type of CAPTCHA:">
                <VBox.margin>
@@ -38,17 +38,9 @@
                            <children>
                               <TextField fx:id="keywordSpecifyText" maxWidth="200.0" prefWidth="200.0" promptText="specify the keyword (optional)">
                                  <VBox.margin>
-                                    <Insets top="20.0" />
+                                    <Insets />
                                  </VBox.margin>
                               </TextField>
-                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="sem pod radiobtny doplnit Available solvers" textFill="#868686">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                                 <font>
-                                    <Font name="System Italic" size="11.0" />
-                                 </font>
-                              </Label>
                            </children>
                         </VBox>
                         <ImageView fitHeight="300.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
@@ -76,19 +68,11 @@
                            <children>
                               <TextField fx:id="imageSpecifyText" maxWidth="200.0" prefWidth="200.0" promptText="specify ref. image class (optional)">
                                  <VBox.margin>
-                                    <Insets top="20.0" />
+                                    <Insets bottom="20.0" top="20.0" />
                                  </VBox.margin>
                               </TextField>
                            </children>
                         </VBox>
-                        <Label alignment="BOTTOM_RIGHT" contentDisplay="RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="*only solvable by KNN" textFill="#868686">
-                           <VBox.margin>
-                              <Insets bottom="20.0" right="20.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font name="System Italic" size="11.0" />
-                           </font>
-                        </Label>
                         <ImageView fitHeight="300.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
                            <image>
                               <Image url="@../CAPTCHA_example_refimage.png" />

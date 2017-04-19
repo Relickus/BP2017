@@ -20,12 +20,7 @@ public class CNNSolver extends Solver {
     }
 
 
-    @Override
-    public void solve(CAPTCHA captcha) {
-    
-        //set Result object
-    }
-
+   
 //    @Override
 //    public void loadScript(AbstractChallenge challenge) {
 //

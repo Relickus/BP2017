@@ -21,6 +21,8 @@ public class Constants {
     public static final String FILTER_CORRECT_PATH = "file:src/resources/filter_correct.png";
             
     public static final double FILTER_CHOSEN_OPACITY = 0.3;
+    public static final int MAX_NUMBER_OF_CORRECT_IMAGES = 6;
+    public static final int MIN_NUMBER_OF_CORRECT_IMAGES = 4;
 
     
 }

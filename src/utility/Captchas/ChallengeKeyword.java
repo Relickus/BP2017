@@ -17,6 +17,7 @@ import utility.Solvers.ClarifaiSolver;
 import utility.Solvers.GoogleSolver;
 import utility.Solvers.ImaggaSolver;
 import utility.Solvers.KNNSolver;
+import utility.Solvers.MicrosoftSolver;
 import utility.Solvers.Solver;
 import utility.Solvers.WatsonSolver;
 
@@ -97,6 +98,7 @@ public class ChallengeKeyword extends AbstractChallenge {
         arr.add(new WatsonSolver());
         arr.add(new ClarifaiSolver());
         arr.add(new ImaggaSolver());
+        arr.add(new MicrosoftSolver());
         // add more online solvers
         
         return arr;
