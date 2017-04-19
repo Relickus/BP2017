@@ -36,6 +36,8 @@ public class StageController {
 
     public StageController() {
         this.currentStage = new Stage();
+        currentStage.setWidth(500);
+        currentStage.setHeight(720);
     }
 
     public void loadNextStage(String window){

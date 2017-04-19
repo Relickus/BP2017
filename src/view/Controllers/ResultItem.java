@@ -58,8 +58,6 @@ public class ResultItem extends VBox {
     }
 
     private void styleLabels(Double d) {
-        //solverName.setStyle("-fx-font-weight: bold;");
-
 
         if (d.compareTo(30.0) <= 0) {
             solverAcc.setTextFill(Color.RED);
@@ -70,7 +68,7 @@ public class ResultItem extends VBox {
         } else {
             solverAcc.setTextFill(Color.GREEN);
             if(d.compareTo(100.0) == 0)
-                solverAcc.setStyle("-fx-font-weight: bold");
+                solverAcc.setStyle("-fx-font-size: 15px; -fx-font-weight: bold");
         }
     }
 

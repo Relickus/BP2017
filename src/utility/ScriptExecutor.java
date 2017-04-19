@@ -19,16 +19,21 @@ public class ScriptExecutor {
     private ArrayList<Solver> solvers;
     private CAPTCHA captcha;
 
-    public void launchScripts(ArrayList<Solver> arr, CAPTCHA c, Task<Boolean> task, PleaseWaitDialog pleaseWaitDialog) {
+    public boolean launchScripts(ArrayList<Solver> arr, CAPTCHA c, Task<Boolean> task, PleaseWaitDialog pleaseWaitDialog) {
         this.solvers = arr;
         this.captcha = c;
         int ctr = 0;         
         
         for (Solver s : solvers) {
             pleaseWaitDialog.updateProgress((double)ctr/solvers.size());
-            s.solve(captcha,task,pleaseWaitDialog);
+            try{
+                s.solve(captcha,task,pleaseWaitDialog);
+            }catch( SolutionInterruptedException e){
+                return false;
+            }
             ++ctr;
         }
+        return true;
     }
     
     

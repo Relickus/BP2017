@@ -45,7 +45,7 @@ import utility.Solvers.Solver;
  *
  * @author Vojta
  */
-public class SolverSettingsController extends AbstractController implements Initializable{
+public class SolverSettingsController extends AbstractController implements Initializable {
 
     private CAPTCHA captcha;
     private CAPTCHAHolder captchaHolder;
@@ -127,7 +127,7 @@ public class SolverSettingsController extends AbstractController implements Init
                     kComboBox.getValue(),
                     (AbstractDistance) distance.getValue(),
                     weightedVotes.isSelected()
-                    //,crossFolding.isSelected()
+            //,crossFolding.isSelected()
             );
         });
 
@@ -209,6 +209,8 @@ public class SolverSettingsController extends AbstractController implements Init
 
         if (pickedSolversArr == null) {
             pickedSolversArr = new ArrayList<>();
+        } else {
+            pickedSolversArr.clear();
         }
 
         for (CheckBoxTreeItem<CustomTreeItem> i : checkboxArr) {
@@ -234,35 +236,34 @@ public class SolverSettingsController extends AbstractController implements Init
         pleaseWaitDialog = new PleaseWaitDialog();
         ScriptExecutor se = new ScriptExecutor();
         pleaseWaitDialog.setEstimatedTime(se.getEstimatedTime(pickedSolversArr));
-                
+
         Task<Boolean> task = new Task<Boolean>() {
             @Override
             public Boolean call() {
-                se.launchScripts(pickedSolversArr, captcha, this, pleaseWaitDialog);
-                return true;
+                return se.launchScripts(pickedSolversArr, captcha, this, pleaseWaitDialog);
             }
         };
-        
 
         task.setOnRunning((e) -> pleaseWaitDialog.show());
-        
         task.setOnSucceeded((e) -> {
+
+            //if it is already hidden by clicking Stop, return to SolverSettings
+            if (!pleaseWaitDialog.isShowing()) {
+                return;
+            }
             pleaseWaitDialog.hide();
-            // process return value again in JavaFX thread
-              
+
             stageController.loadNextStage(NEXT_SCENE);
             ResultWindowController windowController = (ResultWindowController) stageController.getWindowController();
             windowController.setCaptcha(captcha);
             windowController.setResults(pickedSolversArr);
-            // tohle muze casem prijit pryc, nahradit metodou setResults() po obdrzeni vysledků
             windowController.initView();
 
             stageController.showStage();
         });
-        
-       Thread t = new Thread(task);      
-       //pleaseWaitDialog.setTaskToCancelButton(task);
-       t.start();
+
+        Thread t = new Thread(task);
+        t.start();
     }
 
     @Override
@@ -271,6 +272,5 @@ public class SolverSettingsController extends AbstractController implements Init
         NEXT_SCENE = Constants.RESULT_WINDOW;
         PREVIOUS_SCENE = Constants.CAPTCHA_SETTINGS_WINDOW;
     }
-
 
 }

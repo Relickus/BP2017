@@ -13,7 +13,7 @@ public enum ImageClassEnum {
       
     DOG(0),
     FLOWER(1),  //plant?
-    HOUSE(2),   //building
+    BUILDING(2),   //building
     BOAT(3),    // ship
     TREE(4),
     CAR(5),

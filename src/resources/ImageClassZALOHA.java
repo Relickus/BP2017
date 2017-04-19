@@ -13,14 +13,14 @@ public enum ImageClassZALOHA {
     
    
     DOG(1),
-    HOUSE(2),
+    BUILDING(2),
     BOAT(3),
     TREE(4),
     CAR(5),
     PLANE(6),
     CAT(7),
     HORSE(8),
-    HUMAN(9),
+    FACE(9),
     FLOWER(10);
   
     private final int value;

@@ -9,12 +9,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.concurrent.Task;
-import javafx.scene.control.ProgressBar;
 import resources.Constants;
 import utility.Captchas.CAPTCHA;
 import utility.PayloadImage;
 import utility.PleaseWaitDialog;
 import utility.Result;
+import utility.SolutionInterruptedException;
 import utility.SolverParameters;
 
 /**
@@ -36,7 +36,6 @@ public abstract class Solver {
         setScriptPath();
     }
 
-
     public String getName() {
         return name;
     }
@@ -45,23 +44,27 @@ public abstract class Solver {
         return parameters;
     }
 
-    public void solve(CAPTCHA captcha, Task<Boolean> task, PleaseWaitDialog pleaseWaitDialog){
-                        
-         ArrayList<PayloadImage> payloadArr = captcha.getChallenge().getPayload();
+    public void solve(CAPTCHA captcha, Task<Boolean> task, PleaseWaitDialog pleaseWaitDialog) throws SolutionInterruptedException {
+
+        ArrayList<PayloadImage> payloadArr = captcha.getChallenge().getPayload();
         for (PayloadImage pi : payloadArr) {
             try {
-                classifyImage(pi);            
-                //pleaseWaitDialog.incrementProgress();
+                classifyImage(pi);
+
+                //user clicked Stop on Dialog panel
+                if (!pleaseWaitDialog.isShowing()) {
+                    throw new SolutionInterruptedException();
+                }
+
             } catch (IOException e) {
                 System.err.println("\t !!!Chyba v processbuileru: ");
                 System.err.println(e.getMessage());
                 return;
             }
         }
-        
+
         result.countAccuracy(captcha.getChallenge().getChallengeClass(), captcha.getChallenge().getNumberOfCorrectImgs());
     }
-    //public abstract void loadScript( AbstractChallenge challenge);  // WHAT??
 
     private void setScriptPath() {
         scriptPath = Constants.SCRIPTS_FOLDER_PATH + name.replace(" ", "") + ".py";
@@ -73,7 +76,6 @@ public abstract class Solver {
 
     public abstract boolean hasParams();
 
-    
     public Result getResult() {
         return result;
     }
@@ -81,14 +83,13 @@ public abstract class Solver {
     public void setResult(Result result) {
         this.result = result;
     }
-    
+
     /**
-     * 
+     *
      * @return Estimated time of solution in SECONDS
      */
-    public int getEstimatedTime(){
+    public int getEstimatedTime() {
         return estimatedTime;
     }
-    
-    
+
 }
