@@ -12,7 +12,7 @@ import java.util.Random;
 import java.util.Set;
 import javafx.scene.image.Image;
 import resources.Constants;
-import resources.ImageClassEnum;
+import resources.ImageClass;
 
 /**
  *
@@ -26,7 +26,7 @@ public class Loader {
         return instance;
     }
 
-    public PayloadImage loadImageFile(ImageClassEnum img) {
+    public PayloadImage loadImageFile(ImageClass img) {
 
         File targetFolder = getTargetFolder(img);
         if (targetFolder == null) {
@@ -37,12 +37,12 @@ public class Loader {
 
         PayloadImage result = new PayloadImage(constructImagePath(img, imgIndex));
         
-        result.setImageClass(img);
+        result.setCorrectClass(img);
 
         return result;
     }
 
-    public PayloadImage loadImageFile(ImageClassEnum img, int idxSpecify) {
+    public PayloadImage loadImageFile(ImageClass img, int idxSpecify) {
 
         File targetFolder = getTargetFolder(img);
         if (targetFolder == null) {
@@ -51,14 +51,14 @@ public class Loader {
 
         PayloadImage result = new PayloadImage(constructImagePath(img, idxSpecify));
         
-        result.setImageClass(img);
+        result.setCorrectClass(img);
 
         return result;
     }
 
-    private File getTargetFolder(ImageClassEnum img) {
+    private File getTargetFolder(ImageClass img) {
 
-        String folderName = img.toString().toUpperCase();
+        String folderName = img.getName().toUpperCase();
 
         File[] folders = new File(Constants.DATASET_PATH).listFiles();
 
@@ -84,7 +84,7 @@ public class Loader {
      * which must be mutually exclusive)
      * @return List of size num with loaded images of desired class
      */
-    public ArrayList<PayloadImage> loadNImageFiles(ImageClassEnum img, int num) {
+    public ArrayList<PayloadImage> loadNImageFiles(ImageClass img, int num) {
 
         File targetFolder = getTargetFolder(img);
         if (targetFolder == null) {
@@ -103,16 +103,16 @@ public class Loader {
         Image i = new Image(constructImagePath(img, num));
         for (Integer idx : indexSet) {
             PayloadImage pi = new PayloadImage(constructImagePath(img, idx));
-            pi.setImageClass(img);
+            pi.setCorrectClass(img);
             imgArr.add(pi);
         }
 
         return imgArr;
     }
 
-    private String constructImagePath(ImageClassEnum imgclass, int idx) {
+    private String constructImagePath(ImageClass imgclass, int idx) {
 
-        String className = imgclass.printableName().toLowerCase();
+        String className = imgclass.getName().toLowerCase();
         String targetFileName = className + "_" + idx + ".jpg";
 
         File targetFolder = getTargetFolder(imgclass);

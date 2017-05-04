@@ -12,7 +12,8 @@ import java.util.Random;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import resources.Constants;
-import resources.ImageClassEnum;
+import resources.ImageClass;
+import resources.ImageClassContainer;
 import utility.Loader;
 import utility.Solvers.CNNSolver;
 import utility.Solvers.ClarifaiSolver;
@@ -45,13 +46,13 @@ public class ChallengeImage extends AbstractChallenge {
     protected void randomClass() {
         fixedClass = false;
         questionClassIdx = new Random().nextInt(Constants.NUMBER_OF_CLASSES);
-        challengeClass = ImageClassEnum.getEnum(questionClassIdx);
+        challengeClass = ImageClassContainer.getClassByVal(questionClassIdx);
         keywordStr = challengeClass.printableName();
         loadRefImage();
     }
 
     @Override
-    protected void specifyClass(ImageClassEnum e) {                    
+    protected void specifyClass(ImageClass e) {                    
         fixedClass = true;
         challengeClass = e;
         questionClassIdx = challengeClass.getValue();

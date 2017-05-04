@@ -2,7 +2,7 @@ package utility;
 
 import java.io.File;
 import javafx.scene.image.Image;
-import resources.ImageClassEnum;
+import resources.ImageClass;
 
 /**
  * Wrapper class for payload images and their coordinates in the payload grid
@@ -12,12 +12,13 @@ public class PayloadImage extends Image {
 
     Coordinates coordinates;
     String path;
-    ImageClassEnum correctClass;
+    ImageClass correctClass;
 
     public PayloadImage(String url) {
         super(url);
-        this.path = url;
+        this.path = url;        
     }
+    
 
     public void setPath(String path) {
         this.path = path;
@@ -39,12 +40,12 @@ public class PayloadImage extends Image {
         return coordinates;
     }
     
-    public ImageClassEnum getImageClass(){      
+    public ImageClass getCorrectClass(){      
         return correctClass;
     }
 
-    void setImageClass(ImageClassEnum img) {
-        correctClass = img;
+    public void setCorrectClass(ImageClass imgclass) {
+        
+        correctClass = imgclass;
     }
-
 }

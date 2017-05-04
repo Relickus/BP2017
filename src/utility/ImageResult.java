@@ -5,6 +5,9 @@
  */
 package utility;
 
+import resources.ImageClass;
+import resources.ImageClassContainer;
+
 /**
  *
  * @author Vojta
@@ -32,6 +35,17 @@ public class ImageResult implements Comparable<ImageResult>{
          return (int)(o.score*1000 - this.score*1000);  // *1000 in order to preserve floating point precision
     }
     
+    public boolean matchesImageClass(ImageClass imageClass){        
+        return label.equalsIgnoreCase(imageClass.getName());        
+    }    
+    
+    public boolean matchesSynonym(ImageClass imageClass){       
         
+        for(ImageClass i : ImageClassContainer.getSynonyms(imageClass)){            
+            if(i.getName().equalsIgnoreCase(label))
+                return true;            
+        }   
+        return false;
+    }   
     
 }

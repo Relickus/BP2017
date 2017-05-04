@@ -14,22 +14,9 @@ import javafx.fxml.FXML;
  */
 class AbstractController {
 
-    //protected Stage currentStage;   // VYRESIT REDUNDANCI TENHLE STAGE A TEN UVNITR STAGECONTROLERU
     protected StageController stageController = StageController.getInstance();
     protected String NEXT_SCENE;
     protected String PREVIOUS_SCENE;
-
-//    public void setPrevStage(Stage stage){
-//        currentStage = stage;
-//    }
-    protected void goToNextStage() {
-
-        stageController.closeStage(stageController.getCurrentStage());
-
-        stageController.loadNextStage(NEXT_SCENE);
-
-        stageController.showStage();
-    }
 
     @FXML
     private void onBackClicked(ActionEvent event) {

@@ -11,7 +11,8 @@ import java.util.Random;
 import javafx.scene.Node;
 import javafx.scene.web.WebView;
 import resources.Constants;
-import resources.ImageClassEnum;
+import resources.ImageClass;
+import resources.ImageClassContainer;
 import utility.Coordinates;
 import utility.Loader;
 import utility.PayloadImage;
@@ -29,11 +30,11 @@ public abstract class AbstractChallenge {
 
     protected ArrayList<PayloadImage> payloadImgArr;
     protected ArrayList<Coordinates> payloadCoordinatesArr;
-    protected ArrayList<ImageClassEnum> noiseImgsClassArr;
+    protected ArrayList<ImageClass> noiseImgsClassArr;
 
     protected int questionClassIdx;
     protected String keywordStr;
-    protected ImageClassEnum challengeClass;
+    protected ImageClass challengeClass;
 
     protected WebView captchaWebView;
     protected WebView payloadWebView;
@@ -51,7 +52,7 @@ public abstract class AbstractChallenge {
         setConstants();
 
         questionClassIdx = (new Random().nextInt(Constants.NUMBER_OF_CLASSES)) + 1;
-        challengeClass = ImageClassEnum.getEnum(questionClassIdx);
+        challengeClass = ImageClassContainer.getClassByVal(questionClassIdx);
     }
 
     private void setConstants() {
@@ -84,7 +85,7 @@ public abstract class AbstractChallenge {
 
     public abstract String getKeyword();
     
-    public ImageClassEnum getChallengeClass(){
+    public ImageClass getChallengeClass(){
         return challengeClass;
     }
 
@@ -114,7 +115,7 @@ public abstract class AbstractChallenge {
         while (i < NUMBER_OF_NOISE_IMAGES) {
             int nextIdx = new Random().nextInt(Constants.NUMBER_OF_CLASSES);
             if (nextIdx != questionClassIdx) {
-                noiseImgsClassArr.add(ImageClassEnum.getEnum(nextIdx));
+                noiseImgsClassArr.add(ImageClassContainer.getClassByVal(nextIdx));
                 ++i;
             }
             //if generated same class as keywordStr try again...
@@ -157,7 +158,7 @@ public abstract class AbstractChallenge {
         payloadImgArr = loader.loadNImageFiles(challengeClass, NUMBER_OF_CORRECT_IMAGES);
 
         // appends noise images to arr
-        for (ImageClassEnum i : noiseImgsClassArr) {
+        for (ImageClass i : noiseImgsClassArr) {
             payloadImgArr.add(loader.loadImageFile(i));
         }
     }
@@ -172,7 +173,7 @@ public abstract class AbstractChallenge {
 
     protected final void checkInput(String key) {
 
-        ImageClassEnum specClass = ImageClassEnum.getEnum(key);
+        ImageClass specClass = ImageClassContainer.getClassByName(key);
         if (specClass != null) {
             specifyClass(specClass);
         } else {
@@ -181,7 +182,7 @@ public abstract class AbstractChallenge {
         }
     }
 
-    protected abstract void specifyClass(ImageClassEnum e);
+    protected abstract void specifyClass(ImageClass e);
 
     protected abstract void randomClass();
 

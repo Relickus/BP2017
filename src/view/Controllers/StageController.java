@@ -12,25 +12,26 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import resources.Constants;
 
 /**
  *
  * @author Vojta
  */
 public class StageController {
-    
+
     private FXMLLoader fxmlLoader;
     private Pane pane;
     private final Stage currentStage;
-    
+
     private static final StageController instance = new StageController();
-    
-    public static StageController getInstance(){
+
+    public static StageController getInstance() {
         return instance;
-        
+
     }
-    
-    public Stage getCurrentStage(){
+
+    public Stage getCurrentStage() {
         return currentStage;
     }
 
@@ -38,39 +39,33 @@ public class StageController {
         this.currentStage = new Stage();
         currentStage.setWidth(500);
         currentStage.setHeight(720);
+
+        currentStage.setTitle(Constants.APPLICATION_TITLE);
     }
 
-    public void loadNextStage(String window){
-       fxmlLoader = new FXMLLoader(getClass().getResource(window));
-       
+    public void loadNextStage(String window) {
+        fxmlLoader = new FXMLLoader(getClass().getResource(window));
+
         try {
             pane = fxmlLoader.load();
             Scene scene = new Scene(pane);
-            currentStage.setScene(scene);        
+            currentStage.setScene(scene);
             currentStage.setResizable(false);
-            
+
         } catch (IOException ex) {
             Logger.getLogger(StageController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void closeStage(Stage stage){
-        
-       stage.close();
+
+    public void showStage() {
+
+        currentStage.show();
+
     }
-    
-    public void showStage(){
-    
-       
-       
-       currentStage.show();
-      
+
+    public AbstractController getWindowController() {
+
+        return fxmlLoader.getController();
     }
-    
-    public AbstractController getWindowController(){
-        
-       return fxmlLoader.getController();      
-    }
-    
-    
+
 }

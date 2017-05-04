@@ -11,7 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import resources.Constants;
 import resources.ImageClass;
-import resources.ImageClassEnum;
+import resources.ImageClassContainer;
 import utility.Solvers.CNNSolver;
 import utility.Solvers.ClarifaiSolver;
 import utility.Solvers.GoogleSolver;
@@ -37,7 +37,7 @@ public class ChallengeKeyword extends AbstractChallenge {
 
     private void generateKeyword() {
         questionClassIdx = new Random().nextInt(Constants.NUMBER_OF_CLASSES);
-        challengeClass = ImageClassEnum.getEnum(questionClassIdx);
+        challengeClass = ImageClassContainer.getClassByVal(questionClassIdx);
         keywordStr = challengeClass.printableName();
     }
 
@@ -51,7 +51,7 @@ public class ChallengeKeyword extends AbstractChallenge {
     }
 
     @Override
-    protected void specifyClass(ImageClassEnum e) {
+    protected void specifyClass(ImageClass e) {
                
         fixedClass = true;
         challengeClass = e;

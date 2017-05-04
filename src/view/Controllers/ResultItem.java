@@ -97,14 +97,14 @@ public class ResultItem extends VBox {
         
         if(filterPath.equals(Constants.FILTER_CHOSEN_PATH)){
             for (ClassifiedImage i : result.getResultArr()) {
-                if (i.matchesKeyword(captcha.getChallenge().getChallengeClass())) {
+                if (i.isEquivalentClass(captcha.getChallenge().getChallengeClass())) {
                     captchaHolder.setFilterOnField(filterPath, i.getCoordinates());
                 }
             }
         }
         else if(filterPath.equals(Constants.FILTER_CORRECT_PATH)){
             for (ClassifiedImage i : result.getResultArr()) {
-                if (captcha.getChallenge().getChallengeClass().equals(i.getImageClass())) {
+                if (captcha.getChallenge().getChallengeClass().equals(i.getCorrectClass())) {
                     captchaHolder.setFilterOnField(filterPath, i.getCoordinates());
                 }
             }

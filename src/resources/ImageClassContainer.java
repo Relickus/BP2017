@@ -5,59 +5,105 @@
  */
 package resources;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashMap;
+import java.util.HashSet;
+
 /**
  *
  * @author Vojta
  */
-public enum ImageClassContainer {
-    
-   
-    DOG(1),
-    BUILDING(2),
-    BOAT(3),
-    TREE(4),
-    CAR(5),
-    PLANE(6),
-    CAT(7),
-    HORSE(8),
-    FACE(9),
-    FLOWER(10);
-  
-    private final int value;
+public class ImageClassContainer {
 
-    private ImageClassContainer(int value) {
-        this.value = value;
-    }
-    
-    public static ImageClassContainer getEnum(int value) {
-      for(ImageClassContainer e: ImageClassContainer.values()) {
-        if(e.value == value) {
-          return e;
+    private static final HashMap<ImageClass, Set<ImageClass>> synMap  = new HashMap<>();
+    private static final ArrayList<ImageClass> imgClassesArr = new ArrayList<>();
+
+    public static void init() {            
+        int counter=0;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(Constants.CONFIG_IMAGE_CLASSES))) {
+            String line;
+            ImageClass imageclass;
+            
+            while ((line = br.readLine()) != null) {                
+                ++counter;
+                
+               int delimPos = line.indexOf(":");
+               if(delimPos == -1){
+                   imageclass = new ImageClass(line);
+                   
+                   addRow(imageclass);
+                   imgClassesArr.add(imageclass);
+                   continue;
+               }
+               
+               imageclass = new ImageClass(line.substring(0,delimPos));
+               String synonyms = line.substring(delimPos+1);
+               String [] syns = synonyms.split(",");
+               
+               addRow(imageclass, syns);
+               imgClassesArr.add(imageclass);
+            }
         }
-      }
-      return null;
-    }
-    
-    public int getValue(){
-        return value;
-    }
-    
-    public static ImageClassContainer getEnum(String str){
-        
-        for(ImageClassContainer e: ImageClassContainer.values()) {
-        if(e.printableName().toLowerCase().equals( str.toLowerCase() ) ) {
-          return e;
+        catch(IOException ex){
+            System.err.println("NESLO NACIST CONFIG FILE!!!  " + ex.getMessage());
+            System.exit(1);
         }
-      }
-      return null;
+      
+        Constants.NUMBER_OF_CLASSES = counter;
     }
     
-    public String printableName(){
-        
-        String tmp = this.name().toLowerCase();
-        
-        return tmp.substring(0, 1).toUpperCase() + tmp.substring(1);        
+     public static void addRow(ImageClass imgclass) {
+        synMap.put(imgclass, null);
     }
+
+    public static void addRow(ImageClass imgclass, Set<ImageClass> syns) {
+        synMap.put(imgclass, syns);
+    }
+    public static void addRow(ImageClass imgclass, String[] syns) {
+        
+        Set<ImageClass> synSet = new HashSet<>();
+        
+        for(String s : syns){
+            synSet.add(new ImageClass(s,imgclass.getValue()));
+        }
+        
+        addRow(imgclass,synSet);        
+    }
+
+    public static void addSynonym(ImageClass imgclass, ImageClass synonym) {
+        synMap.get(imgclass).add(synonym);
+    }
+    public static void addSynonyms(ImageClass imgclass, Set<ImageClass> synonymArr) {
+        synMap.get(imgclass).addAll(synonymArr);
+    }
+
+    public static Set<ImageClass> getSynonyms(ImageClass imgclass) {
+        return synMap.get(imgclass);
+    }
+    
+    public static ImageClass getClassByVal(int val){
+        
+        return imgClassesArr.get(val);
+    }
+    public static ImageClass getClassByName(String name){
+        
+        for(ImageClass i : imgClassesArr){
+            if(i.getName().toLowerCase().equals(name))
+                return i;
+        }
+        
+        return null;
+    }
+
+    public static ArrayList<ImageClass> getClassesArr() {
+        return imgClassesArr;
+    }
+
     
     
 }

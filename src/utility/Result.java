@@ -6,7 +6,7 @@
 package utility;
 
 import java.util.ArrayList;
-import resources.ImageClassEnum;
+import resources.ImageClass;
 
 /**
  *
@@ -34,11 +34,11 @@ public class Result {
         return classifiedImgsArr == null || classifiedImgsArr.isEmpty();
     }
     
-    public void countAccuracy(ImageClassEnum challengeClass,int numberOfCorrectImgs){
+    public void countAccuracy(ImageClass challengeClass,int numberOfCorrectImgs){
         
         int counter=0;
         for(ClassifiedImage img : classifiedImgsArr){  
-            if(img.matchesKeyword(challengeClass))
+            if(img.isEquivalentClass(challengeClass))
                 ++counter;
         }
         

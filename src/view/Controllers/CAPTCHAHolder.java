@@ -65,6 +65,7 @@ public class CAPTCHAHolder extends VBox{
     private void setChallengeHeader(ChallengeImage c){
         
         promptLabel.setText("Select all images that match this one: ");
+        promptLabel.setWrapText(true);
         ImageView iv = (ImageView)c.getNode();
         iv.setFitWidth(100);
         iv.setFitHeight(100);

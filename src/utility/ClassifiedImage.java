@@ -7,7 +7,8 @@ package utility;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import resources.ImageClassEnum;
+import resources.ImageClass;
+import resources.ImageClassContainer;
 
 /**
  *
@@ -16,7 +17,7 @@ import resources.ImageClassEnum;
 public class ClassifiedImage extends PayloadImage {
 
     private ArrayList<ImageResult> resultsArr;
-    private ImageClassEnum predictedClass;
+    private ImageClass predictedClass;
 
     public ClassifiedImage(PayloadImage payloadimage) {
         super(payloadimage.path);
@@ -31,19 +32,26 @@ public class ClassifiedImage extends PayloadImage {
         Collections.sort(resultsArr);
 
         for (ImageResult r : resultsArr) {
-            for (ImageClassEnum e : ImageClassEnum.values()) {
-                String lookforclass = e.name().toLowerCase();     // ':' is there to exclude substrings like 'car' match labels like 'carnivore'
-                if (r.label.equalsIgnoreCase(lookforclass)) {
+            for (ImageClass e : ImageClassContainer.getClassesArr()) {
+                if (r.matchesImageClass(e)) {    
                     predictedClass = e;
                     return;
                 }
+                //search in synonyms of currently checked class
+                if(ImageClassContainer.getSynonyms(e) != null)
+                    for(ImageClass syn : ImageClassContainer.getSynonyms(e)){
+                        if(r.matchesImageClass(syn)){
+                            predictedClass = syn;       // !!!!!!!!!!! NOW predictedclass != correctclass
+                            return;
+                        }
+                    }    
             }
         }
 
         // none of my imageclasses were in prediction 
     }
 
-    public ImageClassEnum getPredictedClass() {
+    public ImageClass getPredictedClass() {
         return predictedClass;
     }
 
@@ -56,15 +64,26 @@ public class ClassifiedImage extends PayloadImage {
     }
 
     public boolean guessedRight() {
-        return correctClass.equals(predictedClass);
+        
+        if(predictedClass == null)
+            return false;
+        
+        if (correctClass.equals(predictedClass))
+            return true;
+        
+        if(ImageClassContainer.getSynonyms(correctClass).contains(predictedClass))
+            return true;
+        
+        return false;
     }
 
-    public boolean matchesKeyword(ImageClassEnum challengeClass) {
+    public boolean isEquivalentClass(ImageClass oth) {
 
         if(predictedClass == null)
             return false;
         
-        return challengeClass.equals(predictedClass);
+        // comparison of values instead of names because synonyms have same values
+        return oth.getValue() == predictedClass.getValue();
     }
 
 }

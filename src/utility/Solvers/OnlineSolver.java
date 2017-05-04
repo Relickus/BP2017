@@ -33,7 +33,7 @@ public abstract class OnlineSolver extends Solver {
         BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
         String ret;
-        ClassifiedImage i = new ClassifiedImage(img);
+        ClassifiedImage classifiedImage = new ClassifiedImage(img);
 
         while (true) {
             ret = in.readLine();
@@ -47,12 +47,12 @@ public abstract class OnlineSolver extends Solver {
 
             String label = ret.substring(0, ret.indexOf(':'));
             double score = Double.parseDouble(ret.substring(ret.indexOf(':') + 1));
-            i.addClass(label, score);
+            classifiedImage.addClass(label, score);
 
         }
 
-        i.setPredictedClass();
-        result.addClassifiedImage(i);
+        classifiedImage.setPredictedClass();
+        result.addClassifiedImage(classifiedImage);
     }
 
     @Override
