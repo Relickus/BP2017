@@ -11,6 +11,8 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Orientation;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 import resources.Constants;
 import utility.Captchas.CAPTCHA;
@@ -82,8 +84,13 @@ public class ResultWindowController extends AbstractController implements Initia
             
             r.setFilter(Constants.FILTER_CHOSEN_PATH);
             r.setFilter(Constants.FILTER_CORRECT_PATH);
+            
+            if(s.getResult().hasReferenceImage()){
+                r.setRefImgFilter();
+            }
     
             resultContainer.getChildren().add(r);
+            resultContainer.getChildren().add(new Separator(Orientation.HORIZONTAL));
         }
 
     }

@@ -93,11 +93,12 @@ public class SolverSettingsController extends AbstractController implements Init
         dialogGrid.setHgap(10);
         dialogGrid.setVgap(10);
         dialogGrid.setPadding(new Insets(10, 10, 10, 10));
+        
 
         Label Kparam = new Label("K parameter:");
         ComboBox kComboBox = new ComboBox();
         kComboBox.getItems().addAll(
-                1, 3, 5, 7, 9, 11, 15, 21, 33
+                KNNParameters.getAvailableKs()
         );
 
         kComboBox.getSelectionModel().selectFirst();
@@ -107,7 +108,7 @@ public class SolverSettingsController extends AbstractController implements Init
 
         ComboBox distance = new ComboBox();
         distance.getItems().addAll(
-                new EucleidianDistance(), new ManhattanDistance(), new CosineDistance()
+                KNNParameters.getAvailableDistances()
         );
         distance.getSelectionModel().selectFirst();
 
@@ -115,7 +116,6 @@ public class SolverSettingsController extends AbstractController implements Init
         dialogGrid.add(kComboBox, 1, 0);
         dialogGrid.add(distance, 2, 0);
         dialogGrid.add(weightedVotes, 3, 0);
-        //dialogGrid.add(crossFolding, 4, 0);
 
         knnParamsDialog = new Dialog();
         knnParamsDialog.getDialogPane().setContent(dialogGrid);
@@ -127,7 +127,6 @@ public class SolverSettingsController extends AbstractController implements Init
                     kComboBox.getValue(),
                     (AbstractDistance) distance.getValue(),
                     weightedVotes.isSelected()
-            //,crossFolding.isSelected()
             );
         });
 

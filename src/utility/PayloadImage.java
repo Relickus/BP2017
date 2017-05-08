@@ -19,6 +19,9 @@ public class PayloadImage extends Image {
         this.path = url;        
     }
     
+    public void setIsReferenceImage(){
+        coordinates = new Coordinates(-1,-1);
+    }
 
     public void setPath(String path) {
         this.path = path;

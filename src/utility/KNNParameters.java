@@ -5,6 +5,9 @@
  */
 package utility;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  *
  * @author Vojta
@@ -14,27 +17,27 @@ public class KNNParameters extends SolverParameters{
     
     protected int K;
     protected boolean weightedVotes;
-    //protected boolean crossFolding;
+    protected static final Integer [] availableKs = new Integer[]{1, 3, 5, 7, 9, 11, 15, 21, 33};
+    protected static final AbstractDistance [] availableDistances = new AbstractDistance[]{
+        new EucleidianDistance(),
+        new ManhattanDistance()
+    };
     
     protected AbstractDistance measureDistance;
 
-    public KNNParameters(Object k, AbstractDistance dist, boolean weights /*, boolean cross*/) {
+    public KNNParameters(Object k, AbstractDistance dist, boolean weights) {
 
         this.K = (Integer)k;
         this.measureDistance = dist;
-        this.weightedVotes = weights;
-        //this.crossFolding = cross;            
+        this.weightedVotes = weights;         
     }
 
     public KNNParameters() {   // default parameters
             
         this.K = 5;
         this.measureDistance = new EucleidianDistance();
-        this.weightedVotes = false;
-        //this.crossFolding = false;        
+        this.weightedVotes = false;  
     }
-
-    
     
     public void setK(int K) {
         
@@ -66,10 +69,6 @@ public class KNNParameters extends SolverParameters{
         return weightedVotes;
     }
 
-//    public boolean isCrossFolding() {
-//        return crossFolding;
-//    }
-
     public AbstractDistance getMeasureDistance() {
         return measureDistance;
     }
@@ -78,6 +77,14 @@ public class KNNParameters extends SolverParameters{
     public String toString() {
         return " K: " + K + ", distance: " + measureDistance.getName() 
              + ", weighting: " + weightedVotes/* + ", crossfolding: " + crossFolding*/;
+    }
+    
+    public static ArrayList<Integer> getAvailableKs(){
+        return new ArrayList<>(Arrays.asList(availableKs));
+    }
+    
+    public static ArrayList<AbstractDistance>getAvailableDistances(){        
+        return new ArrayList<>(Arrays.asList(availableDistances));
     }
     
 }

@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -53,24 +54,30 @@ public class CAPTCHAHolder extends VBox{
 
     private void setChallengeHeader(ChallengeKeyword c){
         
-        promptLabel.setText("Select all images of a ");
+        promptLabel.setText(Constants.LABEL_CHALLENGE_KEYWORD);
         Label keywordLabel = (Label)c.getNode();
         keywordLabel.setTextFill(Color.WHITE);
         keywordLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 18px; -fx-font-weight: bold;");
         
+        keywordOrImageHbox.setMinHeight(100);
         keywordOrImageHbox.setPadding(new Insets(20,20,20,10));
         keywordOrImageHbox.getChildren().add(keywordLabel);
         
     }
     private void setChallengeHeader(ChallengeImage c){
         
-        promptLabel.setText("Select all images that match this one: ");
+        promptLabel.setText(Constants.LABEL_CHALLENGE_IMAGE);
         promptLabel.setWrapText(true);
         ImageView iv = (ImageView)c.getNode();
         iv.setFitWidth(100);
         iv.setFitHeight(100);
         
-        keywordOrImageHbox.getChildren().add(iv);
+        GridPane ivholder = new GridPane();
+        ivholder.setHgap(0);
+        ivholder.setVgap(0);
+        ivholder.add(iv, 0, 0);
+        
+        keywordOrImageHbox.getChildren().add(ivholder);
         
     }
     
@@ -111,4 +118,14 @@ public class CAPTCHAHolder extends VBox{
         payloadGrid.getChildren().add(iv);
     }
     
+    void setFilterOnRefImg(String filterPath){
+        
+        ImageView filteriv = new ImageView(new Image(filterPath));        
+        filteriv.setFitHeight(100);
+        filteriv.setFitWidth(100);
+        filteriv.setOpacity(Constants.FILTER_CHOSEN_OPACITY);  
+                
+        ((GridPane)(keywordOrImageHbox.getChildren().get(0))).add(filteriv, 0, 0);
+                    
+    }
 }

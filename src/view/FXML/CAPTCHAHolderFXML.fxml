@@ -12,9 +12,9 @@
 
 <fx:root fx:id="CAPTCHAHolder" maxHeight="370.0" maxWidth="300.0" minHeight="370.0" minWidth="300.0" prefHeight="370.0" prefWidth="300.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
      <children>
-      <HBox maxWidth="300.0" minWidth="300.0" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #4a90e2;">
+      <HBox maxWidth="300.0" minHeight="100.0" minWidth="300.0" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #4a90e2;">
          <children>
-            <HBox>
+            <HBox alignment="CENTER_LEFT">
                <children>
                         <Label fx:id="promptLabel" text="Select all images of a " textFill="WHITE">
                            <font>
@@ -29,7 +29,7 @@
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>
             </HBox>
-            <HBox fx:id="keywordOrImageHbox" HBox.hgrow="ALWAYS">
+            <HBox fx:id="keywordOrImageHbox" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets />
                </HBox.margin></HBox>

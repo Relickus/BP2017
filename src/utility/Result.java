@@ -15,6 +15,7 @@ import resources.ImageClass;
 public class Result {
     
     private ArrayList<ClassifiedImage> classifiedImgsArr;
+    private ClassifiedImage referenceImage;
     private double accuracy;
 
     public Result() {
@@ -29,9 +30,18 @@ public class Result {
         return classifiedImgsArr;
     }
     
+    public ClassifiedImage getClassifiedRefImg(){
+        return referenceImage;
+    }
+    
     public boolean isEmpty(){
         
         return classifiedImgsArr == null || classifiedImgsArr.isEmpty();
+    }
+    
+    
+    public void setAccuracy(double acc){
+        accuracy = acc;
     }
     
     public void countAccuracy(ImageClass challengeClass,int numberOfCorrectImgs){
@@ -47,7 +57,17 @@ public class Result {
     }
     
     public void addClassifiedImage(ClassifiedImage img){
-        classifiedImgsArr.add(img);
+        
+        // coordinates -1,-1 indicate reference image, other coordinates indicate payload grid image
+        if(img.getCoordinates().getRow() == -1 && img.getCoordinates().getCol() == -1 )
+            referenceImage = img;
+        else
+            classifiedImgsArr.add(img);
     }
+    
+    public boolean hasReferenceImage(){
+        return referenceImage != null;
+    }
+    
     
 }

@@ -11,7 +11,7 @@
    <center>
       <ScrollPane focusTraversable="false" hbarPolicy="NEVER" BorderPane.alignment="TOP_LEFT">
          <content>
-            <VBox fx:id="resultContainer">
+            <VBox fx:id="resultContainer" spacing="40.0">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>

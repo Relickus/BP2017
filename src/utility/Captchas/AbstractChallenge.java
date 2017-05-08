@@ -51,7 +51,7 @@ public abstract class AbstractChallenge {
 
         setConstants();
 
-        questionClassIdx = (new Random().nextInt(Constants.NUMBER_OF_CLASSES)) + 1;
+        questionClassIdx = (new Random().nextInt(Constants.NUMBER_OF_CLASSES));
         challengeClass = ImageClassContainer.getClassByVal(questionClassIdx);
     }
 
@@ -68,6 +68,10 @@ public abstract class AbstractChallenge {
 
     public int getNumberOfCorrectImgs(){
         return NUMBER_OF_CORRECT_IMAGES;
+    }
+    
+    public int getNumberOfChallengeImgs(){
+        return NUMBER_OF_CHALLENGE_IMAGES;
     }
     
      public boolean isFixedClass() {

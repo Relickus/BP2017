@@ -14,7 +14,9 @@ import javafx.scene.image.ImageView;
 import resources.Constants;
 import resources.ImageClass;
 import resources.ImageClassContainer;
+import utility.Coordinates;
 import utility.Loader;
+import utility.PayloadImage;
 import utility.Solvers.CNNSolver;
 import utility.Solvers.ClarifaiSolver;
 import utility.Solvers.GoogleSolver;
@@ -31,7 +33,7 @@ import utility.Solvers.WatsonSolver;
 
 public class ChallengeImage extends AbstractChallenge {
 
-    private Image refImg;
+    private PayloadImage refImg;
 
     public ChallengeImage() {
         refImg = null;
@@ -80,6 +82,7 @@ public class ChallengeImage extends AbstractChallenge {
     private void loadRefImage() {
         Loader loader = Loader.getInstance();
         refImg = loader.loadImageFile(challengeClass);
+        refImg.setCoordinates(new Coordinates(-1,-1));
 
     }
 
@@ -88,6 +91,10 @@ public class ChallengeImage extends AbstractChallenge {
         return new ImageView(refImg);
     }
 
+    public PayloadImage getReferenceImage(){
+        return refImg;
+    }
+    
     @Override
     public String getChallengeName() {
         return "Reference image";

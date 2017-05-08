@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.net.URL;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -75,9 +77,9 @@ public class ResultItem extends VBox {
     private void setCaptchaView() {
         captchaHolder = new CAPTCHAHolder(captcha);
         captchaContainer.getChildren().add(captchaHolder);
-
     }
-
+      
+    
     public void setResult(Result res) {
         result = res;
     }
@@ -108,7 +110,15 @@ public class ResultItem extends VBox {
                     captchaHolder.setFilterOnField(filterPath, i.getCoordinates());
                 }
             }
-        }
+        }        
+    }
+    
+    public void setRefImgFilter(){
+        
+        if(result.getClassifiedRefImg().guessedRight())
+            captchaHolder.setFilterOnRefImg(Constants.FILTER_CHOSEN_PATH);
+        else
+            captchaHolder.setFilterOnRefImg(Constants.FILTER_REFIMG_WRONG_PATH);
     }
 
 }

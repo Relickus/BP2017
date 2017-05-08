@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javafx.concurrent.Task;
 import resources.Constants;
 import utility.Captchas.CAPTCHA;
+import utility.Captchas.ChallengeImage;
 import utility.PayloadImage;
 import utility.PleaseWaitDialog;
 import utility.Result;
@@ -46,6 +47,31 @@ public abstract class Solver {
 
     public void solve(CAPTCHA captcha, Task<Boolean> task, PleaseWaitDialog pleaseWaitDialog) throws SolutionInterruptedException {
 
+        
+        if(captcha.getChallenge() instanceof ChallengeImage){
+            
+            ChallengeImage challenge = (ChallengeImage)captcha.getChallenge();
+            PayloadImage refimg = challenge.getReferenceImage();
+            
+            try{
+                
+            classifyImage(refimg);
+            
+            // reference image was not classified correctly -> 0% accuracy and skip classification of the payload 
+            if(! result.getClassifiedRefImg().guessedRight()){                
+                pleaseWaitDialog.updateProgress(pleaseWaitDialog.getProgress() + (challenge.getNumberOfChallengeImgs() * 1.0)/pleaseWaitDialog.getGranularity());   // adds more progress to progressbar 
+                result.setAccuracy(0);
+                return;
+            }
+            
+            }catch(IOException e){                
+                System.err.println("\t !!!Chyba v processbuileru: ");
+                System.err.println(e.getMessage());
+                return;
+            }
+            
+        }        
+        
         ArrayList<PayloadImage> payloadArr = captcha.getChallenge().getPayload();
         for (PayloadImage pi : payloadArr) {
             try {
