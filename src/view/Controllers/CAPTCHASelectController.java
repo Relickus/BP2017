@@ -26,8 +26,6 @@ import utility.Captchas.ChallengeKeyword;
  */
 public class CAPTCHASelectController extends AbstractController implements Initializable {
 
-    //@FXML
-    //private WebView htmlView;
     private @FXML
     RadioButton CAPTCHA_radiobtn1;
     private @FXML
@@ -74,9 +72,6 @@ public class CAPTCHASelectController extends AbstractController implements Initi
             return;
         }
 
-        //  captcha.generateChallenge();
-        // generate captcha and hand it to next stage
-        //stageController.getWindowController()
         stageController.loadNextStage(NEXT_SCENE);
 
         CAPTCHASettingsController windowController = (CAPTCHASettingsController) stageController.getWindowController();

@@ -23,6 +23,6 @@ public abstract class AbstractDistance {
         return getName() + " distance";
     }
        
-    
+    public abstract String getParameterName();
     
 }

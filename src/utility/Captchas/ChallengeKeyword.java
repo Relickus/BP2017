@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import resources.Constants;
 import resources.ImageClass;
 import resources.ImageClassContainer;
-import utility.Solvers.CNNSolver;
 import utility.Solvers.ClarifaiSolver;
 import utility.Solvers.GoogleSolver;
 import utility.Solvers.ImaggaSolver;
@@ -96,7 +95,6 @@ public class ChallengeKeyword extends AbstractChallenge {
     public ArrayList<Solver> getAvailableSolvers() {
         
         ArrayList<Solver> arr = new ArrayList<>();
-        arr.add(new CNNSolver());
         arr.add(new GoogleSolver());
         arr.add(new WatsonSolver());
         arr.add(new ClarifaiSolver());

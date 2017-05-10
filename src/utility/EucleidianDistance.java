@@ -25,5 +25,12 @@ public class EucleidianDistance extends AbstractDistance{
     public String getName() {
         return "Eucleidian";
     }
+
+    @Override
+    public String getParameterName() {
+        return "euclid";
+    }
+    
+    
     
 }

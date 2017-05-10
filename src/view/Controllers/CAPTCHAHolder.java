@@ -57,7 +57,7 @@ public class CAPTCHAHolder extends VBox{
         promptLabel.setText(Constants.LABEL_CHALLENGE_KEYWORD);
         Label keywordLabel = (Label)c.getNode();
         keywordLabel.setTextFill(Color.WHITE);
-        keywordLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 18px; -fx-font-weight: bold;");
+        keywordLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 20px; -fx-font-weight: bold;");
         
         keywordOrImageHbox.setMinHeight(100);
         keywordOrImageHbox.setPadding(new Insets(20,20,20,10));

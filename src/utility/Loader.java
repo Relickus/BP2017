@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-import javafx.scene.image.Image;
 import resources.Constants;
 import resources.ImageClass;
 
@@ -30,35 +29,25 @@ public class Loader {
 
         File targetFolder = getTargetFolder(img);
         if (targetFolder == null) {
-            return null;    // this shouldn't happen if using defined enum values
+            return null;   
         }
         Random rand = new Random();
         int imgIndex = rand.nextInt(targetFolder.list().length) + 1;    // returns random integer denoting a real image file in this folder
 
-        PayloadImage result = new PayloadImage(constructImagePath(img, imgIndex));
+        
+        File imageFile = targetFolder.listFiles()[imgIndex];
+        
+        PayloadImage result = new PayloadImage(constructImagePath(imageFile));
         
         result.setCorrectClass(img);
 
         return result;
     }
-
-    public PayloadImage loadImageFile(ImageClass img, int idxSpecify) {
-
-        File targetFolder = getTargetFolder(img);
-        if (targetFolder == null) {
-            return null;    // this shouldn't happen if using defined enum values
-        }
-
-        PayloadImage result = new PayloadImage(constructImagePath(img, idxSpecify));
-        
-        result.setCorrectClass(img);
-
-        return result;
-    }
+    
 
     private File getTargetFolder(ImageClass img) {
 
-        String folderName = img.getName().toUpperCase();
+        String folderName = img.getName();
 
         File[] folders = new File(Constants.DATASET_PATH).listFiles();
 
@@ -67,7 +56,7 @@ public class Loader {
                 continue;
             }
 
-            if (folder.getName().equals(folderName)) {
+            if (folder.getName().equalsIgnoreCase(folderName)) {
                 return new File(Constants.DATASET_PATH + folderName);
 
             }
@@ -100,9 +89,11 @@ public class Loader {
         }
 
         ArrayList<PayloadImage> imgArr = new ArrayList<>(num);
-        Image i = new Image(constructImagePath(img, num));
+        
+        File [] images = targetFolder.listFiles();
+        
         for (Integer idx : indexSet) {
-            PayloadImage pi = new PayloadImage(constructImagePath(img, idx));
+            PayloadImage pi = new PayloadImage(constructImagePath(images[idx]));
             pi.setCorrectClass(img);
             imgArr.add(pi);
         }
@@ -110,14 +101,8 @@ public class Loader {
         return imgArr;
     }
 
-    private String constructImagePath(ImageClass imgclass, int idx) {
-
-        String className = imgclass.getName().toLowerCase();
-        String targetFileName = className + "_" + idx + ".jpg";
-
-        File targetFolder = getTargetFolder(imgclass);
-
-        return targetFolder.toURI().toString() + targetFileName;
+    private String constructImagePath(File chosenFile) {
+        return chosenFile.toURI().toString();
     }
 
 }

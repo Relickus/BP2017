@@ -119,4 +119,10 @@ public abstract class Solver {
         return estimatedTime;
     }
 
+    public void setParameters(SolverParameters parameters) {
+        this.parameters = parameters;
+    }
+
+    
+    
 }

@@ -88,7 +88,6 @@ public class ResultWindowController extends AbstractController implements Initia
             if(s.getResult().hasReferenceImage()){
                 r.setRefImgFilter();
             }
-    
             resultContainer.getChildren().add(r);
             resultContainer.getChildren().add(new Separator(Orientation.HORIZONTAL));
         }

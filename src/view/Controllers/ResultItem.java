@@ -9,9 +9,7 @@ import java.io.IOException;
 import java.net.URL;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -32,7 +30,7 @@ public class ResultItem extends VBox {
     Label solverParam;
     private @FXML
     Label solverAcc;
-    private @FXML
+    public @FXML
     HBox captchaContainer;
 
     private final CAPTCHA captcha;
@@ -48,15 +46,15 @@ public class ResultItem extends VBox {
     }
 
     public void setLabels(String name, String param, String acc) {
-                
+
         solverName.setText(name);
-        solverParam.setText(param);        
-        
-        Double accPercent = Double.valueOf(acc.replace(',', '.'))*100;
+        solverParam.setText(param);
+
+        Double accPercent = Double.valueOf(acc.replace(',', '.')) * 100;
         solverAcc.setText(accPercent.toString() + "%");
 
         styleLabels(accPercent);
-        
+
     }
 
     private void styleLabels(Double d) {
@@ -69,8 +67,9 @@ public class ResultItem extends VBox {
             solverAcc.setTextFill(Color.LIMEGREEN);
         } else {
             solverAcc.setTextFill(Color.GREEN);
-            if(d.compareTo(100.0) == 0)
+            if (d.compareTo(100.0) == 0) {
                 solverAcc.setStyle("-fx-font-size: 15px; -fx-font-weight: bold");
+            }
         }
     }
 
@@ -78,8 +77,7 @@ public class ResultItem extends VBox {
         captchaHolder = new CAPTCHAHolder(captcha);
         captchaContainer.getChildren().add(captchaHolder);
     }
-      
-    
+
     public void setResult(Result res) {
         result = res;
     }
@@ -96,29 +94,29 @@ public class ResultItem extends VBox {
     }
 
     public void setFilter(String filterPath) {
-        
-        if(filterPath.equals(Constants.FILTER_CHOSEN_PATH)){
+
+        if (filterPath.equals(Constants.FILTER_CHOSEN_PATH)) {
             for (ClassifiedImage i : result.getResultArr()) {
                 if (i.isEquivalentClass(captcha.getChallenge().getChallengeClass())) {
                     captchaHolder.setFilterOnField(filterPath, i.getCoordinates());
                 }
             }
-        }
-        else if(filterPath.equals(Constants.FILTER_CORRECT_PATH)){
+        } else if (filterPath.equals(Constants.FILTER_CORRECT_PATH)) {
             for (ClassifiedImage i : result.getResultArr()) {
                 if (captcha.getChallenge().getChallengeClass().equals(i.getCorrectClass())) {
                     captchaHolder.setFilterOnField(filterPath, i.getCoordinates());
                 }
             }
-        }        
+        }
     }
-    
-    public void setRefImgFilter(){
-        
-        if(result.getClassifiedRefImg().guessedRight())
+
+    public void setRefImgFilter() {
+
+        if (result.getClassifiedRefImg().guessedRight()) {
             captchaHolder.setFilterOnRefImg(Constants.FILTER_CHOSEN_PATH);
-        else
+        } else {
             captchaHolder.setFilterOnRefImg(Constants.FILTER_REFIMG_WRONG_PATH);
+        }
     }
 
 }

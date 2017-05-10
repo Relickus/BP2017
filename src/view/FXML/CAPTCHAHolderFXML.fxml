@@ -26,7 +26,7 @@
                         </Label>
                </children>
                <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                  <Insets bottom="20.0" left="20.0" right="10.0" top="20.0" />
                </padding>
             </HBox>
             <HBox fx:id="keywordOrImageHbox" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">

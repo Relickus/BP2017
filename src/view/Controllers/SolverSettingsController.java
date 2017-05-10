@@ -31,13 +31,11 @@ import javafx.scene.layout.VBox;
 import resources.Constants;
 import utility.AbstractDistance;
 import utility.Captchas.CAPTCHA;
-import utility.CosineDistance;
 import utility.CustomTreeItem;
-import utility.EucleidianDistance;
 import utility.KNNParameters;
-import utility.ManhattanDistance;
 import utility.PleaseWaitDialog;
 import utility.ScriptExecutor;
+import utility.Solvers.KNNSolver;
 import utility.Solvers.Solver;
 
 /**
@@ -216,6 +214,9 @@ public class SolverSettingsController extends AbstractController implements Init
             if (i.isSelected()) {
                 if (i.getValue().getSolver() != null) {
                     pickedSolversArr.add(i.getValue().getSolver());
+                    if(i.getValue().getSolver().hasParams()){
+                        i.getValue().getSolver().setParameters(knnParams);
+                    }
                 }
             }
         }

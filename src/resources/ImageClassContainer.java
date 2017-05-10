@@ -93,7 +93,7 @@ public class ImageClassContainer {
     public static ImageClass getClassByName(String name){
         
         for(ImageClass i : imgClassesArr){
-            if(i.getName().toLowerCase().equals(name))
+            if(i.getName().equalsIgnoreCase(name))
                 return i;
         }
         

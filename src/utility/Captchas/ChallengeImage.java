@@ -17,7 +17,6 @@ import resources.ImageClassContainer;
 import utility.Coordinates;
 import utility.Loader;
 import utility.PayloadImage;
-import utility.Solvers.CNNSolver;
 import utility.Solvers.ClarifaiSolver;
 import utility.Solvers.GoogleSolver;
 import utility.Solvers.ImaggaSolver;
@@ -124,7 +123,6 @@ public class ChallengeImage extends AbstractChallenge {
 
         ArrayList<Solver> arr = new ArrayList<>();
         arr.add(new KNNSolver());
-        arr.add(new CNNSolver());
         arr.add(new GoogleSolver());        
         arr.add(new WatsonSolver());
         arr.add(new ClarifaiSolver());
