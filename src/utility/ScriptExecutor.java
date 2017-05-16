@@ -6,12 +6,11 @@
 package utility;
 
 import java.util.ArrayList;
-import javafx.concurrent.Task;
 import utility.Captchas.CAPTCHA;
 import utility.Solvers.Solver;
 
 /**
- *
+ * This class executes external scripts
  * @author Vojta
  */
 public class ScriptExecutor {
@@ -19,7 +18,14 @@ public class ScriptExecutor {
     private ArrayList<Solver> solvers;
     private CAPTCHA captcha;
 
-    public boolean launchScripts(ArrayList<Solver> arr, CAPTCHA c, Task<Boolean> task, PleaseWaitDialog pleaseWaitDialog) {
+    /**
+     * Lanches selected solver scripts from array
+     * @param arr Array of scripts
+     * @param c captcha to be solved
+     * @param pleaseWaitDialog loading dialog
+     * @return
+     */
+    public boolean launchScripts(ArrayList<Solver> arr, CAPTCHA c, PleaseWaitDialog pleaseWaitDialog) {
         this.solvers = arr;
         this.captcha = c;
         int ctr = 0;         
@@ -27,7 +33,7 @@ public class ScriptExecutor {
         for (Solver s : solvers) {
             pleaseWaitDialog.updateProgress((double)ctr/solvers.size());
             try{
-                s.solve(captcha,task,pleaseWaitDialog);
+                s.solve(captcha,pleaseWaitDialog);
             }catch( SolutionInterruptedException e){
                 return false;
             }
@@ -36,7 +42,11 @@ public class ScriptExecutor {
         return true;
     }
     
-    
+    /**
+     * returns a time estimation of computation
+     * @param solvers array of solvers
+     * @return
+     */
     public int getEstimatedTime(ArrayList<Solver> solvers){        
         int res=0;
         

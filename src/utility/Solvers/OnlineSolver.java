@@ -12,15 +12,25 @@ import utility.ClassifiedImage;
 import utility.PayloadImage;
 
 /**
- *
+ * A base class for online classifier services
  * @author Vojta
  */
 public abstract class OnlineSolver extends Solver {
 
+    /**
+     * Instantiates a subclass of an online solver
+     * @param name name of the solver
+     * @param time computation time estimation in seconds
+     */
     public OnlineSolver(String name, int time) {
         super(name, time);
     }
 
+    /**
+     * Classifies an image
+     * @param img A challenge image to be classified
+     * @throws java.io.IOException
+     */
     @Override
     protected void classifyImage(PayloadImage img) throws IOException {
 
@@ -54,7 +64,11 @@ public abstract class OnlineSolver extends Solver {
         classifiedImage.setPredictedClass();
         result.addClassifiedImage(classifiedImage);
     }
-
+    
+    /**
+     * Online solver classes do not support additional paramters
+     * @return false value
+     */
     @Override
     public boolean hasParams() {
         return false;

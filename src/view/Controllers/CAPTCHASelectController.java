@@ -21,7 +21,7 @@ import utility.Captchas.ChallengeImage;
 import utility.Captchas.ChallengeKeyword;
 
 /**
- *
+ * controller for first application window 
  * @author Vojta
  */
 public class CAPTCHASelectController extends AbstractController implements Initializable {

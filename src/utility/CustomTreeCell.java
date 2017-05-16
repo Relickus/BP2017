@@ -12,7 +12,7 @@ import javafx.scene.control.TreeCell;
 import javafx.scene.layout.HBox;
 
 /**
- *
+ * Class acting as a custom tree cell in a treeview
  * @author Vojta
  */
 public class CustomTreeCell extends TreeCell<String> {

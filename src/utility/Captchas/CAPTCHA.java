@@ -6,36 +6,56 @@
 package utility.Captchas;
 
 /**
- *
+ * Wrapper class for a certain type of challenge
  * @author Vojta
  */
 public class CAPTCHA {
     
   private AbstractChallenge challenge;
 
+    /**
+     * constructor 
+     * @param challenge Challenge of any type
+     */
     public CAPTCHA(AbstractChallenge challenge) {
         this.challenge = challenge;
         
     }
 
+    /**
+     *
+     */
     public CAPTCHA() {
     }
     
-     
-   public void setChallenge(AbstractChallenge challenge){
+    /**
+     * challenge setter
+     * @param challenge challenge to be set
+     */
+    public void setChallenge(AbstractChallenge challenge){
        this.challenge = challenge;
    }
 
+    /**
+     * getter for challenge in this captcha 
+     * @return challenge of this captcha
+     */
     public AbstractChallenge getChallenge() {
         return challenge;
     }
     
-   public void generateRandomChallenge(){
+    /**
+     * generates a random challenge
+     */
+    public void generateRandomChallenge(){
        
        challenge.createChallenge();
    }
    
-   public void generatePayload(){
+    /**
+     * generates a payload for curent challenge
+     */
+    public void generatePayload(){
        challenge.createPayload();
    }
    

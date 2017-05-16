@@ -15,23 +15,29 @@ import resources.ImageClassContainer;
 import utility.Solvers.ClarifaiSolver;
 import utility.Solvers.GoogleSolver;
 import utility.Solvers.ImaggaSolver;
-import utility.Solvers.KNNSolver;
 import utility.Solvers.MicrosoftSolver;
 import utility.Solvers.Solver;
 import utility.Solvers.WatsonSolver;
 
 /**
- *
+ * class representing a captcha challenge specified by a keyword
  * @author Vojta
  */
 public class ChallengeKeyword extends AbstractChallenge {
 
+    /**
+     *
+     */
     public ChallengeKeyword() {
         super();
     }
 
-    public ChallengeKeyword(String key) {
-        super(key);
+    /**
+     * constructor of challenge of a specific class in task
+     * @param specificClass
+     */
+    public ChallengeKeyword(String specificClass) {
+        super(specificClass);
     }
 
     private void generateKeyword() {
@@ -41,14 +47,19 @@ public class ChallengeKeyword extends AbstractChallenge {
     }
 
     
-    // zmenit v hierarchii tyhle dve metody na createRandomChallenge a createSpecifiedChallenge:
-    
+    /**
+     * creates a random class for the challenge task
+     */
     @Override
     protected void randomClass() {
         fixedClass=false;
         generateKeyword();
     }
 
+   /**
+     * creates a specified class for the challenge with keyword in task
+     * @param e class of the task
+     */
     @Override
     protected void specifyClass(ImageClass e) {
                
@@ -58,39 +69,37 @@ public class ChallengeKeyword extends AbstractChallenge {
         keywordStr = challengeClass.printableName();
     }
     
-     
-
+    /**
+     * creates a challenge according to the fixation of the task class
+     */
     @Override
     public void createChallenge() {
         if(! isFixedClass())
             generateKeyword();
     }
 
+    /**
+     * returns appropriate JavaFX node containing keyword of this challenge
+     * @return Label node with reference image
+     */
     @Override
     public Node getNode() {
         return new Label(keywordStr);
     }
 
-    @Override
-    public String getChallengeName() {
-        return "Keyword";
-    }
-
+    /**
+     * keyword getter
+     * @return
+     */
     @Override
     public String getKeyword() {
         return keywordStr;
     }
-
-    @Override
-    protected void generatePayloadWebView() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    protected void generateCaptchaWebView() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
+    /**
+     * returns a set of available solvers for this challenge
+     * @return
+     */
     @Override
     public ArrayList<Solver> getAvailableSolvers() {
         

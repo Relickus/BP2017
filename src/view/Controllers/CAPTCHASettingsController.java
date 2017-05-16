@@ -19,10 +19,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import resources.Constants;
 import utility.Captchas.CAPTCHA;
-import utility.Captchas.ChallengeImage;
 import utility.PayloadImage;
 
 /**
+ * controller class for the second application window
  *
  * @author Vojta
  */
@@ -45,6 +45,11 @@ public class CAPTCHASettingsController extends AbstractController implements Ini
 
     private Node challengeNode;
 
+    /**
+     * captcha object setter
+     *
+     * @param cap captcha object
+     */
     public void setCaptcha(CAPTCHA cap) {
         this.captcha = cap;
     }
@@ -79,11 +84,6 @@ public class CAPTCHASettingsController extends AbstractController implements Ini
         fillPayloadGrid();
     }
 
-//    @FXML
-//    private void onAnotherPayloadClicked(ActionEvent event) {
-//
-//        // feature canceled 
-//    }
     @FXML
     private void onProceedClicked(ActionEvent event) {
 
@@ -96,6 +96,10 @@ public class CAPTCHASettingsController extends AbstractController implements Ini
         stageController.showStage();
     }
 
+    /**
+     * dynamically sets a challenge task of a captcha challenge for display
+     * according to its type
+     */
     public void fillChallengeNode() {
         challengeNode = captcha.getChallenge().getNode();
         styleNode(challengeNode);
@@ -115,23 +119,22 @@ public class CAPTCHASettingsController extends AbstractController implements Ini
             GridPane.setConstraints(imgview, pi.getCoordinates().getRow(), pi.getCoordinates().getCol());
             payloadGrid.getChildren().add(imgview);
         }
-
-        // !!!!!!!!!!!!!!!!!!! working filtering !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!§
-//        ImageView fltr = new ImageView(new Image("file:src/htmlCAPTCHAs/filterCorrect.jpg"));
-//        fltr.setFitWidth(100);
-//        fltr.setFitHeight(100);
-//        fltr.setOpacity(0.5);
-//        GridPane.setConstraints(fltr, 0, 0);
-//        payloadGrid.getChildren().add(fltr);
     }
 
+    /**
+     * initiates the window
+     */
     public void initView() {
 
         fillPayloadGrid();
 
         fillChallengeNode();
 
-        keywordOrImageBtn.setText("Another " + captcha.getChallenge().getChallengeName().toLowerCase());
+        if (captcha.getChallenge().isFixedClass()) {
+            keywordOrImageBtn.setText("Another payload");
+        } else {
+            keywordOrImageBtn.setText("Another challenge");
+        }
 
         if (captcha.getChallenge().isFixedClass()) {
             fixedClassHbox.setVisible(true);

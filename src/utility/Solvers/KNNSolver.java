@@ -16,17 +16,25 @@ import utility.PayloadImage;
 
 /**
  *
+ * Wrapper class for custom KNN classifier
  * @author Vojta
  */
 public class KNNSolver extends Solver {
 
     private final String datasetPath = Constants.DATASET_PATH;
     
+    /**
+     *
+     */
     public KNNSolver() {
         super("KNN",40);
         this.parameters = new KNNParameters();
     }
         
+    /**
+     * constructor with additional KNN algorithm parameters
+     * @param par
+     */
     public KNNSolver(KNNParameters par) {
         super("KNN",60);
         this.parameters = par;
@@ -38,7 +46,7 @@ public class KNNSolver extends Solver {
         
         String kStr = String.valueOf(((KNNParameters)parameters).getK());
         String distStr = ((KNNParameters)parameters).getMeasureDistance().getParameterName();
-        String weightStr = String.valueOf(((KNNParameters)parameters).isWeightedVotes());
+        String weightStr = String.valueOf(((KNNParameters)parameters).getScalingFactor());
         
         res.add( kStr);
         res.add( distStr);
@@ -54,7 +62,7 @@ public class KNNSolver extends Solver {
         
         ArrayList<String> paramsArr = prepareParametersArr();
         
-        processbuilder.command("python", scriptPath, img.getAbsolutePath(), paramsArr.get(0), paramsArr.get(1), paramsArr.get(2) );
+        processbuilder.command("python", scriptPath, Constants.DATASET_PATH ,img.getAbsolutePath(), paramsArr.get(0), paramsArr.get(1), paramsArr.get(2) );
         
         System.err.println("\tSOLVING: " + processbuilder.command().toString());
         Process process = processbuilder.start();

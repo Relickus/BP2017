@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 import resources.Constants;
 
 /**
+ * A controller class handling stage displaying and switching. Singleton design
+ * pattern applied.
  *
  * @author Vojta
  */
@@ -26,15 +28,28 @@ public class StageController {
 
     private static final StageController instance = new StageController();
 
+    /**
+     * returns an instance of this class
+     *
+     * @return StageController instance
+     */
     public static StageController getInstance() {
         return instance;
 
     }
 
+    /**
+     * returns currently displaying stage
+     *
+     * @return currently shown stage
+     */
     public Stage getCurrentStage() {
         return currentStage;
     }
 
+    /**
+     * a constructor of the class
+     */
     public StageController() {
         this.currentStage = new Stage();
         currentStage.setWidth(500);
@@ -43,6 +58,11 @@ public class StageController {
         currentStage.setTitle(Constants.APPLICATION_TITLE);
     }
 
+    /**
+     * loads next stage
+     *
+     * @param window A path to fxml definition of the next window
+     */
     public void loadNextStage(String window) {
         fxmlLoader = new FXMLLoader(getClass().getResource(window));
 
@@ -57,12 +77,20 @@ public class StageController {
         }
     }
 
+    /**
+     * displays the loaded stage
+     */
     public void showStage() {
 
         currentStage.show();
 
     }
 
+    /**
+     * Getter for controller of current class
+     *
+     * @return a controller of current class
+     */
     public AbstractController getWindowController() {
 
         return fxmlLoader.getController();

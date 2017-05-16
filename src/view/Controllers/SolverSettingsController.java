@@ -16,7 +16,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
@@ -35,11 +34,10 @@ import utility.CustomTreeItem;
 import utility.KNNParameters;
 import utility.PleaseWaitDialog;
 import utility.ScriptExecutor;
-import utility.Solvers.KNNSolver;
 import utility.Solvers.Solver;
 
 /**
- * FXML Controller class
+ * controller class for solver settings window
  *
  * @author Vojta
  */
@@ -61,6 +59,9 @@ public class SolverSettingsController extends AbstractController implements Init
     private ArrayList<CheckBoxTreeItem<CustomTreeItem>> checkboxArr;
     private PleaseWaitDialog pleaseWaitDialog;
 
+    /**
+     * initiates the window
+     */
     public void initView() {
 
         captchaContainer.getChildren().add(captchaHolder);
@@ -69,8 +70,13 @@ public class SolverSettingsController extends AbstractController implements Init
 
     }
 
-    public void setCaptcha(CAPTCHA cap) {
-        this.captcha = cap;
+    /**
+     * captcha object setter
+     *
+     * @param captcha captcha object
+     */
+    public void setCaptcha(CAPTCHA captcha) {
+        this.captcha = captcha;
         captchaHolder = new CAPTCHAHolder(captcha);
     }
 
@@ -84,14 +90,12 @@ public class SolverSettingsController extends AbstractController implements Init
         stageController.showStage();
     }
 
-    // fix this method
     private void initDialogView() {
 
         dialogGrid = new GridPane();
         dialogGrid.setHgap(10);
         dialogGrid.setVgap(10);
         dialogGrid.setPadding(new Insets(10, 10, 10, 10));
-        
 
         Label Kparam = new Label("K parameter:");
         ComboBox kComboBox = new ComboBox();
@@ -101,19 +105,23 @@ public class SolverSettingsController extends AbstractController implements Init
 
         kComboBox.getSelectionModel().selectFirst();
 
-        CheckBox weightedVotes = new CheckBox("Weighted voting");
-        //CheckBox crossFolding = new CheckBox("Crossfolding");
-
         ComboBox distance = new ComboBox();
         distance.getItems().addAll(
                 KNNParameters.getAvailableDistances()
         );
         distance.getSelectionModel().selectFirst();
 
+        ComboBox scaleComboBox = new ComboBox();
+        scaleComboBox.getItems().addAll(
+                KNNParameters.getAvailableScales()
+        );
+
+        scaleComboBox.getSelectionModel().select(1);
+
         dialogGrid.add(Kparam, 0, 0);
         dialogGrid.add(kComboBox, 1, 0);
         dialogGrid.add(distance, 2, 0);
-        dialogGrid.add(weightedVotes, 3, 0);
+        dialogGrid.add(scaleComboBox, 3, 0);
 
         knnParamsDialog = new Dialog();
         knnParamsDialog.getDialogPane().setContent(dialogGrid);
@@ -124,7 +132,7 @@ public class SolverSettingsController extends AbstractController implements Init
             return new KNNParameters(
                     kComboBox.getValue(),
                     (AbstractDistance) distance.getValue(),
-                    weightedVotes.isSelected()
+                    scaleComboBox.getValue()
             );
         });
 
@@ -162,7 +170,7 @@ public class SolverSettingsController extends AbstractController implements Init
                 CustomTreeItem tmpItem = (CustomTreeItem) item.getValue();
                 tmpItem.setParamString(tmpStr);
 
-                //this is not redundant, it updates the view!!
+                //this is not redundant, it updates the view, do not remove!!!
                 item.setValue(null);
                 item.setValue(tmpItem);
                 return;
@@ -214,8 +222,13 @@ public class SolverSettingsController extends AbstractController implements Init
             if (i.isSelected()) {
                 if (i.getValue().getSolver() != null) {
                     pickedSolversArr.add(i.getValue().getSolver());
-                    if(i.getValue().getSolver().hasParams()){
-                        i.getValue().getSolver().setParameters(knnParams);
+                    if (i.getValue().getSolver().hasParams()) {
+                        if (i.getValue().getSolver().getName().equalsIgnoreCase("knn")) {
+                            if (knnParams != null) {
+                                i.getValue().getSolver().setParameters(knnParams);
+                            }
+                        }
+
                     }
                 }
             }
@@ -236,12 +249,12 @@ public class SolverSettingsController extends AbstractController implements Init
         pleaseWaitDialog = new PleaseWaitDialog();
         ScriptExecutor se = new ScriptExecutor();
         pleaseWaitDialog.setEstimatedTime(se.getEstimatedTime(pickedSolversArr));
-        pleaseWaitDialog.setGranularity(pickedSolversArr.size(),captcha.getChallenge().getPayloadSize());
+        pleaseWaitDialog.setGranularity(pickedSolversArr.size(), captcha.getChallenge().getPayloadSize());
 
         Task<Boolean> task = new Task<Boolean>() {
             @Override
             public Boolean call() {
-                return se.launchScripts(pickedSolversArr, captcha, this, pleaseWaitDialog);
+                return se.launchScripts(pickedSolversArr, captcha, pleaseWaitDialog);
             }
         };
 

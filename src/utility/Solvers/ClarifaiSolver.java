@@ -7,10 +7,14 @@ package utility.Solvers;
 
 /**
  *
+ * Wrapper class for clarifai computer vision service
  * @author Vojta
  */
 public class ClarifaiSolver extends OnlineSolver{
     
+    /**
+     *
+     */
     public ClarifaiSolver() {
         super("Clarifai",30);
     }

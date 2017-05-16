@@ -5,24 +5,29 @@
  */
 package utility;
 
-import java.awt.Image;
-
 /**
+ * A wrapper class for distance measure used in KNN algorithm script
  *
- * @author Vojta
  */
 public abstract class AbstractDistance {
     
-    protected Image img1,img2;
-    
-    public abstract double getDistance(Image img1, Image img2);
+    /**
+     * Getter for name of the distance in representative form
+     * @return Name of the distance in lowercase with first capital letter
+     */
     public abstract String getName();
 
     @Override
     public String toString() {
         return getName() + " distance";
     }
-       
+
+    /**
+     * Getter for name of the distance in shortened form for usage as a command
+     * line parameter
+     *
+     * @return Shortened name of the distance in lowercase
+     */
     public abstract String getParameterName();
-    
+
 }

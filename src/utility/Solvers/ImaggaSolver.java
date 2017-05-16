@@ -6,11 +6,14 @@
 package utility.Solvers;
 
 /**
- *
+ * Wrapper class for imagga computer vision service
  * @author Vojta
  */
 public class ImaggaSolver extends OnlineSolver{
     
+    /**
+     *
+     */
     public ImaggaSolver() {
         super("Imagga",30);
     }

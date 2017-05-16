@@ -19,6 +19,7 @@ import utility.Captchas.CAPTCHA;
 import utility.Solvers.Solver;
 
 /**
+ * controller of results window
  *
  * @author Vojta
  */
@@ -30,11 +31,21 @@ public class ResultWindowController extends AbstractController implements Initia
     private ArrayList<Solver> solversAndResultsArr;
     private CAPTCHA captcha;
 
+    /**
+     * captcha setter
+     *
+     * @param captcha captcha object
+     */
     public void setCaptcha(CAPTCHA captcha) {
         this.captcha = captcha;
     }
-    
-    public void setResults(ArrayList<Solver> arr){
+
+    /**
+     * setter for array of results
+     *
+     * @param arr array of results
+     */
+    public void setResults(ArrayList<Solver> arr) {
         this.solversAndResultsArr = arr;
     }
 
@@ -68,24 +79,25 @@ public class ResultWindowController extends AbstractController implements Initia
         stageController.showStage();
     }
 
+    /**
+     * initiates the window
+     */
     public void initView() {
 
-        for( Solver s : solversAndResultsArr){
-            
-            ResultItem r = new ResultItem(captcha); // v parametru captcha.applyResultFilter(Result,Filter.SHOW_CORRECT_IMGS=true/false)  --- metoda ktera je prekryje payload filtrem a vraci tu captchu samotnou
-        
-            // r.setFilterChosen(solversAndResultsArr);
-            
+        for (Solver s : solversAndResultsArr) {
+
+            ResultItem r = new ResultItem(captcha);
+
             String paramStr = s.hasParams() ? s.getParameters().toString() : "none";
-            String accString = String.format("%.4f",s.getResult().getAccuracy());
-            
-            r.setLabels(s.getName(), paramStr, accString );
+            String accString = String.format("%.4f", s.getResult().getAccuracy());
+
+            r.setLabels(s.getName(), paramStr, accString);
             r.setResult(s.getResult());
-            
+
             r.setFilter(Constants.FILTER_CHOSEN_PATH);
             r.setFilter(Constants.FILTER_CORRECT_PATH);
-            
-            if(s.getResult().hasReferenceImage()){
+
+            if (s.getResult().hasReferenceImage()) {
                 r.setRefImgFilter();
             }
             resultContainer.getChildren().add(r);

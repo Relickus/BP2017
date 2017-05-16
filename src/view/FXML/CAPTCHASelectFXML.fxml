@@ -45,7 +45,7 @@
                         </VBox>
                         <ImageView fitHeight="300.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
                            <image>
-                              <Image url="@../CAPTCHA_example_keyword.png" />
+                              <Image url="@../../resources/CAPTCHA_example_keyword.png" />
                            </image>
                            <VBox.margin>
                               <Insets />
@@ -75,7 +75,7 @@
                         </VBox>
                         <ImageView fitHeight="300.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
                            <image>
-                              <Image url="@../CAPTCHA_example_refimage.png" />
+                              <Image url="@../../resources/CAPTCHA_example_refimage.png" />
                            </image>
                            <VBox.margin>
                               <Insets />

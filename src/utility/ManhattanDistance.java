@@ -5,28 +5,25 @@
  */
 package utility;
 
-import java.awt.Image;
-
 /**
- *
+ * Manhattan distance wrapper class
  * @author Vojta
  */
 public class ManhattanDistance extends AbstractDistance{
 
-   
+    /**
+     * Getter for name of the distance in representative form
+     * @return Name of the distance in lowercase with first capital letter
+     */
     @Override
     public String getName() {
         return "Manhattan";
     }
 
-    @Override
-    public double getDistance(Image img1, Image img2) {
-         
-         // execute python script
-        
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    /**
+     * Getter for name of the distance in shortened form for usage as a command line parameter
+     * @return Shortened name of the distance in lowercase
+     */
     @Override
     public String getParameterName() {
         return "manhattan";

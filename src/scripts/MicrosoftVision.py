@@ -12,14 +12,6 @@ imagefile = str(sys.argv[1])
 
 def processRequest( json, data, headers, params ):
 
-    """
-    Helper function to process the request to Project Oxford
-
-    Parameters:
-    json: Used when processing images from its URL. See API Documentation
-    data: Used when processing image read from disk. See API Documentation
-    headers: Used to pass the key information and the data type request
-    """
 
     retries = 0
     result = None

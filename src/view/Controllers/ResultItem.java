@@ -19,6 +19,7 @@ import utility.ClassifiedImage;
 import utility.Result;
 
 /**
+ * wrapper class for a result item found in results window
  *
  * @author Vojta
  */
@@ -30,21 +31,36 @@ public class ResultItem extends VBox {
     Label solverParam;
     private @FXML
     Label solverAcc;
-    public @FXML
+
+    private @FXML
     HBox captchaContainer;
 
     private final CAPTCHA captcha;
     private Result result;
     private CAPTCHAHolder captchaHolder;
 
-    public ResultItem(CAPTCHA c) {
+    /**
+     * constructor of the resultitem
+     *
+     * @param captcha a reference to captcha which was solved and produced this
+     * resultitem
+     */
+    public ResultItem(CAPTCHA captcha) {
         super();
         loadFxml(getClass().getResource("/view/FXML/ResultItemFXML.fxml"), this);
-        this.captcha = c;
+        this.captcha = captcha;
 
         setCaptchaView();
     }
 
+    /**
+     * sets labels of the item according to the solver which produced this
+     * result
+     *
+     * @param name name of a solver
+     * @param param parameters of a solver
+     * @param acc accuracy of a solver
+     */
     public void setLabels(String name, String param, String acc) {
 
         solverName.setText(name);
@@ -78,10 +94,21 @@ public class ResultItem extends VBox {
         captchaContainer.getChildren().add(captchaHolder);
     }
 
+    /**
+     * result setter
+     *
+     * @param res
+     */
     public void setResult(Result res) {
         result = res;
     }
 
+    /**
+     * loads apporpriate FXML template
+     *
+     * @param fxmlFile fxml template
+     * @param rootController sets a controller of the template
+     */
     protected static void loadFxml(URL fxmlFile, Object rootController) {
         FXMLLoader loader = new FXMLLoader(fxmlFile);
         loader.setController(rootController);
@@ -93,23 +120,31 @@ public class ResultItem extends VBox {
         }
     }
 
+    /**
+     * sets a filter speciifed in parameter to all appropriate coordinates
+     *
+     * @param filterPath
+     */
     public void setFilter(String filterPath) {
 
         if (filterPath.equals(Constants.FILTER_CHOSEN_PATH)) {
             for (ClassifiedImage i : result.getResultArr()) {
-                if (i.isEquivalentClass(captcha.getChallenge().getChallengeClass())) {
+                if (captcha.getChallenge().getChallengeClass().equivalentTo(i.getPredictedClass())) {
                     captchaHolder.setFilterOnField(filterPath, i.getCoordinates());
                 }
             }
         } else if (filterPath.equals(Constants.FILTER_CORRECT_PATH)) {
             for (ClassifiedImage i : result.getResultArr()) {
-                if (captcha.getChallenge().getChallengeClass().equals(i.getCorrectClass())) {
+                if (captcha.getChallenge().getChallengeClass().equivalentTo(i.getCorrectClass())) {
                     captchaHolder.setFilterOnField(filterPath, i.getCoordinates());
                 }
             }
         }
     }
 
+    /**
+     * sets a filter to reference image of captcha challenge in result
+     */
     public void setRefImgFilter() {
 
         if (result.getClassifiedRefImg().guessedRight()) {

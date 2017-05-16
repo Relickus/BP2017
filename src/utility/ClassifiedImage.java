@@ -11,7 +11,7 @@ import resources.ImageClass;
 import resources.ImageClassContainer;
 
 /**
- *
+ * Represents a payload image classified by a solver
  * @author Vojta
  */
 public class ClassifiedImage extends PayloadImage {
@@ -19,6 +19,10 @@ public class ClassifiedImage extends PayloadImage {
     private ArrayList<ImageResult> resultsArr;
     private ImageClass predictedClass;
 
+    /**
+     * Instantiates the class
+     * @param payloadimage Payload image classified by a solver
+     */
     public ClassifiedImage(PayloadImage payloadimage) {
         super(payloadimage.path);
         correctClass = payloadimage.correctClass;
@@ -27,8 +31,10 @@ public class ClassifiedImage extends PayloadImage {
         resultsArr = new ArrayList<>();
     }
 
+    /**
+     *  Sets a label with the best score returned by a solver as a class of this image predicted by the solver
+     */
     public void setPredictedClass() {
-        // ?????????? HOW
         Collections.sort(resultsArr);
 
         for (ImageResult r : resultsArr) {
@@ -51,18 +57,35 @@ public class ClassifiedImage extends PayloadImage {
         // none of my imageclasses were in prediction 
     }
 
+    /**
+     * Getter for image class of this image predicted by a solver
+     * @return predicted class member variable
+     */
     public ImageClass getPredictedClass() {
         return predictedClass;
     }
 
+    /**
+     * Getter for array of all results from classification by a solver
+     * @return Array of results from classification
+     */
     public ArrayList<ImageResult> getResultsArr() {
         return resultsArr;
     }
 
+    /**
+     * Adds a new label of the image to results array 
+     * @param label Label of the image returned by a solver
+     * @param score Score of the label
+     */
     public void addClass(String label, double score) {
         resultsArr.add(new ImageResult(label, score));
     }
 
+    /**
+     * Checks whether an image was classified correctly by a solver
+     * @return boolean value denoting if image was classified correctly
+     */
     public boolean guessedRight() {
         
         if(predictedClass == null)
@@ -71,19 +94,12 @@ public class ClassifiedImage extends PayloadImage {
         if (correctClass.equals(predictedClass))
             return true;
         
-        if(ImageClassContainer.getSynonyms(correctClass).contains(predictedClass))
+        if(ImageClassContainer.getSynonyms(correctClass) == null)
+            return false;
+        else if(ImageClassContainer.getSynonyms(correctClass).contains(predictedClass))
             return true;
         
         return false;
-    }
-
-    public boolean isEquivalentClass(ImageClass oth) {
-
-        if(predictedClass == null)
-            return false;
-        
-        // comparison of values instead of names because synonyms have same values
-        return oth.getValue() == predictedClass.getValue();
     }
 
 }

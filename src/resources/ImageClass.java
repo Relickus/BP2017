@@ -9,7 +9,7 @@ import java.util.Objects;
 
 /**
  *
- * @author Vojta
+ * Respresents a class of an image
  */
 public class ImageClass {
     
@@ -19,28 +19,45 @@ public class ImageClass {
     private final int value;
     private final String name;
 
+    /**
+     * Constructs an instance
+     * @param name Name of the class
+     */
     public ImageClass(String name) {
         this.value = counter++;        
         this.name  = name;
     }
     
+    /**
+     * Constructs an instance
+     * @param name Name of the class 
+     * @param val Integer identification of the class
+     */
     public ImageClass(String name, int val){        
         this.value = val;        
         this.name  = name;
     }
     
+    /**
+     * Value getter 
+     * @return identification integer value of an image class
+     */
     public int getValue(){
         return value;
     }
 
+    /**
+     * Name getter
+     * @return Name of an image class
+     */
     public String getName() {
         return name;
     }
 
-    public void resetCounter(){
-        counter = 0;
-    }
-        
+    /**
+     * Getter for name of an image class in lowercase with capital first letter
+     * @return Name in said format
+     */
     public String printableName(){
         
         String tmp = name;        
@@ -54,6 +71,26 @@ public class ImageClass {
         if (!(other instanceof ImageClass))return false;
         
         return name.equalsIgnoreCase(((ImageClass)other).getName() );
+    }
+    
+    /**
+     * Checks whether an instance of image class is equivalent to one in parameter. 
+     * Instance I of an image class is eqivalent to image class J if either I has the same name as J or J has the same as one of I's synonymous image classes  
+     * @param oth Instance of image class to compare this instance to
+     * @return boolean value denoting whether two compared image classes are equivalent
+     */
+    public boolean equivalentTo(ImageClass oth){
+        
+        if(oth == null)
+            return false;
+        
+        if(this.equals(oth))
+            return true;
+        
+        if(ImageClassContainer.getSynonyms(this) != null)
+            return ImageClassContainer.getSynonyms(this).contains(oth);
+        
+        return false;  
     }
 
     @Override

@@ -10,7 +10,7 @@ import javafx.fxml.FXML;
 
 /**
  *
- * @author Vojta
+ * Abstract base class for all FXML controllers
  */
 class AbstractController {
 
@@ -19,12 +19,18 @@ class AbstractController {
     protected String PREVIOUS_SCENE;
 
     @FXML
+    /**
+     * back button base functionality
+     */
     private void onBackClicked(ActionEvent event) {
 
         stageController.loadNextStage(PREVIOUS_SCENE);
         stageController.showStage();
     }
 
+    /**
+     * proceed button base functionality
+     */
     @FXML
     private void onProceedClicked(ActionEvent event) {
 

@@ -7,10 +7,14 @@ package utility.Solvers;
 
 /**
  *
+ * Wrapper class for google computer vision service
  * @author Vojta
  */
 public class GoogleSolver extends OnlineSolver{
     
+    /**
+     *
+     */
     public GoogleSolver() {
         super("Google Vision",20);
     }

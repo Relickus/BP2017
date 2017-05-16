@@ -6,11 +6,14 @@
 package utility.Solvers;
 
 /**
- *
+ * Wrapper class for microsoft computer vision service
  * @author Vojta
  */
 public class MicrosoftSolver extends OnlineSolver{
     
+    /**
+     *
+     */
     public MicrosoftSolver() {
         super("Microsoft Vision", 30);
     }

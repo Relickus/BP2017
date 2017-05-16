@@ -6,11 +6,10 @@
 package utility;
 
 /**
- *
+ * Base class for adding parameters to solvers.
+ * In current version of the prototype only KNNSolver supports parameters.
  * @author Vojta
  */
-public abstract class SolverParameters {
-    
-    
+public class SolverParameters {
     
 }

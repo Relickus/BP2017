@@ -5,11 +5,10 @@
  */
 package utility.Captchas;
 
-;
 import java.util.ArrayList;
-import utility.Solvers.Solver;import javafx.scene.Node;
+import utility.Solvers.Solver;
+import javafx.scene.Node;
 import java.util.Random;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import resources.Constants;
 import resources.ImageClass;
@@ -25,6 +24,7 @@ import utility.Solvers.MicrosoftSolver;
 import utility.Solvers.WatsonSolver;
 
 /**
+ * class representing captcha challenge specified by a reference image
  *
  * @author Vojta
  */
@@ -34,15 +34,25 @@ public class ChallengeImage extends AbstractChallenge {
 
     private PayloadImage refImg;
 
+    /**
+     *
+     */
     public ChallengeImage() {
         refImg = null;
     }
 
-    public ChallengeImage(String key) {
-        super(key);
+    /**
+     * constructor of a challenge with specific class of reference image
+     * @param specificClass
+     */
+    public ChallengeImage(String specificClass) {
+        super(specificClass);
 
     }
 
+    /**
+     * creates a random class for the challenge task
+     */
     @Override
     protected void randomClass() {
         fixedClass = false;
@@ -52,27 +62,31 @@ public class ChallengeImage extends AbstractChallenge {
         loadRefImage();
     }
 
+    /**
+     * loads a reference image of class specified by parameter
+     *
+     * @param e class of the task
+     */
     @Override
-    protected void specifyClass(ImageClass e) {                    
+    protected void specifyClass(ImageClass e) {
         fixedClass = true;
         challengeClass = e;
         questionClassIdx = challengeClass.getValue();
-        keywordStr = challengeClass.printableName();  
+        keywordStr = challengeClass.printableName();
         loadRefImage();
     }
 
-    
-    
+    /**
+     * creates a challenge according to the fixation of the task class
+     */
     @Override
     public void createChallenge() {
-        if(fixedClass)
+        if (fixedClass) {
             loadRefImage();
-        else{
+        } else {
             randomClass();
         }
     }
-
-   
 
     public void setRefImgIndex(int idx) {
         questionClassIdx = idx;
@@ -81,24 +95,35 @@ public class ChallengeImage extends AbstractChallenge {
     private void loadRefImage() {
         Loader loader = Loader.getInstance();
         refImg = loader.loadImageFile(challengeClass);
-        refImg.setCoordinates(new Coordinates(-1,-1));
+        refImg.setCoordinates(new Coordinates(-1, -1));
 
     }
 
+    /**
+     * returns appropriate JavaFX node containing reference image of this
+     * challenge
+     *
+     * @return ImageView node with reference image
+     */
     @Override
     public Node getNode() {
         return new ImageView(refImg);
     }
 
-    public PayloadImage getReferenceImage(){
+    /**
+     * reference image getter
+     *
+     * @return
+     */
+    public PayloadImage getReferenceImage() {
         return refImg;
     }
-    
-    @Override
-    public String getChallengeName() {
-        return "Reference image";
-    }
 
+    /**
+     * keyword getter
+     *
+     * @return
+     */
     @Override
     public String getKeyword() {
         if (refImg == null) {
@@ -108,28 +133,23 @@ public class ChallengeImage extends AbstractChallenge {
         return keywordStr;
     }
 
-    @Override
-    protected void generatePayloadWebView() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    protected void generateCaptchaWebView() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    /**
+     * returns a set of available solvers for this challenge
+     *
+     * @return
+     */
     @Override
     public ArrayList<Solver> getAvailableSolvers() {
 
         ArrayList<Solver> arr = new ArrayList<>();
         arr.add(new KNNSolver());
-        arr.add(new GoogleSolver());        
+        arr.add(new GoogleSolver());
         arr.add(new WatsonSolver());
         arr.add(new ClarifaiSolver());
         arr.add(new ImaggaSolver());
         arr.add(new MicrosoftSolver());
         // add more online solvers
-        
+
         return arr;
     }
 
